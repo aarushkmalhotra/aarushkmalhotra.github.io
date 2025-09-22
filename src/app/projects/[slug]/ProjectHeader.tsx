@@ -4,7 +4,7 @@
 import { ProjectShare } from "@/components/ProjectShare";
 import { Button } from "@/components/ui/button";
 import { Project } from "@/lib/projects";
-import { ArrowUpRight, Github } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Github } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -25,16 +25,22 @@ const getDemoCallToAction = (project: Project) => {
 export function ProjectHeader({ project }: ProjectHeaderProps) {
     return (
         <header 
-            className="sticky top-[80px] z-40"
+            className="sticky top-[80px] z-40 bg-background"
         >
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-4 py-4">
                 <div 
                     className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 max-w-5xl mx-auto rounded-lg border bg-background"
-                    style={{ minHeight: '80px' }}
                 >
+                    <div className="flex-shrink-0">
+                        <Button asChild variant="outline" size="icon">
+                            <Link href="/projects" aria-label="Back to projects">
+                                <ArrowLeft className="h-4 w-4" />
+                            </Link>
+                        </Button>
+                    </div>
                     <div className="flex-grow">
                         <h1 
-                            className="font-headline font-bold tracking-tight text-2xl"
+                            className="font-headline font-bold tracking-tight text-xl sm:text-2xl"
                             style={{ 
                                 color: 'hsl(var(--project-primary))'
                             }}
