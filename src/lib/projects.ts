@@ -5,6 +5,7 @@ export interface Project {
   name: string;
   tagline: string;
   description: string;
+  keyFeatures?: string[];
   techStack: string;
   outcomes: string;
   repoUrl: string | null;

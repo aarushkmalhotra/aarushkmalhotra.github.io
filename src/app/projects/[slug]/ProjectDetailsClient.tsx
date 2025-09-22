@@ -3,7 +3,9 @@
 import { generateProjectHighlights, GenerateProjectHighlightsOutput } from "@/ai/flows/generate-project-highlights";
 import { Button } from "@/components/ui/button";
 import { Project } from "@/lib/projects";
+import { Sparkles } from "lucide-react";
 import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
 
 type Props = {
   project: Project;
@@ -36,9 +38,13 @@ export function ProjectDetailsClient({ project }: Props) {
   return (
     <div className="p-6 rounded-lg bg-card border">
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
-        <h2 className="font-headline text-2xl">AI-Powered Highlights</h2>
-        <Button onClick={handleGenerate} disabled={isLoading} style={{ backgroundColor: 'hsl(var(--project-primary))' }}>
-          {isLoading ? "Generating..." : "✨ Generate with AI"}
+        <div className="flex items-center gap-3">
+          <h2 className="font-headline text-2xl">AI-Powered Highlights</h2>
+          <Badge variant="outline">Powered by Simply</Badge>
+        </div>
+        <Button onClick={handleGenerate} disabled={isLoading} className="bg-purple-600 hover:bg-purple-700 text-white">
+          <Sparkles className="w-4 h-4 mr-2"/>
+          {isLoading ? "Generating..." : "Generate with AI"}
         </Button>
       </div>
 

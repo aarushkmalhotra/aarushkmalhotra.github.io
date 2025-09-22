@@ -7,22 +7,10 @@
       "imageHint": "app dashboard"
     },
     {
-      "id": "simplify-me-2",
-      "description": "Screenshot of Simplify Me. app feature",
-      "imageUrl": "https://picsum.photos/seed/simplify2/1200/800",
-      "imageHint": "app feature"
-    },
-    {
       "id": "vernato-1",
       "description": "Banner for Vernato",
       "imageUrl": "/vernatobanner.png",
       "imageHint": "website landing"
-    },
-    {
-      "id": "vernato-2",
-      "description": "Screenshot of Vernato product page",
-      "imageUrl": "https://picsum.photos/seed/vernato2/1200/800",
-      "imageHint": "product page"
     },
     {
       "id": "emty-1",

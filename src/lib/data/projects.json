@@ -4,12 +4,18 @@
     "id": "simplify-me",
     "name": "Simplify Me.",
     "tagline": "Productivity-Boosting Application",
-    "description": "Simplify Me. is a comprehensive productivity application meticulously designed to streamline complex workflows and significantly enhance user efficiency. It features a deliberately minimalist interface paired with powerful, robust backend capabilities. The application focuses on core productivity areas including advanced task management, real-time team collaboration, and providing deep, insightful analytics to help users understand their work patterns.",
+    "description": "Simplify Me. is a comprehensive productivity application meticulously designed to streamline complex workflows and significantly enhance user efficiency. It features a deliberately minimalist interface paired with powerful, robust backend capabilities.",
+    "keyFeatures": [
+      "Advanced task management with customizable boards",
+      "Real-time team collaboration and communication channels",
+      "Deep, insightful analytics to track productivity trends",
+      "Seamless integration with popular third-party tools"
+    ],
     "techStack": "Next.js, TypeScript, Tailwind CSS, Firebase, Node.js",
     "outcomes": "Achieved a 40% increase in user engagement within the first three months post-launch. The streamlined task management system reduced average task completion time by 25%. Recognized for its intuitive design and robust performance.",
     "repoUrl": "https://github.com/example/simplify-me",
     "demoUrl": "https://www.simplifyme.org",
-    "images": ["simplify-me-1", "simplify-me-2"],
+    "images": ["simplify-me-1"],
     "theme": {
       "primary": "hsl(267, 95%, 48%)",
       "secondary": "hsl(14, 99%, 57%)"
@@ -19,12 +25,18 @@
     "id": "vernato",
     "name": "Vernato",
     "tagline": "E-commerce Platform for Artisans",
-    "description": "Vernato is a boutique e-commerce platform that empowers local artisans by providing them with a beautiful and functional digital space to sell their unique creations. The platform is rich with features, supporting multi-vendor stores, secure payment processing via Stripe, and a highly responsive and aesthetically pleasing storefront. The core mission was to create an exceptionally user-friendly experience for both the artisans selling their products and the customers buying them.",
+    "description": "Vernato is a boutique e-commerce platform that empowers local artisans by providing them with a beautiful and functional digital space to sell their unique creations. The core mission was to create an exceptionally user-friendly experience for both the artisans selling their products and the customers buying them.",
+    "keyFeatures": [
+      "Multi-vendor support with individual artisan dashboards",
+      "Secure and reliable payment processing with Stripe",
+      "A highly responsive and aesthetically pleasing storefront design",
+      "Product and inventory management tools for sellers"
+    ],
     "techStack": "React, Redux, Express, MongoDB, Stripe API",
     "outcomes": "Onboarded over 100 artisans in the first year. Processed over $50,000 in transactions with a 99.9% uptime. The platform was praised for its aesthetic and ease of use, leading to high seller retention.",
     "repoUrl": "https://github.com/example/vernato",
     "demoUrl": "https://www.vernato.org",
-    "images": ["vernato-1", "vernato-2"],
+    "images": ["vernato-1"],
      "theme": {
       "primary": "hsl(196, 75%, 52%)",
       "secondary": "hsl(45, 100%, 55%)"
@@ -35,6 +47,11 @@
     "name": "EMTY",
     "tagline": "Real-time Transit Data Prototype",
     "description": "EMTY is a high-fidelity prototype designed to visualize real-time transit data from the MTA API. The prototype was built using a combination of design and database tools to simulate a live data environment. It demonstrates a concept for an intuitive user interface for tracking and understanding public transportation movements.",
+    "keyFeatures": [
+      "Live visualization of transit data on an interactive map",
+      "User-friendly interface for tracking and filtering routes",
+      "Built with a focus on design and data simulation"
+    ],
     "techStack": "Figma, Canva, Firestore, Firebase Realtime Database, MTA API",
     "outcomes": "Successfully created a proof-of-concept that demonstrates the feasibility of a live transit tracking application. The prototype was used to secure stakeholder buy-in for a full-scale development project. The design was praised for its clarity and user-centric approach.",
     "repoUrl": null,
@@ -50,6 +67,11 @@
     "name": "GitHub Contributions",
     "tagline": "Open Source and Personal Projects",
     "description": "My GitHub profile is a testament to my passion for coding and continuous learning. It hosts a variety of projects, from small utility scripts to larger applications and contributions to open-source libraries. It showcases my proficiency in different languages and frameworks.",
+     "keyFeatures": [
+      "Contributions to various open-source libraries",
+      "Maintenance of several personal utility projects",
+      "Demonstration of skills in multiple programming languages"
+    ],
     "techStack": "Git, GitHub Actions, Various Languages (JS, TS, Python)",
     "outcomes": "Actively maintained several open-source projects. Contributed to popular libraries, gaining experience in collaborative development workflows. My profile reflects a strong commitment to quality code and best practices.",
     "repoUrl": "https://github.com/simplifyme7",
