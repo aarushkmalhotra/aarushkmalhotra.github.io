@@ -51,7 +51,7 @@ export function ProjectDetailsClient({ project }: Props) {
             </Link>
           )}
         </div>
-        <Button onClick={handleGenerate} disabled={isLoading} className="w-full sm:w-auto bg-purple-600 hover:bg-purple-700 text-white">
+        <Button onClick={handleGenerate} disabled={isLoading} className="w-full bg-purple-600 hover:bg-purple-700 text-white">
           <Sparkles className="w-4 h-4 mr-2"/>
           {isLoading ? "Generating..." : "Generate with AI"}
         </Button>
