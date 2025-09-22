@@ -13,22 +13,22 @@ const experience = [
   {
     role: "B.S. in Computer Science",
     company: "Macaulay Honors College at CCNY",
-    period: "2024 - 2029 (Expected)",
+    period: "2025 - 2029 (Expected)",
     description: "Pursuing a degree in Computer Science while building and managing my own tech projects. Based in Manhattan, New York.",
     icon: <GraduationCap className="w-5 h-5 text-primary" />
   },
   {
     role: "Founder & Developer",
     company: "Vernato",
-    period: "2022 - Present",
-    description: "Developed a language-learning platform focused on regional accents and dialects, born from the frustration of standardized language apps.",
+    period: "June 2025 - Present",
+    description: "Vernato is an AI-powered pronunciation improvement platform helping learners speak with clarity and confidence. Our PronScore™ model combines accuracy, fluency, and completeness into a single score, giving users actionable feedback that actually drives progress.",
     icon: <Briefcase className="w-5 h-5 text-primary" />
   },
   {
     role: "Founder & Developer",
     company: "Simplify Me.",
-    period: "2021 - Present",
-    description: "Created a tool to translate complex legal jargon in privacy policies into plain English, driven by a passion for data privacy and transparency.",
+    period: "Jan 2023 - May 2025",
+    description: "You know when you sign up for a new website or download a shiny new app, and you’re hit with a wall of text that seems to go on forever? Yeah, that’s the Terms of Service. Our mission is simple: to help you make informed decisions about your privacy.",
     icon: <Briefcase className="w-5 h-5 text-primary" />
   },
 ];
@@ -55,10 +55,10 @@ export default function AboutPage() {
               I'm a student founder based in Manhattan, currently studying Computer Science at Macaulay Honors College at CCNY (expected graduation May 2029). I've lived in way too many countries and been through way too many school systems. CBSE, IGCSE, APs, and now college. You name it, I've probably been confused by it at some point.
             </p>
             <p>
-              All that moving around taught me that most things are more complicated than they need to be. For instance, why do privacy policies sound like they were written by robots for other robots? I got so annoyed reading those endless terms and conditions that I built <a href="/projects/simplify-me">Simplify Me.</a> It turns legal nonsense into plain English so people know what companies are doing with their data.
+              You know when you sign up for a new website or download a shiny new app, and you’re hit with a wall of text that seems to go on forever? Yeah, that’s the Terms of Service. It’s like reading a novel written in legal jargon, and honestly, who has time for that? Our mission at <a href="/projects/simplify-me">Simplify Me.</a> is simple: to help you make informed decisions about your privacy. We’ll give you the key details you need to know, like what data is being collected, how it’s used, and who it’s shared with. We are based on the ToS;DR infrastructure and it abides their Terms of Service.
             </p>
             <p>
-              Then there's <a href="/projects/vernato">Vernato</a>. I noticed that people speak the same language differently depending on where they're from. I got tired of apps that mark you wrong for sounding different, so I built Vernato to recognize and teach these regional differences. It focuses on the tiny pronunciation details other apps are too lazy to care about.
+                At <a href="/projects/vernato">Vernato</a>, we're building an AI-powered pronunciation improvement platform to help learners speak with clarity and confidence. Our PronScore™ model combines accuracy, fluency, and completeness into a single score, giving users actionable feedback that actually drives progress. Built at the intersection of language learning and technology, Vernato is designed for individuals, educators, and organizations seeking a smarter way to master spoken language.
             </p>
             <p>
                 The truth is, I just get really bothered when things don't work well. I end up building tools to fix whatever's driving me crazy. I'm always down to chat with people who also think technology should actually help people instead of just being impressive.
