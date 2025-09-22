@@ -9,6 +9,7 @@ import {
 import Link from "next/link";
 import { ArrowUpRightIcon } from "@/components/icons/ArrowUpRightIcon";
 import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface Post {
   id: string;
@@ -17,8 +18,13 @@ interface Post {
   url: string;
   slug: string;
   publishedAt: string;
+  readTimeInMinutes: number;
   coverImage?: {
     url: string;
+  };
+  author: {
+    name: string;
+    profilePicture?: string;
   };
 }
 
@@ -49,8 +55,13 @@ async function getHashnodePosts(username: string): Promise<Post[]> {
               slug
               url
               publishedAt
+              readTimeInMinutes
               coverImage {
                 url
+              }
+              author {
+                name
+                profilePicture
               }
             }
           }
@@ -119,14 +130,21 @@ export default async function BlogPage() {
               )}
               <div className={`p-6 flex flex-col flex-grow`}>
                   <CardTitle className="font-headline text-2xl group-hover:text-primary transition-colors">{post.title}</CardTitle>
-                  <CardDescription className="mt-2">
-                    {new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  <CardDescription className="mt-2 text-xs">
+                    {new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} · {post.readTimeInMinutes} min read
                   </CardDescription>
                 <CardContent className="p-0 flex-grow pt-4">
                   <p className="text-muted-foreground line-clamp-3">{post.brief}</p>
                 </CardContent>
-                <CardFooter className="p-0 pt-4">
-                  <span className="text-sm text-accent flex items-center gap-1">
+                <CardFooter className="p-0 pt-6 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                        <Avatar className="h-8 w-8">
+                            {post.author.profilePicture && <AvatarImage src={post.author.profilePicture} alt={post.author.name} />}
+                            <AvatarFallback>{post.author.name.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                        <span className="text-sm font-medium">{post.author.name}</span>
+                    </div>
+                    <span className="text-sm text-accent flex items-center gap-1">
                       Read on Hashnode <ArrowUpRightIcon className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </span>
                 </CardFooter>
