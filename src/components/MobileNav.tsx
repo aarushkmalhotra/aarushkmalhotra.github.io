@@ -8,7 +8,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "./ui/button";
-import { Mail, Menu, PanelRightClose } from "lucide-react";
+import { Mail, Menu, PanelLeftClose } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { GithubIcon } from "./icons/GithubIcon";
@@ -52,7 +52,7 @@ export function MobileNav({ navLinks }: MobileNavProps) {
               </div>
               <SheetClose asChild>
                 <Button variant="ghost" size="icon">
-                  <PanelRightClose />
+                  <PanelLeftClose />
                   <span className="sr-only">Close Menu</span>
                 </Button>
               </SheetClose>
