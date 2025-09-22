@@ -52,6 +52,12 @@ const nextConfig: NextConfig = {
         hostname: 'opengraph.githubassets.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.vernato.org',
+        port: '',
+        pathname: '/**',
       }
     ],
   },

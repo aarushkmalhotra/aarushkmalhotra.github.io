@@ -2,20 +2,20 @@
   "placeholderImages": [
     {
       "id": "simplify-me-1",
-      "description": "Screenshot of Simplify Me app dashboard",
-      "imageUrl": "https://picsum.photos/seed/simplify1/1200/800",
+      "description": "Banner for Simplify Me.",
+      "imageUrl": "simplybanner.png",
       "imageHint": "app dashboard"
     },
     {
       "id": "simplify-me-2",
-      "description": "Screenshot of Simplify Me app feature",
+      "description": "Screenshot of Simplify Me. app feature",
       "imageUrl": "https://picsum.photos/seed/simplify2/1200/800",
       "imageHint": "app feature"
     },
     {
       "id": "vernato-1",
-      "description": "Screenshot of Vernato landing page",
-      "imageUrl": "https://picsum.photos/seed/vernato1/1200/800",
+      "description": "Open Graph image for Vernato",
+      "imageUrl": "https://www.vernato.org/opengraph-image.png",
       "imageHint": "website landing"
     },
     {
@@ -26,8 +26,8 @@
     },
     {
       "id": "emty-1",
-      "description": "Screenshot of EMTY project",
-      "imageUrl": "https://picsum.photos/seed/emty1/1200/800",
+      "description": "Banner for Relay (formerly EMTY)",
+      "imageUrl": "emtybanner.png",
       "imageHint": "data visualization"
     },
     {

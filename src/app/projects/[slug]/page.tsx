@@ -108,10 +108,10 @@ export default async function ProjectDetailPage({ params }: { params: { slug:str
                         </Button>
                     )}
                     {project.demoUrl && (
-                        <Button asChild className="w-full justify-start gap-2" style={{ backgroundColor: 'hsl(var(--project-primary))' }}>
+                         <Button asChild variant="outline" className="w-full justify-start gap-2">
                             <Link href={project.demoUrl} target="_blank" rel="noopener noreferrer">
                                 <ArrowUpRightIcon className="w-4 h-4" />
-                                Live Demo
+                                {project.id === "relay" ? "Use for Free" : "Live Demo"}
                             </Link>
                         </Button>
                     )}

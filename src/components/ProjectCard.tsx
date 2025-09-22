@@ -54,8 +54,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 </Badge>
                 ))}
             </div>
-            <span className="text-sm text-accent flex items-center gap-1">
-                View Project <ArrowUpRightIcon className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+             <span className="text-sm text-accent flex items-center gap-1">
+                {project.id === 'relay' ? 'Use for Free' : 'View Project'} <ArrowUpRightIcon className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </span>
         </CardFooter>
       </Card>
