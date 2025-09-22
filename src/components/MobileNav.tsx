@@ -1,74 +1,60 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { Button } from "./ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface NavLink {
-    href: string;
-    label: string;
+  href: string;
+  label: string;
 }
 
 interface MobileNavProps {
-    navLinks: NavLink[];
+  navLinks: NavLink[];
 }
 
 export function MobileNav({ navLinks }: MobileNavProps) {
-    const [isOpen, setIsOpen] = useState(false);
-    const pathname = usePathname();
-
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "auto";
-        }
-
-        return () => {
-            document.body.style.overflow = "auto";
-        };
-    }, [isOpen]);
-
-    useEffect(() => {
-        setIsOpen(false);
-    }, [pathname]);
-
-    return (
-        <div className="md:hidden">
-            <Button variant="ghost" size="icon" onClick={() => setIsOpen(true)}>
-                <Menu />
-                <span className="sr-only">Open Menu</span>
-            </Button>
-
-            {isOpen && (
-                <div
-                    className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm animate-fade-in"
+  return (
+    <div className="md:hidden">
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="ghost" size="icon">
+            <Menu />
+            <span className="sr-only">Open Menu</span>
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left">
+          <div className="flex flex-col h-full">
+            <div className="border-b p-4">
+                <Link href="/" className="flex items-center gap-2 font-headline text-lg font-bold">
+                    <Image
+                        src="/portrait.jpg"
+                        alt="Aarush's Portfolio Logo"
+                        width={32}
+                        height={32}
+                        className="rounded-full"
+                    />
+                    <span>Aarush's Portfolio</span>
+                </Link>
+            </div>
+            <nav className="flex flex-col gap-6 p-4 text-lg font-medium">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-muted-foreground transition-colors hover:text-foreground"
                 >
-                    <div className="container mx-auto px-4 flex h-16 items-center justify-between">
-                        <Link href="/" className="flex items-center gap-2 font-headline text-lg font-bold">
-                            <span>Aarush's Portfolio</span>
-                        </Link>
-                        <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
-                            <X />
-                            <span className="sr-only">Close Menu</span>
-                        </Button>
-                    </div>
-                    <nav className="flex flex-col items-center justify-center gap-8 text-2xl font-medium" style={{ height: 'calc(100vh - 4rem)' }}>
-                        {navLinks.map((link, index) => (
-                            <Link
-                                key={link.href}
-                                href={link.href}
-                                className="text-muted-foreground transition-colors hover:text-foreground animate-fade-in-up"
-                                style={{ animationDelay: `${index * 100 + 100}ms` }}
-                            >
-                                {link.label}
-                            </Link>
-                        ))}
-                    </nav>
-                </div>
-            )}
-        </div>
-    );
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        </SheetContent>
+      </Sheet>
+    </div>
+  );
 }
