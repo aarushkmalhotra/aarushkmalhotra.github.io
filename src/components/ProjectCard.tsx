@@ -22,7 +22,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const image = PlaceHolderImages.find((img) => img.id === firstImageId);
 
   return (
-    <Link href={`/projects/${project.id}`} className="group block">
+    <Link href={`/projects/${project.id}`} className="group block h-full">
       <Card className="h-full flex flex-col transition-all duration-300 ease-in-out group-hover:shadow-xl group-hover:-translate-y-1">
         <CardHeader>
           {image && (
@@ -42,15 +42,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <CardDescription>{project.tagline}</CardDescription>
         </CardHeader>
         <CardContent className="flex-grow">
-          <div className="flex flex-wrap gap-2">
-            {project.techStack.split(", ").slice(0, 4).map((tech) => (
-              <Badge key={tech} variant="secondary">
-                {tech}
-              </Badge>
-            ))}
-          </div>
+            <p className="text-sm text-muted-foreground line-clamp-3">{project.description}</p>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex-col items-start gap-4">
+            <div className="flex flex-wrap gap-2">
+                {project.techStack.split(", ").slice(0, 4).map((tech) => (
+                <Badge key={tech} variant="secondary">
+                    {tech}
+                </Badge>
+                ))}
+            </div>
             <span className="text-sm text-accent flex items-center gap-1">
                 View Project <ArrowUpRightIcon className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </span>

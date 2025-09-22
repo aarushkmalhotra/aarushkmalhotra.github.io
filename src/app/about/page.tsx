@@ -35,7 +35,7 @@ export default function AboutPage() {
         <div className="md:col-span-1">
           <div className="relative aspect-square">
             <Image
-              src="https://picsum.photos/seed/about/400/400"
+              src="/portrait.jpg"
               alt="Profile Picture"
               fill
               className="rounded-lg object-cover shadow-lg"

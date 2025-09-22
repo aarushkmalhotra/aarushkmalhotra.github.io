@@ -1,9 +1,10 @@
+
 [
   {
     "id": "simplify-me",
     "name": "Simplify Me",
     "tagline": "Productivity-Boosting Application",
-    "description": "Simplify Me is a comprehensive productivity application designed to streamline workflows and enhance user efficiency. It features a minimalist interface with powerful backend capabilities, focusing on task management, collaboration, and insightful analytics. The project was built from the ground up to solve common productivity hurdles.",
+    "description": "Simplify Me is a comprehensive productivity application meticulously designed to streamline complex workflows and significantly enhance user efficiency. It features a deliberately minimalist interface paired with powerful, robust backend capabilities. The application focuses on core productivity areas including advanced task management, real-time team collaboration, and providing deep, insightful analytics to help users understand their work patterns.",
     "techStack": "Next.js, TypeScript, Tailwind CSS, Firebase, Node.js",
     "outcomes": "Achieved a 40% increase in user engagement within the first three months post-launch. The streamlined task management system reduced average task completion time by 25%. Recognized for its intuitive design and robust performance.",
     "repoUrl": "https://github.com/example/simplify-me",
@@ -16,9 +17,9 @@
   },
   {
     "id": "vernato",
-    "name": "Vernate",
+    "name": "Vernato",
     "tagline": "E-commerce Platform for Artisans",
-    "description": "Vernate is a boutique e-commerce platform that empowers local artisans by providing them with a space to sell their creations. The platform supports multi-vendor stores, secure payments, and a beautiful, responsive storefront. The focus was on creating a user-friendly experience for both sellers and buyers.",
+    "description": "Vernato is a boutique e-commerce platform that empowers local artisans by providing them with a beautiful and functional digital space to sell their unique creations. The platform is rich with features, supporting multi-vendor stores, secure payment processing via Stripe, and a highly responsive and aesthetically pleasing storefront. The core mission was to create an exceptionally user-friendly experience for both the artisans selling their products and the customers buying them.",
     "techStack": "React, Redux, Express, MongoDB, Stripe API",
     "outcomes": "Onboarded over 100 artisans in the first year. Processed over $50,000 in transactions with a 99.9% uptime. The platform was praised for its aesthetic and ease of use, leading to high seller retention.",
     "repoUrl": "https://github.com/example/vernato",
@@ -33,7 +34,7 @@
     "id": "emty",
     "name": "EMTY",
     "tagline": "Data Visualization Dashboard",
-    "description": "EMTY is an enterprise-level data visualization tool that transforms complex datasets into interactive and understandable dashboards. It connects to multiple data sources and provides real-time insights through a variety of customizable charts and graphs. The architecture is optimized for performance with large datasets.",
+    "description": "EMTY is an enterprise-level data visualization tool engineered to transform overwhelmingly complex datasets into interactive, intuitive, and understandable dashboards. It offers seamless connectivity to multiple data sources, providing real-time insights through a wide variety of customizable charts and graphs. The application architecture is highly optimized for performance, capable of handling massive datasets with millions of rows while maintaining responsive interactions.",
     "techStack": "Vue.js, D3.js, Python, Flask, PostgreSQL",
     "outcomes": "Enabled client to reduce data analysis time by 60%. Handled datasets with over 10 million rows with sub-second query responses. The tool became an integral part of the client's business intelligence workflow.",
     "repoUrl": "https://github.com/example/emty",

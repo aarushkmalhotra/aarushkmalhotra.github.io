@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
-import { CodeBracketIcon } from "./icons/CodeBracketIcon";
+import Image from "next/image";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -15,7 +15,13 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-headline text-lg font-bold">
-          <CodeBracketIcon className="h-6 w-6 text-primary" />
+          <Image
+            src="/portrait.jpg"
+            alt="Aarush's Portfolio Logo"
+            width={32}
+            height={32}
+            className="rounded-full"
+          />
           <span>Aarush's Portfolio</span>
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
