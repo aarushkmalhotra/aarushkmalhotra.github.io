@@ -1,4 +1,5 @@
-import { Github, Linkedin } from "lucide-react";
+import { GithubIcon } from "./icons/GithubIcon";
+import { LinkedinIcon } from "./icons/LinkedinIcon";
 import { InstagramIcon } from "./icons/InstagramIcon";
 import Link from "next/link";
 
@@ -11,10 +12,10 @@ export function Footer() {
           </p>
           <div className="flex gap-4 mt-4 md:mt-0">
             <Link href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                <Github className="h-6 w-6 text-secondary-foreground/60 transition-colors hover:text-foreground" />
+                <GithubIcon className="h-6 w-6 text-secondary-foreground/60 transition-colors hover:text-[#181717] dark:hover:text-white" />
             </Link>
             <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <Linkedin className="h-6 w-6 text-secondary-foreground/60 transition-colors hover:text-[#0A66C2]" />
+                <LinkedinIcon className="h-6 w-6 text-secondary-foreground/60 transition-colors hover:text-[#0A66C2]" />
             </Link>
             <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <InstagramIcon className="h-6 w-6 text-secondary-foreground/60 transition-colors hover:text-[#E1306C]" />
