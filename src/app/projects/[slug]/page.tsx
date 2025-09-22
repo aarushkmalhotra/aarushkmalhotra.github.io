@@ -59,6 +59,17 @@ export default async function ProjectDetailPage({ params }: { params: { slug:str
   const projectImages = project.images
     .map((id) => PlaceHolderImages.find((img) => img.id === id))
     .filter(Boolean);
+    
+  const TechStackAside = () => (
+    <div className="p-6 rounded-lg bg-card border">
+        <h3 className="font-headline text-xl mb-4">Tech Stack</h3>
+        <div className="flex flex-wrap gap-2">
+            {project.techStack.split(',').map(tech => (
+                <Badge key={tech.trim()} variant="secondary">{tech.trim()}</Badge>
+            ))}
+        </div>
+    </div>
+  );
 
   return (
     <div className="animate-fade-in" style={{ '--project-primary': project.theme.primary, '--project-secondary': project.theme.secondary, '--project-accent': project.theme.secondary } as React.CSSProperties}>
@@ -86,12 +97,18 @@ export default async function ProjectDetailPage({ params }: { params: { slug:str
               </div>
             )}
             
+            <div className="lg:hidden">
+              <TechStackAside />
+            </div>
+
             <div className="prose prose-lg dark:prose-invert max-w-none">
                 <h2 className="font-headline text-3xl">Outcomes</h2>
                 <p>{project.outcomes}</p>
             </div>
             
-            <ProjectDetailsClient project={project} />
+            <div className="lg:hidden">
+              <ProjectDetailsClient project={project} />
+            </div>
             
             {projectImages.length > 0 && (
               <div>
@@ -112,16 +129,9 @@ export default async function ProjectDetailPage({ params }: { params: { slug:str
               </div>
             )}
           </div>
-          <aside className="lg:col-span-1 space-y-8 sticky top-[230px] self-start">
-             <div className="p-6 rounded-lg bg-card border">
-                <h3 className="font-headline text-xl mb-4">Tech Stack</h3>
-                <div className="flex flex-wrap gap-2">
-                    {project.techStack.split(',').map(tech => (
-                        <Badge key={tech.trim()} variant="secondary">{tech.trim()}</Badge>
-
-                    ))}
-                </div>
-             </div>
+          <aside className="hidden lg:block lg:col-span-1 space-y-8 sticky top-[230px] self-start">
+            <TechStackAside />
+            <ProjectDetailsClient project={project} />
           </aside>
         </div>
       </div>
