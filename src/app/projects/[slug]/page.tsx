@@ -130,8 +130,8 @@ export default async function ProjectDetailPage({ params }: { params: { slug:str
             )}
           </div>
           <aside className="hidden lg:block lg:col-span-1 space-y-8 sticky top-[180px] self-start">
-            <TechStackAside />
             <ProjectDetailsClient project={project} />
+            <TechStackAside />
           </aside>
         </div>
       </div>
