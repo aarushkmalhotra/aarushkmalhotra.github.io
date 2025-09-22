@@ -1,27 +1,6 @@
 
 [
   {
-    "id": "simplify-me",
-    "name": "Simplify Me.",
-    "tagline": "Understand Terms of Service in Plain English.",
-    "description": "You know when you sign up for a new website or download a shiny new app, and you’re hit with a wall of text that seems to go on forever? Yeah, that’s the Terms of Service. It’s like reading a novel written in legal jargon, and honestly, who has time for that? Our mission is simple: to help you make informed decisions about your privacy. We’ll give you the key details you need to know, like what data is being collected, how it’s used, and who it’s shared with. Please be informed that we are based on the ToS;DR infrastructure and it abides their Terms of Service. Go check it out for yourself. Trust us, it ain’t too long.",
-    "keyFeatures": [
-      "Translates complex legal jargon into plain English",
-      "Summarizes key data collection and privacy policies",
-      "Highlights how your data is used and shared",
-      "Powered by the ToS;DR community-driven infrastructure"
-    ],
-    "techStack": "ToS;DR API, Next.js, TypeScript, Tailwind CSS, AWS",
-    "outcomes": "Empowered thousands of users to make more informed decisions about their digital privacy. The project has been recognized for its user-centric approach to data transparency and has contributed to the broader conversation about online privacy rights.",
-    "repoUrl": null,
-    "demoUrl": "https://www.simplifyme.org",
-    "images": ["simplify-me-1"],
-    "theme": {
-      "primary": "hsl(267, 95%, 48%)",
-      "secondary": "hsl(14, 99%, 57%)"
-    }
-  },
-  {
     "id": "vernato",
     "name": "Vernato",
     "tagline": "AI-Powered Pronunciation Coach",
@@ -37,9 +16,36 @@
     "repoUrl": null,
     "demoUrl": "https://www.vernato.org",
     "images": ["vernato-1"],
+    "startDate": "2025-06-01",
+    "endDate": null,
+    "type": "project",
      "theme": {
       "primary": "hsl(196, 75%, 52%)",
       "secondary": "hsl(45, 100%, 55%)"
+    }
+  },
+  {
+    "id": "simplify-me",
+    "name": "Simplify Me.",
+    "tagline": "Understand Terms of Service in Plain English.",
+    "description": "You know when you sign up for a new website or download a shiny new app, and you’re hit with a wall of text that seems to go on forever? Yeah, that’s the Terms of Service. It’s like reading a novel written in legal jargon, and honestly, who has time for that? Our mission is simple: to help you make informed decisions about your privacy. We’ll give you the key details you need to know, like what data is being collected, how it’s used, and who it’s shared with. Please be informed that we are based on the ToS;DR infrastructure and it abides their Terms of Service. Go check it out for yourself. Trust us, it ain’t too long.",
+    "keyFeatures": [
+      "Translates complex legal jargon into plain English",
+      "Summarizes key data collection and privacy policies",
+      "Highlights how your data is used and shared",
+      "Powered by the ToS;DR community-driven infrastructure"
+    ],
+    "techStack": "ToS;DR API, Next.js, TypeScript, Tailwind CSS, AWS",
+    "outcomes": "Empowered thousands of users to make more informed decisions about their digital privacy. The project has been recognized for its user-centric approach to data transparency and has contributed to the broader conversation about online privacy rights.",
+    "repoUrl": null,
+    "demoUrl": "https://www.simplifyme.org",
+    "images": ["simplify-me-1"],
+    "startDate": "2023-01-01",
+    "endDate": "2025-05-01",
+    "type": "project",
+    "theme": {
+      "primary": "hsl(267, 95%, 48%)",
+      "secondary": "hsl(14, 99%, 57%)"
     }
   },
   {
@@ -57,6 +63,9 @@
     "repoUrl": null,
     "demoUrl": "https://linktr.ee/emty7",
     "images": ["emty-1"],
+    "startDate": "2024-08-01",
+    "endDate": "2025-04-01",
+    "type": "project",
      "theme": {
       "primary": "hsl(210, 40%, 50%)",
       "secondary": "hsl(160, 60%, 45%)"
@@ -77,6 +86,9 @@
     "repoUrl": "https://github.com/simplifyme7",
     "demoUrl": null,
     "images": ["github-1"],
+    "startDate": "2023-01-01",
+    "endDate": null,
+    "type": "contribution",
      "theme": {
       "primary": "hsl(220, 13%, 18%)",
       "secondary": "hsl(220, 14%, 71%)"

@@ -12,9 +12,22 @@ import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { ArrowUpRightIcon } from "./icons/ArrowUpRightIcon";
+import { format, parseISO } from "date-fns";
 
 interface ProjectCardProps {
   project: Project;
+}
+
+const formatDateRange = (startDate: string, endDate: string | null) => {
+    const start = parseISO(startDate);
+    if (!endDate) {
+        return `${format(start, 'MMM yyyy')} - Present`;
+    }
+    const end = parseISO(endDate);
+    if (format(start, 'yyyy') === format(end, 'yyyy')) {
+        return `${format(start, 'MMM')} - ${format(end, 'MMM yyyy')}`;
+    }
+    return `${format(start, 'MMM yyyy')} - ${format(end, 'MMM yyyy')}`;
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
@@ -57,6 +70,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <CardTitle className="font-headline text-2xl group-hover:text-primary transition-colors">
             {project.name}
           </CardTitle>
+          <p className="text-sm text-muted-foreground">{formatDateRange(project.startDate, project.endDate)}</p>
           <CardDescription>{project.tagline}</CardDescription>
         </CardHeader>
         <CardContent className="flex-grow p-6 pt-0">
