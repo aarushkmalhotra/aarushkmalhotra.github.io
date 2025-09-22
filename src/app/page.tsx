@@ -14,7 +14,7 @@ export default async function Home() {
         <div className="max-w-4xl mx-auto">
           <div className="relative w-32 h-32 md:w-40 md:h-40 mx-auto mb-8">
             <Image
-              src="https://picsum.photos/seed/avatar/200/200"
+              src="/portrait.jpg"
               alt="Developer Avatar"
               width={160}
               height={160}
