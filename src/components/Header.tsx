@@ -16,7 +16,7 @@ export function Header() {
       <div className="container mx-auto px-4 flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-headline text-lg font-bold">
           <CodeBracketIcon className="h-6 w-6 text-primary" />
-          <span>SourceCraft</span>
+          <span>Aarush's Portfolio</span>
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
           {navLinks.map((link) => (
