@@ -4,9 +4,8 @@ import Image from "next/image";
 import { Briefcase, GraduationCap } from "lucide-react";
 
 const skills = [
-  "TypeScript", "React", "Next.js", "Node.js", "Python", "Go",
-  "Tailwind CSS", "Firebase", "PostgreSQL", "MongoDB", "Docker", "Kubernetes",
-  "Google Cloud", "AWS", "Git", "CI/CD"
+  "TypeScript", "JavaScript", "HTML", "Python", "C++", "Swift", "Next.js", "Tailwind CSS",
+  "Git", "Vercel", "Firebase", "Azure", "AWS", "Google Cloud", "Zapier", "WordPress"
 ];
 
 const experience = [
@@ -52,13 +51,13 @@ export default function AboutPage() {
           <h1 className="font-headline text-4xl md:text-5xl font-bold tracking-tight mb-4">I build tools to fix what's broken.</h1>
           <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground space-y-4">
             <p>
-              I'm a student founder based in Manhattan, currently studying Computer Science at Macaulay Honors College at CCNY (expected graduation May 2029). I've lived in way too many countries and been through way too many school systems. CBSE, IGCSE, APs, and now college. You name it, I've probably been confused by it at some point.
+                I'm a student founder based in Manhattan, currently studying Computer Science at Macaulay Honors College at CCNY (expected graduation May 2029). I've lived in way too many countries and been through way too many school systems. CBSE, IGCSE, APs, and now college. You name it, I've probably been confused by it at some point.
             </p>
             <p>
-              You know when you sign up for a new website or download a shiny new app, and you’re hit with a wall of text that seems to go on forever? Yeah, that’s the Terms of Service. It’s like reading a novel written in legal jargon, and honestly, who has time for that? Our mission at <a href="/projects/simplify-me">Simplify Me.</a> is simple: to help you make informed decisions about your privacy. We’ll give you the key details you need to know, like what data is being collected, how it’s used, and who it’s shared with. We are based on the ToS;DR infrastructure and it abides their Terms of Service.
+                All that moving around taught me that most things are way more complicated than they need to be. Like, why do privacy policies sound like they were written by robots for other robots? I got so annoyed reading those endless terms and conditions that I built <a href="/projects/simplify-me">Simplify Me.</a> It turns all that legal nonsense into actual English so people are informed about what companies are doing with their data.
             </p>
             <p>
-                At <a href="/projects/vernato">Vernato</a>, we're building an AI-powered pronunciation improvement platform to help learners speak with clarity and confidence. Our PronScore™ model combines accuracy, fluency, and completeness into a single score, giving users actionable feedback that actually drives progress. Built at the intersection of language learning and technology, Vernato is designed for individuals, educators, and organizations seeking a smarter way to master spoken language.
+                Then there's <a href="/projects/vernato">Vernato</a>. Moving around so much, I noticed that people speak the same language completely differently depending on where they're from. A British accent isn't more "correct" than an American one, and Spanish from Mexico isn't wrong just because it's different from Spanish from Spain. I got tired of apps that could mark you wrong for sounding different, so I built Vernato to actually recognize and teach these regional differences. It focuses on those tiny pronunciation details that other apps are too lazy to care about.
             </p>
             <p>
                 The truth is, I just get really bothered when things don't work well. I end up building tools to fix whatever's driving me crazy. I'm always down to chat with people who also think technology should actually help people instead of just being impressive.
