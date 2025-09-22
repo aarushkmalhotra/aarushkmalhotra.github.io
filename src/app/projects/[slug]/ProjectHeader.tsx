@@ -96,7 +96,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                     </div>
                 </div>
                  <div className="sm:hidden flex flex-col gap-4 mt-4">
-                    <div className="flex flex-col sm:flex-row gap-2">
+                    <div className="flex flex-col gap-2">
                         {project.repoUrl && (
                             <Button asChild className="w-full">
                                 <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
@@ -114,8 +114,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                             </Button>
                         )}
                     </div>
-                    <div className="flex items-center justify-between">
-                        <span className="text-sm text-muted-foreground font-medium">Share Project</span>
+                    <div className="flex justify-center">
                         <ProjectShare project={project} />
                     </div>
                 </div>
