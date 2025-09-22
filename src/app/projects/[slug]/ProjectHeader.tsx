@@ -25,9 +25,9 @@ const getDemoCallToAction = (project: Project) => {
 export function ProjectHeader({ project }: ProjectHeaderProps) {
     return (
         <header 
-            className="sticky top-[64px] z-40"
+            className="sticky top-[64px] z-40 pt-4"
         >
-            <div className="container mx-auto px-4 mt-4">
+            <div className="container mx-auto px-4">
                 <div 
                     className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 max-w-5xl mx-auto rounded-lg border bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/80"
                     style={{ minHeight: '80px' }}
@@ -94,4 +94,3 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
       </header>
     );
 }
-
