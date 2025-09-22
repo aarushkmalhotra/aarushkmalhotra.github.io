@@ -11,7 +11,7 @@
       "Highlights how your data is used and shared",
       "Powered by the ToS;DR community-driven infrastructure"
     ],
-    "techStack": "ToS;DR API, Next.js, TypeScript, Tailwind CSS",
+    "techStack": "ToS;DR API, Next.js, TypeScript, Tailwind CSS, AWS",
     "outcomes": "Empowered thousands of users to make more informed decisions about their digital privacy. The project has been recognized for its user-centric approach to data transparency and has contributed to the broader conversation about online privacy rights.",
     "repoUrl": null,
     "demoUrl": "https://www.simplifyme.org",
@@ -27,13 +27,13 @@
     "tagline": "AI-Powered Pronunciation Coach",
     "description": "Vernato is an AI-powered pronunciation improvement platform helping learners speak with clarity and confidence. Our PronScore™ model combines accuracy, fluency, and completeness into a single score, giving users actionable feedback that actually drives progress. Built at the intersection of language learning and technology, Vernato is designed for individuals, educators, and organizations seeking a smarter way to master spoken language. We’re on a mission to make effective pronunciation training accessible, measurable, and engaging worldwide.",
     "keyFeatures": [
-      "Proprietary PronScore™ model for comprehensive feedback",
+      "PronScore™ model for comprehensive feedback",
       "Actionable insights on accuracy, fluency, and completeness",
       "Designed for individuals, educators, and organizations",
       "Engaging and measurable pronunciation training"
     ],
-    "techStack": "React, Python, FastAPI, Google Cloud, Firebase",
-    "outcomes": "Successfully developed and deployed a proprietary AI model for pronunciation scoring. The platform is currently in beta with a select group of users, gathering feedback to refine the learning experience and prepare for a public launch.",
+    "techStack": "React, Python, Google Cloud, Firebase",
+    "outcomes": "Successfully developed and deployed a an AI model for pronunciation scoring. The platform is currently in beta with a select group of users, gathering feedback to refine the learning experience and prepare for a public launch.",
     "repoUrl": null,
     "demoUrl": "https://www.vernato.org",
     "images": ["vernato-1"],

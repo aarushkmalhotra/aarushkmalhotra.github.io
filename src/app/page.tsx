@@ -11,8 +11,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const skills = [
-  "TypeScript", "React", "Next.js", "Node.js", "Python", "Go",
-  "Tailwind CSS", "Firebase", "PostgreSQL", "Docker", "Kubernetes", "Google Cloud"
+  "TypeScript", "Next.js", "Tailwind CSS", "Firebase", "Google Cloud", "AWS"
 ];
 
 function LatestPostCard({ post }: { post: Post }) {
@@ -105,10 +104,10 @@ export default async function Home() {
                 <h2 className="font-headline text-3xl md:text-4xl font-bold tracking-tight mb-4">About Me</h2>
                 <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground space-y-4">
                     <p>
-                        I'm a student founder with a knack for building tools that fix real-world frustrations. My journey in tech is driven by a simple idea: technology should be helpful and intuitive, not complicated.
+                        I'm a student founder with a knack for building tools that fix real-world frustrations. My journey in tech is driven by a simple idea: technology should be helpful and intuitive, not just impressive.
                     </p>
                     <p>
-                        From translating complex legal jargon into plain English with Simplify Me., to teaching regional language dialects with Vernato, I love diving deep into problems and building solutions that make a difference.
+                        From making sense of endless legal jargon with <Link href="/projects/simplify-me">Simplify Me.</Link> to teaching nuanced language dialects with <Link href="/projects/vernato">Vernato</Link>, I love diving deep into problems and building solutions that make a difference.
                     </p>
                 </div>
                  <Button asChild variant="link" className="text-accent p-0 mt-4 text-base">
