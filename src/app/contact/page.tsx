@@ -1,7 +1,7 @@
 // Important: To make this form work, you need a Formspree account.
 // 1. Create a new form on formspree.io.
 // 2. Replace the placeholder URL below with your own Formspree form endpoint URL.
-const FORMSPREE_URL = "https://formspree.io/f/your_form_id";
+const FORMSPREE_URL = "https://formspree.io/f/mzzjpwwl";
 
 export default function ContactPage() {
   return (
