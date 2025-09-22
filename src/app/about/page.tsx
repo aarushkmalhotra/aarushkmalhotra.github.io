@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
+import { Briefcase } from "lucide-react";
 
 const skills = [
   "TypeScript", "React", "Next.js", "Node.js", "Python", "Go",
@@ -73,19 +74,22 @@ export default function AboutPage() {
       <section className="py-16 md:py-24 border-t">
         <h2 className="font-headline text-3xl md:text-4xl font-bold text-center mb-16">Career Journey</h2>
         <div className="relative max-w-3xl mx-auto">
-          <div className="absolute left-1/2 -translate-x-1/2 h-full w-0.5 bg-border"></div>
+          <div className="absolute left-0 md:left-1/2 md:-translate-x-1/2 h-full w-0.5 bg-border"></div>
           {experience.map((item, index) => (
-            <div key={index} className="relative mb-12 flex items-center justify-between w-full">
-              <div className={`w-5/12 ${index % 2 === 0 ? 'order-1' : 'order-3 text-right'}`}>
-                <p className="text-sm text-muted-foreground">{item.period}</p>
-                <h3 className="font-headline text-xl font-bold text-primary">{item.role}</h3>
-                <h4 className="font-semibold">{item.company}</h4>
-                <p className="text-sm text-muted-foreground mt-2">{item.description}</p>
+            <div key={index} className="relative pl-8 md:pl-0 mb-12">
+              <div className="md:absolute md:left-1/2 md:-translate-x-1/2 bg-background border-2 border-primary w-10 h-10 rounded-full flex items-center justify-center -ml-5 md:ml-0">
+                  <Briefcase className="w-5 h-5 text-primary" />
               </div>
-              <div className="order-2 w-10 h-10 rounded-full bg-primary flex items-center justify-center z-10">
-                <div className="w-3 h-3 bg-primary-foreground rounded-full"></div>
+              <div className="md:flex md:items-center w-full">
+                <div className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8 md:order-1'}`}>
+                  <div className={`p-4 rounded-lg border bg-card shadow-sm ${index % 2 === 0 ? 'md:text-right' : ''}`}>
+                    <p className="text-sm text-muted-foreground">{item.period}</p>
+                    <h3 className="font-headline text-xl font-bold text-primary">{item.role}</h3>
+                    <h4 className="font-semibold">{item.company}</h4>
+                    <p className="text-sm text-muted-foreground mt-2">{item.description}</p>
+                  </div>
+                </div>
               </div>
-              <div className="w-5/12"></div>
             </div>
           ))}
         </div>
