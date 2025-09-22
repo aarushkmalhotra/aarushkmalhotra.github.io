@@ -26,7 +26,7 @@ export default function ContactPage() {
                   name="name"
                   id="name"
                   required
-                  className="block w-full rounded-md border-input bg-background px-4 py-3 text-foreground shadow-sm focus:border-primary focus:ring-primary"
+                  className="block w-full rounded-md border border-input bg-background px-4 py-3 text-foreground shadow-sm focus:border-primary focus:ring-primary"
                   placeholder="John Doe"
                 />
               </div>
@@ -40,7 +40,7 @@ export default function ContactPage() {
                   id="email"
                   required
                   autoComplete="email"
-                  className="block w-full rounded-md border-input bg-background px-4 py-3 text-foreground shadow-sm focus:border-primary focus:ring-primary"
+                  className="block w-full rounded-md border border-input bg-background px-4 py-3 text-foreground shadow-sm focus:border-primary focus:ring-primary"
                   placeholder="you@example.com"
                 />
               </div>
@@ -53,7 +53,7 @@ export default function ContactPage() {
                   name="subject"
                   id="subject"
                   required
-                  className="block w-full rounded-md border-input bg-background px-4 py-3 text-foreground shadow-sm focus:border-primary focus:ring-primary"
+                  className="block w-full rounded-md border border-input bg-background px-4 py-3 text-foreground shadow-sm focus:border-primary focus:ring-primary"
                   placeholder="Project Inquiry"
                 />
               </div>
@@ -66,7 +66,7 @@ export default function ContactPage() {
                   id="message"
                   required
                   rows={5}
-                  className="block w-full rounded-md border-input bg-background px-4 py-3 text-foreground shadow-sm focus:border-primary focus:ring-primary"
+                  className="block w-full rounded-md border border-input bg-background px-4 py-3 text-foreground shadow-sm focus:border-primary focus:ring-primary"
                   placeholder="Your message..."
                 ></textarea>
               </div>
