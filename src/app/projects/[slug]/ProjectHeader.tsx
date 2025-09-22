@@ -75,7 +75,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                             {project.tagline}
                         </p>
                     </div>
-                    <div className="flex-shrink-0 hidden sm:flex items-center gap-4">
+                    <div className="flex-shrink-0 hidden sm:flex items-center gap-2">
                         {project.repoUrl && (
                             <Button asChild size="sm">
                                 <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
@@ -95,10 +95,10 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                          <ProjectShare project={project} />
                     </div>
                 </div>
-                 <div className="sm:hidden flex items-center justify-between gap-2 mt-4">
-                    <div className="flex items-center gap-2">
+                 <div className="sm:hidden flex flex-col gap-4 mt-4">
+                    <div className="flex flex-col sm:flex-row gap-2">
                         {project.repoUrl && (
-                            <Button asChild size="sm">
+                            <Button asChild className="w-full">
                                 <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
                                     <Github />
                                     GitHub
@@ -106,7 +106,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                             </Button>
                         )}
                         {project.demoUrl && (
-                            <Button asChild variant="secondary" size="sm">
+                            <Button asChild variant="secondary" className="w-full">
                                 <Link href={project.demoUrl} target="_blank" rel="noopener noreferrer">
                                     {getDemoCallToAction(project)}
                                     <ArrowUpRight />
@@ -114,7 +114,10 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                             </Button>
                         )}
                     </div>
-                    <ProjectShare project={project} />
+                    <div className="flex items-center justify-between">
+                        <span className="text-sm text-muted-foreground font-medium">Share Project</span>
+                        <ProjectShare project={project} />
+                    </div>
                 </div>
             </div>
       </header>
