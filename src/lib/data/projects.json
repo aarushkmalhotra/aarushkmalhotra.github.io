@@ -31,13 +31,13 @@
     }
   },
   {
-    "id": "relay",
-    "name": "Relay",
-    "tagline": "Data Visualization Dashboard",
-    "description": "Relay is an enterprise-level data visualization tool engineered to transform overwhelmingly complex datasets into interactive, intuitive, and understandable dashboards. It offers seamless connectivity to multiple data sources, providing real-time insights through a wide variety of customizable charts and graphs. The application architecture is highly optimized for performance, capable of handling massive datasets with millions of rows while maintaining responsive interactions.",
-    "techStack": "Vue.js, D3.js, Python, Flask, PostgreSQL",
-    "outcomes": "Enabled client to reduce data analysis time by 60%. Handled datasets with over 10 million rows with sub-second query responses. The tool became an integral part of the client's business intelligence workflow.",
-    "repoUrl": "https://github.com/example/emty",
+    "id": "emty",
+    "name": "EMTY",
+    "tagline": "Real-time Transit Data Prototype",
+    "description": "EMTY is a high-fidelity prototype designed to visualize real-time transit data from the MTA API. The prototype was built using a combination of design and database tools to simulate a live data environment. It demonstrates a concept for an intuitive user interface for tracking and understanding public transportation movements.",
+    "techStack": "Figma, Canva, Firestore, Firebase Realtime Database, MTA API",
+    "outcomes": "Successfully created a proof-of-concept that demonstrates the feasibility of a live transit tracking application. The prototype was used to secure stakeholder buy-in for a full-scale development project. The design was praised for its clarity and user-centric approach.",
+    "repoUrl": null,
     "demoUrl": "https://linktr.ee/emty7",
     "images": ["emty-1"],
      "theme": {
@@ -52,7 +52,7 @@
     "description": "My GitHub profile is a testament to my passion for coding and continuous learning. It hosts a variety of projects, from small utility scripts to larger applications and contributions to open-source libraries. It showcases my proficiency in different languages and frameworks.",
     "techStack": "Git, GitHub Actions, Various Languages (JS, TS, Python)",
     "outcomes": "Actively maintained several open-source projects. Contributed to popular libraries, gaining experience in collaborative development workflows. My profile reflects a strong commitment to quality code and best practices.",
-    "repoUrl": "https://github.com/example",
+    "repoUrl": "https://github.com/simplifyme7",
     "demoUrl": null,
     "images": ["github-1"],
      "theme": {

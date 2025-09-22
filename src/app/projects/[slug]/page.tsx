@@ -46,6 +46,16 @@ export default async function ProjectDetailPage({ params }: { params: { slug:str
     .map((id) => PlaceHolderImages.find((img) => img.id === id))
     .filter(Boolean);
 
+  const getDemoCallToAction = () => {
+    if (project.id === 'simplify-me' || project.id === 'vernato') {
+      return 'Use for Free';
+    }
+    if (project.id === 'emty') {
+      return 'View Linktree';
+    }
+    return 'Live Demo';
+  }
+
   return (
     <div className="animate-fade-in" style={{ '--project-primary': project.theme.primary, '--project-secondary': project.theme.secondary } as React.CSSProperties}>
       <header className="bg-card py-16 md:py-24 border-b">
@@ -111,7 +121,7 @@ export default async function ProjectDetailPage({ params }: { params: { slug:str
                          <Button asChild variant="outline" className="w-full justify-start gap-2">
                             <Link href={project.demoUrl} target="_blank" rel="noopener noreferrer">
                                 <ArrowUpRightIcon className="w-4 h-4" />
-                                {project.id === "relay" ? "Use for Free" : "Live Demo"}
+                                {getDemoCallToAction()}
                             </Link>
                         </Button>
                     )}
