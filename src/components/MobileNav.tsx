@@ -1,3 +1,4 @@
+
 "use client";
 
 import {
@@ -7,7 +8,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "./ui/button";
-import { Menu } from "lucide-react";
+import { Mail, Menu } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { GithubIcon } from "./icons/GithubIcon";
@@ -67,6 +68,9 @@ export function MobileNav({ navLinks }: MobileNavProps) {
           </nav>
           <div className="border-t p-4">
             <div className="flex justify-center gap-6">
+              <Link href="mailto:aarush@vernato.org" aria-label="Email">
+                <Mail className="h-7 w-7 text-secondary-foreground/60 transition-colors hover:text-primary" />
+              </Link>
               <Link href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                   <GithubIcon className="h-7 w-7 text-secondary-foreground/60 transition-colors hover:text-[#181717] dark:hover:text-white" />
               </Link>
