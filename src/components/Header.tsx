@@ -27,16 +27,19 @@ export function Header() {
           />
           <span>Aarush's Portfolio</span>
         </Link>
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-          {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} className="text-muted-foreground transition-colors hover:text-foreground">
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <MobileNav navLinks={navLinks} />
+        
+        <div className="flex items-center gap-4">
+            <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+                {navLinks.map((link) => (
+                    <Link key={link.href} href={link.href} className="text-muted-foreground transition-colors hover:text-foreground">
+                    {link.label}
+                    </Link>
+                ))}
+            </nav>
+            <div className="flex items-center gap-2">
+                <ThemeToggle />
+                <MobileNav navLinks={navLinks} />
+            </div>
         </div>
       </div>
     </header>
