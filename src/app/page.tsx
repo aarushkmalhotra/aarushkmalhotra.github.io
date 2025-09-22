@@ -85,7 +85,7 @@ export default async function Home() {
               </span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-              I'm a full-stack developer specializing in building exceptional, high-performance web applications. Welcome to my corner of the internet where I showcase my work and share my thoughts on technology.
+              I'm a student founder and full-stack developer specializing in building exceptional, high-performance web applications. Welcome to my corner of the internet where I showcase my work and share my thoughts.
             </p>
             <div className="flex justify-center gap-4">
               <Button asChild size="lg">
@@ -105,10 +105,10 @@ export default async function Home() {
                 <h2 className="font-headline text-3xl md:text-4xl font-bold tracking-tight mb-4">About Me</h2>
                 <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground space-y-4">
                     <p>
-                        I'm a passionate software engineer with a knack for building elegant, efficient, and scalable solutions. With years of experience across the stack, I thrive in turning complex problems into beautiful, functional web applications.
+                        I'm a student founder with a knack for building tools that fix real-world frustrations. My journey in tech is driven by a simple idea: technology should be helpful and intuitive, not complicated.
                     </p>
                     <p>
-                        My journey in tech is driven by a relentless curiosity and a desire to create things that make a difference. From architecting robust backends to designing pixel-perfect frontends, I love every aspect of the development process.
+                        From translating complex legal jargon into plain English with Simplify Me., to teaching regional language dialects with Vernato, I love diving deep into problems and building solutions that make a difference.
                     </p>
                 </div>
                  <Button asChild variant="link" className="text-accent p-0 mt-4 text-base">
