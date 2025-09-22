@@ -19,7 +19,7 @@ export default function ContactPage() {
             <div className="grid grid-cols-1 gap-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                  Full Name
+                  Full Name <span className="text-destructive">*</span>
                 </label>
                 <input
                   type="text"
@@ -32,7 +32,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                  Email Address
+                  Email Address <span className="text-destructive">*</span>
                 </label>
                 <input
                   type="email"
@@ -46,7 +46,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-2">
-                  Subject
+                  Subject <span className="text-destructive">*</span>
                 </label>
                 <input
                   type="text"
@@ -59,7 +59,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                  Message
+                  Message <span className="text-destructive">*</span>
                 </label>
                 <textarea
                   name="message"
