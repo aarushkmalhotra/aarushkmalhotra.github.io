@@ -19,10 +19,10 @@
       "imageHint": "data visualization"
     },
     {
-      "id": "github-1",
-      "description": "Screenshot of a GitHub repository",
-      "imageUrl": "https://opengraph.githubassets.com/1/simplifyme7/Simply",
-      "imageHint": "code repository"
+      "id": "simply-1",
+      "description": "Logo for Simply Discord Bot",
+      "imageUrl": "/simplylogo.png",
+      "imageHint": "AI bot logo"
     }
   ]
 }

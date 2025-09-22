@@ -49,6 +49,31 @@
     }
   },
   {
+    "id": "simply",
+    "name": "Simply",
+    "tagline": "AI Discord Bot for Decoding Privacy Policies & ToS",
+    "description": "Simply is an advanced Discord AI bot designed to decode the complexities of Privacy Policies and Terms of Service. Leveraging the power of Google Gemini, Simply streamlines the interpretation of legal documents by providing precise and easily understandable summaries. This project is a core component of the Simplify Me. ecosystem. Although the bot is no longer active on Discord, its powerful summarization engine can be accessed at www.simplifyme.org. *Credit for the foundational codebase goes to Echoshard on GitHub (github.com/Echoshard/Gemini_Discordbot).*",
+    "keyFeatures": [
+      "Multi-Format Support: Processes various file types, including images, PDFs, and text files.",
+      "Contextual Analysis: Maintains a history window of up to 15 previous messages for coherent conversations.",
+      "Privacy Control: Users can reset and clear their message history at any time.",
+      "Performance and Scalability: Runs on Python in an Amazon EC2 instance for reliable performance.",
+      "High-Accuracy Summaries: Extensively trained on legal texts to handle documents up to 70,000 words."
+    ],
+    "techStack": "Python, AWS EC2, Google Gemini, Discord API",
+    "outcomes": "Successfully developed and deployed a Discord bot capable of simplifying complex legal documents, demonstrating skills in AI integration, API usage, and cloud deployment. The technology now powers the core summarization features of the Simplify Me. web platform.",
+    "repoUrl": "https://github.com/Echoshard/Gemini_Discordbot",
+    "demoUrl": "https://www.simplifyme.org",
+    "images": ["simply-1"],
+    "startDate": "2023-08-01",
+    "endDate": "2024-07-01",
+    "type": "project",
+    "theme": {
+      "primary": "hsl(221, 83%, 53%)",
+      "secondary": "hsl(210, 40%, 96.1%)"
+    }
+  },
+  {
     "id": "emty",
     "name": "EMTY",
     "tagline": "Real-time Transit Data Prototype",
@@ -69,29 +94,6 @@
      "theme": {
       "primary": "hsl(210, 40%, 50%)",
       "secondary": "hsl(160, 60%, 45%)"
-    }
-  },
-  {
-    "id": "github-contributions",
-    "name": "GitHub Contributions",
-    "tagline": "Open Source and Personal Projects",
-    "description": "My GitHub profile is a testament to my passion for coding and continuous learning. It hosts a variety of projects, from small utility scripts to larger applications and contributions to open-source libraries. It showcases my proficiency in different languages and frameworks.",
-     "keyFeatures": [
-      "Contributions to various open-source libraries",
-      "Maintenance of several personal utility projects",
-      "Demonstration of skills in multiple programming languages"
-    ],
-    "techStack": "Git, GitHub Actions, Various Languages (JS, TS, Python)",
-    "outcomes": "Actively maintained several open-source projects. Contributed to popular libraries, gaining experience in collaborative development workflows. My profile reflects a strong commitment to quality code and best practices.",
-    "repoUrl": "https://github.com/simplifyme7",
-    "demoUrl": null,
-    "images": ["github-1"],
-    "startDate": "2023-01-01",
-    "endDate": null,
-    "type": "contribution",
-     "theme": {
-      "primary": "hsl(220, 13%, 18%)",
-      "secondary": "hsl(220, 14%, 71%)"
     }
   }
 ]
