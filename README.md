@@ -1,6 +1,6 @@
-# SourceCraft - A Modern Developer Portfolio
+# Aarush's Portfolio - A Modern Developer Portfolio
 
-SourceCraft is a multi-page developer portfolio built with Next.js, TypeScript, and Tailwind CSS. It's designed to be minimalist, modern, and easily deployable to GitHub Pages.
+Aarush's Portfolio is a multi-page developer portfolio built with Next.js, TypeScript, and Tailwind CSS. It's designed to be minimalist, modern, and easily deployable to GitHub Pages.
 
 ![SourceCraft Screenshot](https://picsum.photos/seed/readme/1200/800)
 _A placeholder for your portfolio's screenshot._
@@ -101,3 +101,4 @@ If you are deploying your portfolio to a subdirectory (e.g., `https://<username>
     };
     ```
 3.  Commit and push this change. The deployment workflow will use this new path.
+

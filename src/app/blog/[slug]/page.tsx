@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const post = getPostBySlug(params.slug);
     return {
-      title: `${post.meta.title} | SourceCraft`,
+      title: `${post.meta.title} | Aarush's Portfolio`,
       description: post.meta.description,
     };
   } catch (error) {
