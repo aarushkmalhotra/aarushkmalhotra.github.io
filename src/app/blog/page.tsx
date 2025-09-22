@@ -90,7 +90,7 @@ async function getHashnodePosts(username: string): Promise<Post[]> {
 }
 
 export default async function BlogPage() {
-  const posts = await getHashnodePosts("vernato");
+  const posts = await getHashnodePosts("vernato101");
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-16 animate-fade-in">
