@@ -25,7 +25,7 @@ const getDemoCallToAction = (project: Project) => {
 export function ProjectHeader({ project }: ProjectHeaderProps) {
     return (
         <header 
-            className="sticky top-[80px] z-40 bg-background"
+            className="sticky top-[80px] z-40"
         >
             <div className="container mx-auto px-4 py-4">
                 <div 
