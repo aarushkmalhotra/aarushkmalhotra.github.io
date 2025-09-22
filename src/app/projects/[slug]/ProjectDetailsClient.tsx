@@ -42,12 +42,14 @@ export function ProjectDetailsClient({ project }: Props) {
       <div className="flex flex-col sm:flex-row flex-wrap justify-between sm:items-center gap-4">
         <div className="flex-grow">
           <h2 className="font-headline text-2xl mb-2">AI-Powered Highlights</h2>
-          <Link href="https://simplifyme.org/meet-simply" target="_blank" rel="noopener noreferrer" className="inline-flex">
-            <div className="inline-flex items-center gap-2 rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground hover:bg-secondary">
-              <Image src="/simplylogo.png" alt="Simply Logo" width={16} height={16} className="rounded-full" />
-              Powered by Simply
-            </div>
-          </Link>
+          {(project.id === 'simplify-me' || project.id === 'simply') && (
+            <Link href="https://simplifyme.org/meet-simply" target="_blank" rel="noopener noreferrer" className="inline-flex">
+              <div className="inline-flex items-center gap-2 rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground hover:bg-secondary">
+                <Image src="/simplylogo.png" alt="Simply Logo" width={16} height={16} className="rounded-full" />
+                Powered by Simply
+              </div>
+            </Link>
+          )}
         </div>
         <Button onClick={handleGenerate} disabled={isLoading} className="w-full sm:w-auto bg-purple-600 hover:bg-purple-700 text-white">
           <Sparkles className="w-4 h-4 mr-2"/>
