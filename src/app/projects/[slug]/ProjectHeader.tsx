@@ -2,12 +2,25 @@
 "use client";
 
 import { ProjectShare } from "@/components/ProjectShare";
+import { Button } from "@/components/ui/button";
 import { Project } from "@/lib/projects";
 import { cn } from "@/lib/utils";
+import { ArrowUpRight, Github } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface ProjectHeaderProps {
     project: Project;
+}
+
+const getDemoCallToAction = (project: Project) => {
+    if (project.id === 'simplify-me' || project.id === 'vernato') {
+        return 'Use for Free';
+    }
+    if (project.id === 'emty') {
+        return 'View Linktree';
+    }
+    return 'Live Demo';
 }
 
 export function ProjectHeader({ project }: ProjectHeaderProps) {
@@ -63,10 +76,46 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                             {project.tagline}
                         </p>
                     </div>
-                    <div className="flex-shrink-0">
+                    <div className="flex-shrink-0 flex items-center gap-4">
+                         <div className="hidden sm:flex items-center gap-2">
+                            {project.repoUrl && (
+                                <Button asChild size="sm">
+                                    <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
+                                        <Github />
+                                        GitHub
+                                    </Link>
+                                </Button>
+                            )}
+                            {project.demoUrl && (
+                                <Button asChild variant="secondary" size="sm">
+                                    <Link href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+                                        {getDemoCallToAction(project)}
+                                        <ArrowUpRight />
+                                    </Link>
+                                </Button>
+                            )}
+                         </div>
                          <ProjectShare project={project} />
                     </div>
                 </div>
+                 <div className="sm:hidden flex items-center gap-2 mt-4">
+                    {project.repoUrl && (
+                        <Button asChild size="sm" className="flex-1">
+                            <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
+                                <Github />
+                                GitHub
+                            </Link>
+                        </Button>
+                    )}
+                    {project.demoUrl && (
+                        <Button asChild variant="secondary" size="sm" className="flex-1">
+                            <Link href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+                                {getDemoCallToAction(project)}
+                                <ArrowUpRight />
+                            </Link>
+                        </Button>
+                    )}
+                    </div>
             </div>
       </header>
     );
