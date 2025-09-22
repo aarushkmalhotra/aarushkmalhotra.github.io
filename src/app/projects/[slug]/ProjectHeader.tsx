@@ -25,10 +25,13 @@ const getDemoCallToAction = (project: Project) => {
 export function ProjectHeader({ project }: ProjectHeaderProps) {
     return (
         <header 
-            className="sticky top-[64px] z-40 border-b bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/80 py-4"
+            className="sticky top-[64px] z-40"
         >
-            <div className="container mx-auto px-4">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="container mx-auto px-4 mt-4">
+                <div 
+                    className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 max-w-5xl mx-auto rounded-lg border bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/80"
+                    style={{ minHeight: '80px' }}
+                >
                     <div className="flex-grow">
                         <h1 
                             className="font-headline font-bold tracking-tight text-2xl"
@@ -44,7 +47,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                             {project.tagline}
                         </p>
                     </div>
-                    <div className="flex-shrink-0 hidden sm:flex items-center gap-2">
+                    <div className="hidden sm:flex flex-shrink-0 items-center gap-2">
                         {project.repoUrl && (
                             <Button asChild size="sm">
                                 <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
@@ -63,28 +66,28 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                         )}
                          <ProjectShare project={project} />
                     </div>
-                </div>
-                 <div className="sm:hidden flex items-center justify-between gap-4 mt-4">
-                    <div className="flex items-center gap-2 flex-grow">
-                        {project.repoUrl && (
-                            <Button asChild className="flex-grow">
-                                <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
-                                    <Github />
-                                    GitHub
-                                </Link>
-                            </Button>
-                        )}
-                        {project.demoUrl && (
-                            <Button asChild variant="secondary" className="flex-grow">
-                                <Link href={project.demoUrl} target="_blank" rel="noopener noreferrer">
-                                    {getDemoCallToAction(project)}
-                                    <ArrowUpRight />
-                                </Link>
-                            </Button>
-                        )}
-                    </div>
-                    <div className="flex-shrink-0">
-                        <ProjectShare project={project} />
+                    <div className="sm:hidden flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-2 flex-grow">
+                            {project.repoUrl && (
+                                <Button asChild className="flex-grow">
+                                    <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
+                                        <Github />
+                                        GitHub
+                                    </Link>
+                                </Button>
+                            )}
+                            {project.demoUrl && (
+                                <Button asChild variant="secondary" className="flex-grow">
+                                    <Link href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+                                        {getDemoCallToAction(project)}
+                                        <ArrowUpRight />
+                                    </Link>
+                                </Button>
+                            )}
+                        </div>
+                        <div className="flex-shrink-0">
+                            <ProjectShare project={project} />
+                        </div>
                     </div>
                 </div>
             </div>

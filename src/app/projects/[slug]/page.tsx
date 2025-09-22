@@ -75,7 +75,7 @@ export default async function ProjectDetailPage({ params }: { params: { slug:str
     <div className="animate-fade-in" style={{ '--project-primary': project.theme.primary, '--project-secondary': project.theme.secondary, '--project-accent': project.theme.secondary } as React.CSSProperties}>
       <ProjectHeader project={project} />
 
-      <div className="container mx-auto px-4 py-12 md:py-20">
+      <div className="container mx-auto px-4 py-8 md:py-12">
         <div className="grid lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2 space-y-12">
             <div className="prose prose-lg dark:prose-invert max-w-none">
@@ -129,7 +129,7 @@ export default async function ProjectDetailPage({ params }: { params: { slug:str
               </div>
             )}
           </div>
-          <aside className="hidden lg:block lg:col-span-1 space-y-8 sticky top-[230px] self-start">
+          <aside className="hidden lg:block lg:col-span-1 space-y-8 sticky top-[180px] self-start">
             <TechStackAside />
             <ProjectDetailsClient project={project} />
           </aside>
