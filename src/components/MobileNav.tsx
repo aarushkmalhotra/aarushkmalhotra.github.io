@@ -8,7 +8,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "./ui/button";
-import { Mail, Menu } from "lucide-react";
+import { Mail, Menu, PanelRightClose } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { GithubIcon } from "./icons/GithubIcon";
@@ -39,8 +39,8 @@ export function MobileNav({ navLinks }: MobileNavProps) {
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="flex flex-col p-0">
-          <div className="border-b p-4">
-              <Link href="/" className="flex items-center gap-2 font-headline text-lg font-bold">
+          <div className="border-b p-4 flex items-center justify-between">
+              <div className="flex items-center gap-2 font-headline text-lg font-bold">
                   <Image
                       src="/portrait.jpg"
                       alt="Aarush's Portfolio Logo"
@@ -49,7 +49,13 @@ export function MobileNav({ navLinks }: MobileNavProps) {
                       className="rounded-full"
                   />
                   <span>Aarush's Portfolio</span>
-              </Link>
+              </div>
+              <SheetClose asChild>
+                <Button variant="ghost" size="icon">
+                  <PanelRightClose />
+                  <span className="sr-only">Close Menu</span>
+                </Button>
+              </SheetClose>
           </div>
           <nav className="flex-grow flex flex-col gap-6 p-4 text-lg font-medium">
             {navLinks.map((link) => (
