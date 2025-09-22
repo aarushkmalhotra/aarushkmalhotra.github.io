@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -11,7 +12,7 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/projects", label: "Projects" },
   { href: "/blog", label: "Blog" },
-  { href: "/about", label: "About" },
+  { href: "/about", "label": "About" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -19,7 +20,7 @@ export function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/80">
       <div className="container mx-auto px-4 flex h-16 items-center">
         <Link href="/" className="flex items-center gap-2 font-headline text-lg font-bold mr-auto">
           <Image
