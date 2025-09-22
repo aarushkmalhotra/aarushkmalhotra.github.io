@@ -3,7 +3,7 @@
     {
       "id": "simplify-me-1",
       "description": "Banner for Simplify Me.",
-      "imageUrl": "/simplybanner.png",
+      "imageUrl": "/simplifymebanner.png",
       "imageHint": "app dashboard"
     },
     {
@@ -20,8 +20,8 @@
     },
     {
       "id": "simply-1",
-      "description": "Logo for Simply Discord Bot",
-      "imageUrl": "/simplylogo.png",
+      "description": "Banner for Simply Discord Bot",
+      "imageUrl": "/simplybanner.png",
       "imageHint": "AI bot logo"
     }
   ]

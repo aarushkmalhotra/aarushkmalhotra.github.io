@@ -77,7 +77,7 @@ export default function AboutPage() {
         </div>
       </section>
       
-      <section className="py-16 md:py-24 border-t">
+      <section className="pt-16 md:pt-24 border-t">
         <h2 className="font-headline text-3xl md:text-4xl font-bold text-center mb-16">My Journey</h2>
         <div className="relative max-w-3xl mx-auto">
           <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 h-full w-0.5 bg-border"></div>
