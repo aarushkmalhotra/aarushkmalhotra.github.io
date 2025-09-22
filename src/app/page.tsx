@@ -1,3 +1,4 @@
+
 import { ProjectCard } from "@/components/ProjectCard";
 import { Button } from "@/components/ui/button";
 import { getProjects } from "@/lib/projects";
@@ -16,7 +17,7 @@ export default async function Home() {
 
   return (
     <div className="animate-fade-in">
-      <section className="text-center py-16 md:py-24 border-b">
+      <section className="text-center border-b min-h-[calc(100dvh-65px)] flex flex-col items-center justify-center py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="relative w-32 h-32 md:w-40 md:h-40 mx-auto mb-8">
