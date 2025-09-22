@@ -35,7 +35,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
     }, []);
     
     // Animate between 0 and 1 based on scroll position up to 100px
-    const animationProgress = Math.min(scrolled / 100, 1);
+    const animationProgress = Math.max(0, Math.min(scrolled / 100, 1));
 
     return (
         <header 
