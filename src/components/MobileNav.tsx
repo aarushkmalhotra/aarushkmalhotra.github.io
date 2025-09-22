@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Sheet,
   SheetClose,
@@ -11,6 +13,8 @@ import Image from "next/image";
 import { GithubIcon } from "./icons/GithubIcon";
 import { LinkedinIcon } from "./icons/LinkedinIcon";
 import { InstagramIcon } from "./icons/InstagramIcon";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 interface NavLink {
   href: string;
@@ -22,6 +26,8 @@ interface MobileNavProps {
 }
 
 export function MobileNav({ navLinks }: MobileNavProps) {
+  const pathname = usePathname();
+  
   return (
     <div className="md:hidden">
       <Sheet>
@@ -49,7 +55,10 @@ export function MobileNav({ navLinks }: MobileNavProps) {
               <SheetClose asChild key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-muted-foreground transition-colors hover:text-foreground"
+                  className={cn(
+                    "transition-colors hover:text-foreground",
+                    pathname === link.href ? "text-primary" : "text-muted-foreground"
+                  )}
                 >
                   {link.label}
                 </Link>
