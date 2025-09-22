@@ -10,6 +10,7 @@ import { ProjectDetailsClient } from "./ProjectDetailsClient";
 import { Metadata } from 'next';
 import { ProjectShare } from "@/components/ProjectShare";
 import { CheckCircle } from "lucide-react";
+import { ProjectHeader } from "./ProjectHeader";
 
 type Props = {
   params: { slug: string };
@@ -74,12 +75,7 @@ export default async function ProjectDetailPage({ params }: { params: { slug:str
 
   return (
     <div className="animate-fade-in" style={{ '--project-primary': project.theme.primary, '--project-secondary': project.theme.secondary } as React.CSSProperties}>
-      <header className="sticky top-[64px] z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-8 border-b">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="font-headline text-4xl md:text-5xl font-bold tracking-tight" style={{ color: 'hsl(var(--project-primary))' }}>{project.name}</h1>
-          <p className="mt-3 text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">{project.tagline}</p>
-        </div>
-      </header>
+      <ProjectHeader project={project} />
 
       <div className="container mx-auto px-4 py-12 md:py-20">
         <div className="grid lg:grid-cols-3 gap-12">
@@ -91,11 +87,11 @@ export default async function ProjectDetailPage({ params }: { params: { slug:str
             
             {project.keyFeatures && project.keyFeatures.length > 0 && (
               <div>
-                <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none">Key Features</h2>
-                <ul className="mt-4 space-y-3">
+                <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Key Features</h2>
+                <ul className="space-y-4">
                   {project.keyFeatures.map((feature, index) => (
                     <li key={index} className="flex items-start">
-                      <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" />
+                      <CheckCircle className="w-6 h-6 text-green-500 mr-4 mt-1 flex-shrink-0" />
                       <span className="text-lg text-muted-foreground">{feature}</span>
                     </li>
                   ))}
@@ -129,7 +125,7 @@ export default async function ProjectDetailPage({ params }: { params: { slug:str
               </div>
             )}
           </div>
-          <aside className="lg:col-span-1 space-y-8 sticky top-48 self-start">
+          <aside className="lg:col-span-1 space-y-8 sticky top-[108px] self-start">
              <div className="p-6 rounded-lg bg-card border">
                 <h3 className="font-headline text-xl mb-4">Tech Stack</h3>
                 <div className="flex flex-wrap gap-2">
@@ -158,10 +154,6 @@ export default async function ProjectDetailPage({ params }: { params: { slug:str
                         </Button>
                     )}
                 </div>
-             </div>
-             <div className="p-6 rounded-lg bg-card border">
-                <h3 className="font-headline text-xl mb-4">Share Project</h3>
-                <ProjectShare project={project} />
              </div>
           </aside>
         </div>
