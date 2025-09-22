@@ -24,8 +24,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Link href={`/projects/${project.id}`} className="group block h-full">
       <Card className="h-full flex flex-col transition-all duration-300 ease-in-out group-hover:shadow-xl group-hover:-translate-y-1">
-        <CardHeader>
-          {image && (
+        <CardHeader className="p-6">
+          {image ? (
             <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
               <Image
                 src={image.imageUrl}
@@ -35,16 +35,18 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 data-ai-hint={image.imageHint}
               />
             </div>
+          ) : (
+            <div className="aspect-video relative overflow-hidden rounded-lg mb-4 bg-muted" />
           )}
           <CardTitle className="font-headline text-2xl group-hover:text-primary transition-colors">
             {project.name}
           </CardTitle>
           <CardDescription>{project.tagline}</CardDescription>
         </CardHeader>
-        <CardContent className="flex-grow">
+        <CardContent className="flex-grow p-6 pt-0">
             <p className="text-sm text-muted-foreground line-clamp-3">{project.description}</p>
         </CardContent>
-        <CardFooter className="flex-col items-start gap-4">
+        <CardFooter className="p-6 pt-0 flex-col items-start gap-4">
             <div className="flex flex-wrap gap-2">
                 {project.techStack.split(", ").slice(0, 4).map((tech) => (
                 <Badge key={tech} variant="secondary">
