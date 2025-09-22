@@ -1,3 +1,40 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "simplify-me-1",
+      "description": "Screenshot of Simplify Me app dashboard",
+      "imageUrl": "https://picsum.photos/seed/simplify1/1200/800",
+      "imageHint": "app dashboard"
+    },
+    {
+      "id": "simplify-me-2",
+      "description": "Screenshot of Simplify Me app feature",
+      "imageUrl": "https://picsum.photos/seed/simplify2/1200/800",
+      "imageHint": "app feature"
+    },
+    {
+      "id": "vernato-1",
+      "description": "Screenshot of Vernato landing page",
+      "imageUrl": "https://picsum.photos/seed/vernato1/1200/800",
+      "imageHint": "website landing"
+    },
+    {
+      "id": "vernato-2",
+      "description": "Screenshot of Vernato product page",
+      "imageUrl": "https://picsum.photos/seed/vernato2/1200/800",
+      "imageHint": "product page"
+    },
+    {
+      "id": "emty-1",
+      "description": "Screenshot of EMTY project",
+      "imageUrl": "https://picsum.photos/seed/emty1/1200/800",
+      "imageHint": "data visualization"
+    },
+    {
+      "id": "github-1",
+      "description": "Screenshot of a GitHub repository",
+      "imageUrl": "https://picsum.photos/seed/github1/1200/800",
+      "imageHint": "code repository"
+    }
+  ]
 }
