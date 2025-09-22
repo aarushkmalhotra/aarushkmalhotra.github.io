@@ -14,7 +14,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Metadata } from 'next';
 import { Button } from "@/components/ui/button";
 import { getHashnodePosts } from "@/lib/hashnode";
-import { Inbox } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Blog | Aarush's Portfolio",
@@ -36,7 +35,6 @@ export const metadata: Metadata = {
 function EmptyState() {
   return (
     <div className="text-center py-16 px-6 bg-card border rounded-lg shadow-sm">
-        <Inbox className="w-16 h-16 mx-auto text-muted-foreground mb-6" />
       <h2 className="text-2xl font-semibold mb-4">No Posts Found</h2>
       <p className="text-muted-foreground mb-6 max-w-md mx-auto">
         It seems there are no blog posts available at the moment. Please check back later or try refreshing.
