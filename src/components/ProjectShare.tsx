@@ -3,7 +3,7 @@
 
 import { Project } from "@/lib/projects";
 import { Button } from "./ui/button";
-import { Twitter, Linkedin } from "lucide-react";
+import { X, Linkedin } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -29,8 +29,8 @@ export function ProjectShare({ project }: ProjectShareProps) {
     return (
         <div className="flex items-center gap-2">
             <Button asChild variant="outline" size="icon">
-                <a href={twitterShareUrl} target="_blank" rel="noopener noreferrer" aria-label="Share on Twitter">
-                    <Twitter className="w-4 h-4" />
+                <a href={twitterShareUrl} target="_blank" rel="noopener noreferrer" aria-label="Share on X">
+                    <X className="w-4 h-4" />
                 </a>
             </Button>
             <Button asChild variant="outline" size="icon">
