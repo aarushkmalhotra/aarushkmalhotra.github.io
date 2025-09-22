@@ -21,6 +21,22 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const firstImageId = project.images[0];
   const image = PlaceHolderImages.find((img) => img.id === firstImageId);
 
+  const getCallToAction = () => {
+    if (project.id === 'simplify-me' || project.id === 'vernato') {
+      return 'Use for Free';
+    }
+    if (project.id === 'emty') {
+      return 'View Linktree';
+    }
+    if(project.demoUrl) {
+      return 'View Project';
+    }
+    if(project.repoUrl) {
+        return 'View on GitHub';
+    }
+    return 'View Details';
+  }
+
   return (
     <Link href={`/projects/${project.id}`} className="group block h-full">
       <Card className="h-full flex flex-col transition-all duration-300 ease-in-out group-hover:shadow-xl group-hover:-translate-y-1">
@@ -55,7 +71,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 ))}
             </div>
              <span className="text-sm text-accent flex items-center gap-1">
-                {project.id === 'relay' ? 'Use for Free' : 'View Project'} <ArrowUpRightIcon className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                {getCallToAction()} <ArrowUpRightIcon className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </span>
         </CardFooter>
       </Card>

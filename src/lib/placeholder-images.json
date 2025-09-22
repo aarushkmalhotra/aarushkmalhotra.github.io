@@ -3,7 +3,7 @@
     {
       "id": "simplify-me-1",
       "description": "Banner for Simplify Me.",
-      "imageUrl": "simplybanner.png",
+      "imageUrl": "/simplybanner.png",
       "imageHint": "app dashboard"
     },
     {
@@ -14,8 +14,8 @@
     },
     {
       "id": "vernato-1",
-      "description": "Open Graph image for Vernato",
-      "imageUrl": "https://www.vernato.org/opengraph-image.png",
+      "description": "Banner for Vernato",
+      "imageUrl": "/vernatobanner.png",
       "imageHint": "website landing"
     },
     {
@@ -26,8 +26,8 @@
     },
     {
       "id": "emty-1",
-      "description": "Banner for Relay (formerly EMTY)",
-      "imageUrl": "emtybanner.png",
+      "description": "Banner for EMTY",
+      "imageUrl": "/emtybanner.png",
       "imageHint": "data visualization"
     },
     {
