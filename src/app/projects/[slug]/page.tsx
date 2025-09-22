@@ -1,16 +1,12 @@
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { getProjectById, getProjects } from "@/lib/projects";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowUpRightIcon } from "@/components/icons/ArrowUpRightIcon";
 import { ProjectDetailsClient } from "./ProjectDetailsClient";
 import { Metadata } from 'next';
-import { ProjectShare } from "@/components/ProjectShare";
-import { CheckCircle } from "lucide-react";
+import { Check } from "lucide-react";
 import { ProjectHeader } from "./ProjectHeader";
 
 type Props = {
@@ -65,7 +61,7 @@ export default async function ProjectDetailPage({ params }: { params: { slug:str
     .filter(Boolean);
 
   return (
-    <div className="animate-fade-in" style={{ '--project-primary': project.theme.primary, '--project-secondary': project.theme.secondary } as React.CSSProperties}>
+    <div className="animate-fade-in" style={{ '--project-primary': project.theme.primary, '--project-secondary': project.theme.secondary, '--project-accent': project.theme.secondary } as React.CSSProperties}>
       <ProjectHeader project={project} />
 
       <div className="container mx-auto px-4 py-12 md:py-20">
@@ -82,8 +78,8 @@ export default async function ProjectDetailPage({ params }: { params: { slug:str
                 <ul className="space-y-4">
                   {project.keyFeatures.map((feature, index) => (
                     <li key={index} className="flex items-start">
-                      <CheckCircle className="w-6 h-6 text-green-500 mr-4 mt-1 flex-shrink-0" />
-                      <span className="text-lg text-muted-foreground">{feature}</span>
+                      <Check className="w-5 h-5 text-accent mr-4 mt-1 flex-shrink-0" style={{ color: 'hsl(var(--project-accent))' }} />
+                      <span className="text-base text-muted-foreground">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -122,6 +118,7 @@ export default async function ProjectDetailPage({ params }: { params: { slug:str
                 <div className="flex flex-wrap gap-2">
                     {project.techStack.split(',').map(tech => (
                         <Badge key={tech.trim()} variant="secondary">{tech.trim()}</Badge>
+
                     ))}
                 </div>
              </div>
