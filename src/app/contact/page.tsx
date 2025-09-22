@@ -1,4 +1,6 @@
-// Important: To make this form work, create a form on formspree.io and replace the placeholder URL.
+// Important: To make this form work, you need a Formspree account.
+// 1. Create a new form on formspree.io.
+// 2. Replace the placeholder URL below with your own Formspree form endpoint URL.
 const FORMSPREE_URL = "https://formspree.io/f/your_form_id";
 
 export default function ContactPage() {
@@ -43,6 +45,19 @@ export default function ContactPage() {
                 />
               </div>
               <div>
+                <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-2">
+                  Subject
+                </label>
+                <input
+                  type="text"
+                  name="subject"
+                  id="subject"
+                  required
+                  className="block w-full rounded-md border-input bg-background px-4 py-3 text-foreground shadow-sm focus:border-primary focus:ring-primary"
+                  placeholder="Project Inquiry"
+                />
+              </div>
+              <div>
                 <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
                   Message
                 </label>
@@ -67,7 +82,7 @@ export default function ContactPage() {
           </form>
         </div>
         <p className="text-center text-xs text-muted-foreground mt-4">
-            This form is powered by Formspree.
+            This form is powered by <a href="https://formspree.io" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">Formspree</a>.
         </p>
       </div>
     </div>
