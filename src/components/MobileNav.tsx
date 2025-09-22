@@ -31,7 +31,7 @@ export function MobileNav({ navLinks }: MobileNavProps) {
             <span className="sr-only">Open Menu</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="flex flex-col">
+        <SheetContent side="left" className="flex flex-col p-0">
           <div className="border-b p-4">
               <Link href="/" className="flex items-center gap-2 font-headline text-lg font-bold">
                   <Image
