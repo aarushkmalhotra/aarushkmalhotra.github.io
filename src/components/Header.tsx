@@ -1,6 +1,13 @@
 import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
 import Image from "next/image";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Button } from "./ui/button";
+import { Menu } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -31,9 +38,25 @@ export function Header() {
             </Link>
           ))}
         </nav>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <ThemeToggle />
-          {/* Mobile menu could be added here */}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
+                <Menu />
+                <span className="sr-only">Toggle Menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right">
+              <nav className="flex flex-col gap-6 text-lg font-medium mt-12">
+                {navLinks.map((link) => (
+                  <Link key={link.href} href={link.href} className="text-muted-foreground transition-colors hover:text-foreground">
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>
