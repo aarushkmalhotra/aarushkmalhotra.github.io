@@ -39,7 +39,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
 
     return (
         <header 
-            className="sticky top-[64px] z-40 bg-background/95 backdrop-blur-xl supports-[backdrop-filter]:bg-background/80 border-b"
+            className="sticky top-[64px] z-40 bg-background backdrop-blur-xl supports-[backdrop-filter]:bg-background/95 border-b"
             style={{ 
                 // py-8 (32px) -> py-3 (12px)
                 paddingTop: `${32 - (20 * animationProgress)}px`,
