@@ -38,6 +38,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const remainingSkillsCount = allSkills.length - skillsToShow.length;
 
   const getCallToAction = () => {
+    if (project.id === 'cifar-10-cnn') {
+      return 'View Slides';
+    }
     if (project.id === 'simplify-me' || project.id === 'vernato') {
       return 'Use for Free';
     }
