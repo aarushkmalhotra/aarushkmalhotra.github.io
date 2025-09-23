@@ -1,9 +1,7 @@
 
 
 import { Badge } from "@/components/ui/badge";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { getProjectById, getProjects } from "@/lib/projects";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ProjectDetailsClient } from "./ProjectDetailsClient";
 import { Metadata } from 'next';
@@ -13,6 +11,8 @@ import { AudioPlayer } from "@/components/AudioPlayer";
 import { DownloadableAudioPlayer } from "@/components/DownloadableAudioPlayer";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
+import { ProjectGallery } from "./ProjectGallery";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -62,15 +62,6 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   if (!project) {
     notFound();
   }
-
-  const projectImages = project.images
-    .map((id) => PlaceHolderImages.find((img) => img.id === id))
-    .filter(Boolean);
-
-  const galleryItems = [
-      ...(project.videoPreview ? [project.videoPreview] : []), 
-      ...(!project.videoPreview && project.id !== 'imdb-top-1000' && project.id !== 'album-tracks' ? projectImages : [])
-  ];
     
   const TechStackAside = () => (
     <div className="p-6 rounded-lg bg-card border">
@@ -167,43 +158,8 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               </div>
             )}
 
-            {galleryItems.length > 0 && (
-              <div>
-                <h2 className="font-headline text-3xl mb-6 prose prose-lg dark:prose-invert max-w-none">Gallery</h2>
-                <div className="grid grid-cols-1 gap-6">
-                    {galleryItems.map((item, index) => {
-                      if (typeof item === 'string' && item.endsWith('.mp4')) {
-                        return (
-                          <div key={index} className="aspect-video relative overflow-hidden rounded-lg shadow-md bg-black">
-                            <video
-                              src={item}
-                              controls
-                              controlsList="nodownload"
-                              className="w-full h-full object-contain"
-                            />
-                          </div>
-                        )
-                      }
-                      
-                      const image = item as typeof projectImages[0];
-                      if (image) {
-                        return (
-                          <div key={image.id} className="aspect-video relative overflow-hidden rounded-lg shadow-md">
-                              <Image
-                                  src={image.imageUrl}
-                                  alt={`${project.name} screenshot`}
-                                  fill
-                                  className="object-cover"
-                                  data-ai-hint={image.imageHint}
-                              />
-                          </div>
-                        )
-                      }
-                      return null;
-                    })}
-                </div>
-              </div>
-            )}
+            <ProjectGallery project={project} />
+
           </div>
           <aside className="hidden lg:block lg:col-span-1 space-y-4 sticky top-[184px] self-start">
             <ProjectDetailsClient project={project} />

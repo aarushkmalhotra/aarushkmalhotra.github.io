@@ -17,6 +17,7 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { ArrowUpRightIcon } from "./icons/ArrowUpRightIcon";
 import { format, parseISO } from "date-fns";
 import { useState, useRef, useEffect } from "react";
+import { YoutubeIcon } from "./icons/YoutubeIcon";
 
 interface ProjectCardProps {
   project: Project;
@@ -59,6 +60,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
     if (project.id === 'cifar-10-cnn') {
       return 'View Slides';
     }
+    if (project.id === 'youtube-thumbnails') {
+        return 'View Channel';
+    }
     if (project.id === 'simplify-me' || project.id === 'vernato' || project.id === 'imdb-top-1000') {
       return 'View Demo';
     }
@@ -73,6 +77,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
     }
     return 'View Details';
   }
+  
+  const getCallToActionIcon = () => {
+    if (project.id === 'youtube-thumbnails') {
+        return <YoutubeIcon className="w-4 h-4" />;
+    }
+    return <ArrowUpRightIcon className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />;
+  }
 
   return (
     <Link 
@@ -86,7 +97,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <div className="aspect-video relative overflow-hidden rounded-lg mb-4 bg-muted">
             {image && (
                 <>
-                    {project.videoPreview && (
+                    {project.videoPreview && project.videoPreview.endsWith('.mp4') && (
                         <video
                             ref={videoRef}
                             src={project.videoPreview}
@@ -101,7 +112,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                         src={image.imageUrl}
                         alt={project.name}
                         fill
-                        className={`object-cover transition-transform duration-300 ${!project.videoPreview ? 'group-hover:scale-105' : ''} ${project.videoPreview && isHovered ? 'md:opacity-0' : 'opacity-100'}`}
+                        className={`object-cover transition-transform duration-300 ${!project.videoPreview ? 'group-hover:scale-105' : ''} ${project.videoPreview && project.videoPreview.endsWith('.mp4') && isHovered ? 'md:opacity-0' : 'opacity-100'}`}
                         data-ai-hint={image.imageHint}
                     />
                 </>
@@ -131,7 +142,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 )}
             </div>
              <span className="text-sm text-accent flex items-center gap-1">
-                {getCallToAction()} <ArrowUpRightIcon className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                {getCallToAction()} {getCallToActionIcon()}
             </span>
         </CardFooter>
       </Card>

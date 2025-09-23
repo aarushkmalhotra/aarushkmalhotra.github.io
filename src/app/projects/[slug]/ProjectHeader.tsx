@@ -4,6 +4,7 @@
 import { ProjectShare } from "@/components/ProjectShare";
 import { Button } from "@/components/ui/button";
 import { Project } from "@/lib/projects";
+import { YoutubeIcon } from "@/components/icons/YoutubeIcon";
 import { ArrowLeft, ArrowUpRight, Github, Music } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
@@ -15,6 +16,9 @@ interface ProjectHeaderProps {
 const getDemoCallToAction = (project: Project) => {
     if (project.id === 'cifar-10-cnn') {
       return 'View Slides';
+    }
+    if (project.id === 'youtube-thumbnails') {
+        return 'View Channel';
     }
     if (project.id === 'simplify-me' || project.id === 'vernato' || project.id === 'imdb-top-1000') {
         return 'View Demo';
@@ -29,6 +33,13 @@ const getDemoCallToAction = (project: Project) => {
     if (project.demoUrl) {
         return 'View Project';
     }
+}
+
+const getDemoIcon = (project: Project) => {
+    if (project.id === 'youtube-thumbnails') {
+        return <YoutubeIcon />;
+    }
+    return <ArrowUpRight />;
 }
 
 export function ProjectHeader({ project }: ProjectHeaderProps) {
@@ -109,7 +120,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                             <Button asChild variant="secondary" size="sm">
                                 <Link href={project.demoUrl} target="_blank" rel="noopener noreferrer">
                                     {getDemoCallToAction(project)}
-                                    <ArrowUpRight />
+                                    {getDemoIcon(project)}
                                 </Link>
                             </Button>
                         )}
@@ -135,7 +146,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                                 <Button asChild variant="secondary" className="flex-grow">
                                     <Link href={project.demoUrl} target="_blank" rel="noopener noreferrer">
                                         {getDemoCallToAction(project)}
-                                        <ArrowUpRight />
+                                        {getDemoIcon(project)}
                                     </Link>
                                 </Button>
                             )}

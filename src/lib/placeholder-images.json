@@ -47,6 +47,30 @@
       "description": "Banner for Album Tracks Project",
       "imageUrl": "/albumtracksbanner.png",
       "imageHint": "music production"
+    },
+    {
+      "id": "yt-thumb-1",
+      "description": "YouTube Thumbnail 1",
+      "imageUrl": "/ytthumbnail1.png",
+      "imageHint": "youtube thumbnail"
+    },
+    {
+      "id": "yt-thumb-2",
+      "description": "YouTube Thumbnail 2",
+      "imageUrl": "/ytthumbnail2.png",
+      "imageHint": "youtube thumbnail"
+    },
+    {
+      "id": "yt-thumb-3",
+      "description": "YouTube Thumbnail 3",
+      "imageUrl": "/ytthumbnail3.png",
+      "imageHint": "youtube thumbnail"
+    },
+    {
+      "id": "yt-thumb-4",
+      "description": "YouTube Thumbnail 4",
+      "imageUrl": "/ytthumbnail4.png",
+      "imageHint": "youtube thumbnail"
     }
   ]
 }

@@ -102,6 +102,32 @@
     }
   },
   {
+    "id": "youtube-thumbnails",
+    "name": "YouTube Thumbnails",
+    "tagline": "Graphic Design for Digital Content",
+    "description": "Beyond coding, I have a passion for visual storytelling and graphic design. I create all the thumbnails for my <a href=\"https://www.youtube.com/@sunbeam20/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline\">YouTube channel, Sunbeam20</a>, using a combination of Adobe Photoshop, Illustrator, and GIMP. This process involves everything from concept sketching and asset creation to color grading and typographic design, all aimed at creating engaging and click-worthy visuals that capture the essence of each video.",
+    "keyFeatures": [
+      "Conceptualization and sketching of thumbnail ideas.",
+      "Advanced photo manipulation and compositing in Photoshop.",
+      "Vector asset creation with Illustrator and GIMP.",
+      "Typography and color theory to maximize click-through rate.",
+      "Consistent branding across channel content."
+    ],
+    "techStack": "Adobe Photoshop, Adobe Illustrator, GIMP",
+    "keywords": ["Graphic Design", "UI/UX", "Creative"],
+    "outcomes": "Developed a strong portfolio of eye-catching thumbnails that have improved viewer engagement and channel growth. This creative outlet hones my skills in visual communication, branding, and user psychology, complementing my technical work as a developer.",
+    "repoUrl": null,
+    "demoUrl": "https://www.youtube.com/@sunbeam20/",
+    "images": ["yt-thumb-2", "yt-thumb-4", "yt-thumb-1", "yt-thumb-3"],
+    "startDate": "2022-01-01",
+    "endDate": null,
+    "type": "project",
+    "theme": {
+      "primary": "hsl(0, 100%, 50%)",
+      "secondary": "hsl(0, 0%, 13%)"
+    }
+  },
+  {
     "id": "rvc-ui",
     "name": "RVC UI & Songs",
     "tagline": "Voice Transformation for Songs",
@@ -215,7 +241,7 @@
     "repoUrl": null,
     "demoUrl": "https://drive.google.com/drive/folders/1DrceaX2DRv2ve6mYF7210ikESgcIUKOd",
     "images": ["album-tracks-1"],
-    "videoPreview": "/sunbeam-the-album-full.mp4",
+    "videoPreview": "https://www.youtube.com/embed/SWiwfNcLjWg",
     "startDate": "2022-03-01",
     "endDate": "2022-12-01",
     "type": "project",
