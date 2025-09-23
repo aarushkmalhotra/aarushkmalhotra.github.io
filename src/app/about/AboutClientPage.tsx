@@ -76,8 +76,8 @@ export function AboutClientPage() {
     });
     
   return (
-    <div className="container mx-auto px-4 py-8 md:py-16 animate-fade-in">
-      <section className="grid items-center">
+    <div className="animate-fade-in">
+      <section className="flex flex-col justify-center min-h-[calc(100dvh-65px)] container mx-auto px-4 py-8 md:py-16">
         <div className="max-w-5xl mx-auto text-center">
           <h1 className="font-headline text-4xl md:text-5xl font-bold tracking-tight mb-4">I build tools to fix what's broken.</h1>
           <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground space-y-4 text-left md:text-center">
@@ -97,7 +97,7 @@ export function AboutClientPage() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24 border-t mt-16 md:mt-24">
+      <section className="py-16 md:py-24 border-t">
         <h2 className="font-headline text-3xl md:text-4xl font-bold text-center mb-12">My Skillset</h2>
         <div className="relative w-full overflow-hidden group [mask-image:linear-gradient(to-right,transparent,black_10%,black_90%,transparent)]">
             <div className="flex animate-marquee group-hover:[animation-play-state:paused]">
