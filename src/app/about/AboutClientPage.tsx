@@ -5,10 +5,12 @@ import { Badge } from "@/components/ui/badge";
 import { Briefcase, GraduationCap } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 const skills = [
   "TypeScript", "JavaScript", "HTML", "Python", "C++", "Swift", "Next.js", "Tailwind CSS",
-  "Git", "Vercel", "Firebase", "Azure", "AWS", "Google Cloud", "Zapier", "WordPress"
+  "Git", "Vercel", "Firebase", "Azure", "AWS", "Google Cloud", "Zapier", "WordPress", "PyTorch", "Gradio", "CUDA", "PHP"
 ];
 
 const experience = [
@@ -85,10 +87,10 @@ export function AboutClientPage() {
                 I'm a student founder based in Manhattan, currently studying Computer Science at Macaulay Honors College at CCNY (expected graduation May 2029). I've lived in way too many countries and been through way too many school systems. CBSE, IGCSE, APs, and now college. You name it, I've probably been confused by it at some point.
             </p>
             <p>
-                All that moving around taught me that most things are way more complicated than they need to be. Like, why do privacy policies sound like they were written by robots for other robots? I got so annoyed reading those endless terms and conditions that I built <a href="/projects/simplify-me">Simplify Me.</a> It turns all that legal nonsense into actual English so people are informed about what companies are doing with their data.
+                All that moving around taught me that most things are way more complicated than they need to be. Like, why do privacy policies sound like they were written by robots for other robots? I got so annoyed reading those endless terms and conditions that I built <Link href="/projects/simplify-me">Simplify Me.</Link> It turns all that legal nonsense into actual English so people are informed about what companies are doing with their data.
             </p>
             <p>
-                Then there's <a href="/projects/vernato">Vernato</a>. Moving around so much, I noticed that people speak the same language completely differently depending on where they're from. A British accent isn't more "correct" than an American one, and Spanish from Mexico isn't wrong just because it's different from Spanish from Spain. I got tired of apps that could mark you wrong for sounding different, so I built Vernato to actually recognize and teach these regional differences. It focuses on those tiny pronunciation details that other apps are too lazy to care about.
+                Then there's <Link href="/projects/vernato">Vernato</Link>. Moving around so much, I noticed that people speak the same language completely differently depending on where they're from. A British accent isn't more "correct" than an American one, and Spanish from Mexico isn't wrong just because it's different from Spanish from Spain. I got tired of apps that could mark you wrong for sounding different, so I built Vernato to actually recognize and teach these regional differences. It focuses on those tiny pronunciation details that other apps are too lazy to care about.
             </p>
             <p>
                 The truth is, I just get really bothered when things don't work well. I end up building tools to fix whatever's driving me crazy. I'm always down to chat with people who also think technology should actually help people instead of just being impressive.
@@ -102,9 +104,18 @@ export function AboutClientPage() {
         <div className="relative w-full overflow-hidden group [mask-image:linear-gradient(to-right,transparent,black_10%,black_90%,transparent)]">
             <div className="flex animate-marquee group-hover:[animation-play-state:paused]">
                 {[...skills, ...skills].map((skill, index) => (
-                    <Badge key={index} className="text-lg px-6 py-3 mx-4 flex-shrink-0" variant="default">
-                    {skill}
-                    </Badge>
+                    <Link
+                        href={`/projects/skill/${encodeURIComponent(skill.toLowerCase().replace(/\s/g, '-'))}`}
+                        key={index}
+                        className="mx-4 flex-shrink-0"
+                    >
+                        <Badge 
+                            className="text-lg px-6 py-3 transition-all duration-300 ease-in-out hover:bg-primary hover:text-primary-foreground hover:scale-110 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" 
+                            variant="default"
+                        >
+                            {skill}
+                        </Badge>
+                    </Link>
                 ))}
             </div>
         </div>
