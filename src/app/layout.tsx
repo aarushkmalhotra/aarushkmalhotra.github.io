@@ -7,8 +7,12 @@ import { Footer } from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://aarushkumar.github.io/portfolio'),
   title: "Aarush's Portfolio – Developer Portfolio",
   description: 'A developer portfolio built with Next.js and Tailwind CSS.',
+  icons: {
+    icon: '/portrait.jpg',
+  },
 };
 
 export default function RootLayout({
