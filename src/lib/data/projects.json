@@ -3,7 +3,7 @@
   {
     "id": "vernato",
     "name": "Vernato",
-    "tagline": "AI-Powered Pronunciation Coach",
+    "tagline": "AI-Powered Pronunciation Platform",
     "description": "Vernato is an AI-powered pronunciation improvement platform helping learners speak with clarity and confidence. Our PronScore™ model combines accuracy, fluency, and completeness into a single score, giving users actionable feedback that actually drives progress. Built at the intersection of language learning and technology, Vernato is designed for individuals, educators, and organizations seeking a smarter way to master spoken language. We’re on a mission to make effective pronunciation training accessible, measurable, and engaging worldwide.",
     "keyFeatures": [
       "PronScore™ model for comprehensive feedback",
@@ -76,7 +76,7 @@
   {
     "id": "rvc-ui",
     "name": "RVC UI & Songs",
-    "tagline": "AI-Powered Voice Transformation for Song Covers",
+    "tagline": "Voice Transformation for Songs",
     "description": "Retrieval Based Voice Conversion (RVC) is a technique used in speech processing where a system learns to transform one speaker's voice into another's by retrieving similar-sounding samples from a large database. After seeing AI-generated songs and covers gaining popularity on social media, I embarked on an exciting journey to create samples where the renowned Hindi singer Arijit Singh could sing various songs beyond his originals. To achieve this, I leveraged preexisting datasets trained between 1200–2000 epochs. This entire project was run locally on my Windows machine using Python and its powerful libraries. Additionally, I trained the model with a dataset of my own voice to better understand the challenges of RVC and dataset creation.",
     "keyFeatures": [
       "Utilized Retrieval-Based Voice Conversion (RVC) for voice transformation.",
