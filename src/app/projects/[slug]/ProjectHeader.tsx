@@ -25,15 +25,15 @@ const getDemoCallToAction = (project: Project) => {
 export function ProjectHeader({ project }: ProjectHeaderProps) {
     return (
         <header 
-            className="sticky top-[64px] z-40 py-4"
+            className="sticky top-[64px] z-40"
         >
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-4 pt-4">
                 <div 
                     className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 max-w-5xl mx-auto rounded-lg border bg-background"
                 >
                     <div className="flex items-center gap-4">
                         <div className="flex-shrink-0">
-                            <Button asChild variant="outline" size="icon">
+                            <Button asChild variant="outline" size="icon" className="h-9 w-9 sm:h-10 sm:w-10">
                                 <Link href="/projects" aria-label="Back to projects">
                                     <ArrowLeft className="h-4 w-4" />
                                 </Link>
@@ -102,3 +102,4 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
       </header>
     );
 }
+
