@@ -40,6 +40,13 @@ const experience = [
     icon: <Briefcase className="w-5 h-5 text-primary" />
   },
   {
+    role: "Lead Developer and App Designer",
+    company: "EMTY Commuting App",
+    period: "Aug 2024 – April 2025",
+    description: "Designed UX in Figma to display real-time subway car occupancy; built secure real-time backend with Firebase Auth and Realtime Database. Presented EMTY at the U.S. Capitol and to Congressman Adriano Espaillat’s office.",
+    icon: <Briefcase className="w-5 h-5 text-primary" />
+  },
+  {
     role: "Founder & Developer",
     company: "Simplify Me.",
     period: "Jan 2023 - May 2025",
