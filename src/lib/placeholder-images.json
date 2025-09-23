@@ -28,7 +28,7 @@
     {
       "id": "rvc-1",
       "description": "Banner for RVC UI Project",
-      "imageUrl": "https://picsum.photos/seed/rvc/1200/630",
+      "imageUrl": "/rvcbanner.png",
       "imageHint": "sound wave"
     }
   ]
