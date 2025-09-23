@@ -98,16 +98,16 @@ export default async function ProjectDetailPage({ params }: { params: { slug:str
             )}
             
             <div className="lg:hidden">
-              <TechStackAside />
+              <ProjectDetailsClient project={project} />
             </div>
 
+            <div className="lg:hidden">
+              <TechStackAside />
+            </div>
+            
             <div className="prose prose-lg dark:prose-invert max-w-none">
                 <h2 className="font-headline text-3xl">Outcomes</h2>
                 <p>{project.outcomes}</p>
-            </div>
-            
-            <div className="lg:hidden">
-              <ProjectDetailsClient project={project} />
             </div>
             
             {projectImages.length > 0 && (
