@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
 type Props = {
-  params: { skill: string };
+  params: Promise<{ skill: string }>;
 };
 
 // Function to get all unique skills from projects for static generation
@@ -30,7 +30,8 @@ export async function generateStaticParams() {
 
 // Generate metadata for the page
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const decodedSkill = decodeURIComponent(params.skill.replace(/-/g, ' '));
+  const { skill } = await params;
+  const decodedSkill = decodeURIComponent(skill.replace(/-/g, ' '));
   const capitalizedSkill = decodedSkill.charAt(0).toUpperCase() + decodedSkill.slice(1);
 
   return {
@@ -41,11 +42,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // The page component
 export default async function ProjectsBySkillPage({ params }: Props) {
+  const { skill } = await params;
   const allProjects = await getProjects();
   
   // This logic needs to be robust enough to handle the slug transformation.
   // "nextjs" in URL should match "Next.js" in tech stack.
-  const decodedSkillParam = decodeURIComponent(params.skill).replace(/-/g, ' ');
+  const decodedSkillParam = decodeURIComponent(skill).replace(/-/g, ' ');
 
   const filteredProjects = allProjects.filter(project => 
     project.techStack.toLowerCase().split(',').map(s => s.trim().replace(/\./g,'')).includes(decodedSkillParam.toLowerCase())
@@ -54,14 +56,14 @@ export default async function ProjectsBySkillPage({ params }: Props) {
   if (filteredProjects.length === 0) {
     // A simple way to find the original skill name before it was slugified.
     const allSkills = await getAllSkills();
-    const originalSkill = allSkills.find(s => s.toLowerCase().replace(/\s/g, '-').replace(/\./g, '') === params.skill);
+    const originalSkill = allSkills.find(s => s.toLowerCase().replace(/\s/g, '-').replace(/\./g, '') === skill);
     if (!originalSkill) notFound(); // Truly not found
   }
 
   // Capitalize for display
   const displaySkill = filteredProjects.length > 0
-    ? filteredProjects[0].techStack.split(',').map(s => s.trim()).find(s => s.toLowerCase().replace(/\s/g, '-').replace(/\./g, '') === params.skill) || decodeURIComponent(params.skill).replace(/-/g, ' ')
-    : decodeURIComponent(params.skill).replace(/-/g, ' ');
+    ? filteredProjects[0].techStack.split(',').map(s => s.trim()).find(s => s.toLowerCase().replace(/\s/g, '-').replace(/\./g, '') === skill) || decodeURIComponent(skill).replace(/-/g, ' ')
+    : decodeURIComponent(skill).replace(/-/g, ' ');
 
   const capitalizedSkill = displaySkill.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
