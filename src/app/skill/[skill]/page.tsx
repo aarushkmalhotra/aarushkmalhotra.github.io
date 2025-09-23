@@ -1,7 +1,7 @@
 
 
 import { ProjectCard } from "@/components/ProjectCard";
-import { getProjects, getSkills as getAllSkillsData } from "@/lib/projects";
+import { getProjects, getAllSkills } from "@/lib/projects";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 // import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -11,12 +11,6 @@ import { Metadata } from "next";
 type Props = {
   params: { skill: string };
 };
-
-// Function to get all unique skills from projects for static generation
-function getAllSkills() {
-    const { allSkills } = getAllSkillsData();
-    return allSkills;
-}
 
 // Generate static paths for each skill
 export function generateStaticParams() {
@@ -53,8 +47,8 @@ export default function ProjectsBySkillPage({ params }: Props) {
 
   if (filteredProjects.length === 0) {
     // A simple way to find the original skill name before it was slugified.
-    const allSkills = getAllSkills();
-    const originalSkill = allSkills.find(s => s.toLowerCase().replace(/\s/g, '-').replace(/\./g, '') === skill);
+    const allSkillsList = getAllSkills();
+    const originalSkill = allSkillsList.find(s => s.toLowerCase().replace(/\s/g, '-').replace(/\./g, '') === skill);
     if (!originalSkill) notFound(); // Truly not found
   }
 

@@ -18,7 +18,7 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug } = params;
   const project = getProjectById(slug);
 
   if (!project) {
@@ -55,7 +55,7 @@ export function generateStaticParams() {
 }
 
 export default async function ProjectDetailPage({ params }: PageProps) {
-  const { slug } = await params;
+  const { slug } = params;
   const project = getProjectById(slug);
 
   if (!project) {

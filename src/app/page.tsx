@@ -58,7 +58,7 @@ function LatestPostCard({ post }: { post: Post }) {
 }
 
 export default async function Home() {
-  const allProjects = await getProjects();
+  const allProjects = getProjects();
   const featuredProjects = allProjects.slice(0, 3);
   const allPosts = await getHashnodePosts("aarushkumar.hashnode.dev");
   const latestPost = allPosts.length > 0 ? allPosts[0] : null;
