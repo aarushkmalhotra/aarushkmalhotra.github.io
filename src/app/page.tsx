@@ -70,7 +70,7 @@ export default async function Home() {
           <div className="max-w-4xl mx-auto text-center">
             
             <div className="animate-fade-in-up" style={{ animationDelay: '150ms' }}>
-              <Badge variant="secondary" className="px-4 py-2 text-base animate-shine">
+              <Badge variant="secondary" className="px-4 py-2 text-base">
                   Student Founder
               </Badge>
             </div>
