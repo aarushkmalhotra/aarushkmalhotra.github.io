@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { ListFilter, Search } from "lucide-react";
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
 interface ProjectsClientPageProps {
   allProjects: Project[];
@@ -32,20 +32,49 @@ interface ProjectsClientPageProps {
 type SortOption = "newest" | "oldest" | "alphabetical";
 
 export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientPageProps) {
+  const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
-  const initialKeyword = searchParams.get('keyword');
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedKeywords, setSelectedKeywords] = useState<Record<string, boolean>>({});
-  const [sortOrder, setSortOrder] = useState<SortOption>("newest");
+  // Initialize state from URL params
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || "");
+  const [selectedKeywords, setSelectedKeywords] = useState<Record<string, boolean>>(() => {
+    const keywordsParam = searchParams.get('keywords');
+    if (!keywordsParam) return {};
+    return keywordsParam.split(',').reduce((acc, key) => {
+      acc[key] = true;
+      return acc;
+    }, {} as Record<string, boolean>);
+  });
+  const [sortOrder, setSortOrder] = useState<SortOption>((searchParams.get('sort') as SortOption) || "newest");
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
-    if (initialKeyword) {
-      setSelectedKeywords({ [initialKeyword]: true });
+  }, []);
+
+  // Update URL when filters change
+  useEffect(() => {
+    const params = new URLSearchParams();
+
+    if (searchTerm) {
+      params.set('search', searchTerm);
     }
-  }, [initialKeyword]);
+    const activeKeywords = Object.keys(selectedKeywords).filter(key => selectedKeywords[key]);
+    if (activeKeywords.length > 0) {
+      params.set('keywords', activeKeywords.join(','));
+    }
+    if (sortOrder !== 'newest') {
+      params.set('sort', sortOrder);
+    }
+
+    const queryString = params.toString();
+    const newUrl = queryString ? `${pathname}?${queryString}` : pathname;
+    
+    // Use replace to avoid adding to browser history for every filter change
+    router.replace(newUrl, { scroll: false });
+
+  }, [searchTerm, selectedKeywords, sortOrder, pathname, router]);
 
   const handleKeywordChange = (keyword: string) => {
     setSelectedKeywords(prev => ({
@@ -89,8 +118,34 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
   }, [allProjects, searchTerm, selectedKeywords, sortOrder]);
   
   if (!isMounted) {
-    // Prevent hydration mismatch by rendering nothing on the server for this client component.
-    return null;
+    // Prevent hydration mismatch by rendering a skeleton or nothing on the server.
+    return (
+       <div>
+        <div className="flex flex-col md:flex-row gap-4 mb-8">
+            <div className="relative flex-grow">
+                <div className="h-10 w-full bg-muted rounded-md" />
+            </div>
+            <div className="flex flex-row gap-4">
+                <div className="w-1/2 md:w-auto">
+                    <div className="h-10 w-full md:w-32 bg-muted rounded-md" />
+                </div>
+                <div className="w-1/2 md:w-[180px]">
+                    <div className="h-10 w-full bg-muted rounded-md" />
+                </div>
+            </div>
+        </div>
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="border bg-card rounded-lg p-6 space-y-4">
+                    <div className="aspect-video bg-muted rounded-lg" />
+                    <div className="h-5 w-3/4 bg-muted rounded" />
+                    <div className="h-4 w-1/2 bg-muted rounded" />
+                    <div className="h-8 w-full bg-muted rounded" />
+                </div>
+            ))}
+        </div>
+      </div>
+    );
   }
 
   const activeFilterCount = Object.values(selectedKeywords).filter(Boolean).length;

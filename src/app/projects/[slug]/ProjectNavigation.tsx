@@ -10,13 +10,25 @@ import { cn } from "@/lib/utils";
 interface ProjectNavigationProps {
     prevProject?: Project;
     nextProject?: Project;
+    searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-const NavCard = ({ project, direction }: { project: Project; direction: 'prev' | 'next' }) => {
+const NavCard = ({ project, direction, searchParams }: { project: Project; direction: 'prev' | 'next', searchParams?: ProjectNavigationProps['searchParams'] }) => {
     const image = PlaceHolderImages.find(p => p.id === project.images[0]);
     
+    const params = new URLSearchParams();
+    if (searchParams) {
+        Object.entries(searchParams).forEach(([key, value]) => {
+            if (value) {
+                params.set(key, Array.isArray(value) ? value.join(',') : value);
+            }
+        });
+    }
+    const queryString = params.toString();
+    const href = `/projects/${project.id}${queryString ? `?${queryString}` : ''}`;
+    
     return (
-        <Link href={`/projects/${project.id}`} className="block group">
+        <Link href={href} className="block group">
             <Card className="relative overflow-hidden transition-all duration-300 ease-in-out md:hover:shadow-xl md:hover:-translate-y-1 h-full">
                 {image && (
                     <Image 
@@ -53,21 +65,21 @@ const NavCard = ({ project, direction }: { project: Project; direction: 'prev' |
     )
 }
 
-export function ProjectNavigation({ prevProject, nextProject }: ProjectNavigationProps) {
+export function ProjectNavigation({ prevProject, nextProject, searchParams }: ProjectNavigationProps) {
     return (
         <div className={cn(
             "grid grid-cols-1 gap-8",
             (prevProject && nextProject) ? 'md:grid-cols-2' : 'md:grid-cols-1'
         )}>
             {prevProject ? (
-                <div className="min-h-[200px]">
-                    <NavCard project={prevProject} direction="prev" />
+                <div className="md:min-h-[200px]">
+                    <NavCard project={prevProject} direction="prev" searchParams={searchParams} />
                 </div>
             ) : <div />}
 
             {nextProject ? (
-                <div className="min-h-[200px]">
-                    <NavCard project={nextProject} direction="next" />
+                <div className="md:min-h-[200px]">
+                    <NavCard project={nextProject} direction="next" searchParams={searchParams} />
                 </div>
             ) : <div />}
         </div>

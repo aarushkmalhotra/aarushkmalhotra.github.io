@@ -13,12 +13,15 @@ import { ProjectGallery } from "./ProjectGallery";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { ProjectNavigation } from "./ProjectNavigation";
 
+type SortOption = "newest" | "oldest" | "alphabetical";
+
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const { slug } = params;
   const project = getProjectById(slug);
 
   if (!project) {
@@ -54,15 +57,48 @@ export function generateStaticParams() {
   }));
 }
 
-export default async function ProjectDetailPage({ params }: PageProps) {
-  const { slug } = await params;
+export default function ProjectDetailPage({ params, searchParams }: PageProps) {
+  const { slug } = params;
   const project = getProjectById(slug);
 
   if (!project) {
     notFound();
   }
   
-  const { prevProject, nextProject } = getProjectNeighbors(project.id);
+  // Apply filters to get the correct neighbors
+  const allProjects = getProjects();
+  const searchTerm = (searchParams?.search as string) || '';
+  const keywordsParam = (searchParams?.keywords as string) || '';
+  const sortOrder = (searchParams?.sort as SortOption) || 'newest';
+
+  let filtered = allProjects;
+
+  if (searchTerm) {
+    filtered = filtered.filter(p =>
+      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.tagline.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.techStack.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
+
+  const activeKeywords = keywordsParam ? keywordsParam.split(',') : [];
+  if (activeKeywords.length > 0) {
+    filtered = filtered.filter(p =>
+      activeKeywords.every(keyword => p.keywords.includes(keyword))
+    );
+  }
+
+  switch (sortOrder) {
+    case "oldest":
+      filtered = [...filtered].reverse();
+      break;
+    case "alphabetical":
+      filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
+      break;
+  }
+  
+  const { prevProject, nextProject } = getProjectNeighbors(project.id, filtered);
     
   const TechStackAside = () => (
     <div className="p-6 rounded-lg bg-card border">
@@ -175,7 +211,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         {(prevProject || nextProject) && (
             <div className="mt-16 md:mt-24 border-t pt-12">
                 <h2 className="font-headline text-2xl md:text-3xl text-center mb-8">Continue Exploring</h2>
-                <ProjectNavigation prevProject={prevProject} nextProject={nextProject} />
+                <ProjectNavigation prevProject={prevProject} nextProject={nextProject} searchParams={searchParams} />
             </div>
         )}
       </div>
