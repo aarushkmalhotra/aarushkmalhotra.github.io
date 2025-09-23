@@ -64,8 +64,8 @@
     "repoUrl": null,
     "demoUrl": "https://simplifyme.org",
     "images": ["simplify-me-1"],
-    "startDate": "2023-09-01",
-    "endDate": "2024-05-01",
+    "startDate": "2023-01-01",
+    "endDate": "2025-05-01",
     "type": "project",
     "theme": {
       "primary": "hsl(267, 95%, 48%)",
