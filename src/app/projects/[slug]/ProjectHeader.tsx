@@ -22,6 +22,9 @@ const getDemoCallToAction = (project: Project) => {
     if (project.id === 'emty') {
         return 'View Linktree';
     }
+    if (project.id === 'album-tracks') {
+        return 'All Tracks';
+    }
     // A sensible fallback
     if (project.demoUrl) {
         return 'View Project';
@@ -31,7 +34,12 @@ const getDemoCallToAction = (project: Project) => {
 export function ProjectHeader({ project }: ProjectHeaderProps) {
     const headerRef = useRef<HTMLElement>(null);
     const handleScrollToSamples = () => {
-        const element = document.getElementById('ai-samples');
+        let elementId = 'ai-samples';
+        if (project.id === 'album-tracks') {
+            elementId = 'original-tracks';
+        }
+
+        const element = document.getElementById(elementId);
         if (element && headerRef.current) {
             // Main site header is 64px (h-16)
             const siteHeaderHeight = 64; 
@@ -83,10 +91,10 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                         </div>
                     </div>
                     <div className="hidden sm:flex flex-shrink-0 items-center gap-2">
-                        {project.id === 'rvc-ui' && (
+                        {(project.id === 'rvc-ui' || project.id === 'album-tracks') && (
                             <Button onClick={handleScrollToSamples} variant="secondary" size="sm">
                                 <Music />
-                                Song Covers
+                                {project.id === 'rvc-ui' ? 'Song Covers' : 'Original Tracks'}
                             </Button>
                         )}
                         {project.repoUrl && (
@@ -109,10 +117,10 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                     </div>
                     <div className="sm:hidden flex items-center justify-between gap-2">
                         <div className="flex items-center gap-2 flex-grow">
-                             {project.id === 'rvc-ui' && (
+                             {(project.id === 'rvc-ui' || project.id === 'album-tracks') && (
                                 <Button onClick={handleScrollToSamples} variant="secondary" className="flex-grow">
                                     <Music />
-                                    Song Covers
+                                     {project.id === 'rvc-ui' ? 'Song Covers' : 'Original Tracks'}
                                 </Button>
                             )}
                             {project.repoUrl && (

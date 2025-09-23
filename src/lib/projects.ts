@@ -12,6 +12,12 @@ export interface AudioFile {
   originalLyricist: string;
 }
 
+export interface DownloadableAudioFile {
+  id: string;
+  title: string;
+  file: string;
+}
+
 export interface Project {
   id: string;
   name: string;
@@ -33,6 +39,7 @@ export interface Project {
   endDate: string | null;
   type?: 'project' | 'contribution';
   audioFiles?: AudioFile[];
+  downloadableAudioFiles?: DownloadableAudioFile[];
 }
 
 // In a real app, you might fetch this from a CMS or API

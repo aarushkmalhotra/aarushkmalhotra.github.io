@@ -17,15 +17,24 @@ export function ProjectShare({ project }: ProjectShareProps) {
     const [pageUrl, setPageUrl] = useState("");
 
     useEffect(() => {
-        setPageUrl(window.location.href);
+        setPageUrl(window.location.origin + pathname);
     }, [pathname]);
 
     if(!pageUrl) return null;
 
-    const shareText = `Check out this project: ${project.name} - ${project.tagline}`;
+    let shareUrl: string;
+    let shareText: string;
 
-    const twitterShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(shareText)}`;
-    const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
+    if (project.id === 'album-tracks' && project.demoUrl) {
+        shareUrl = project.demoUrl;
+        shareText = `Check out these original tracks by Aarush Kumar:`;
+    } else {
+        shareUrl = pageUrl;
+        shareText = `Check out this project: ${project.name} - ${project.tagline}`;
+    }
+
+    const twitterShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
+    const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
 
     return (
         <div className="flex items-center gap-2">

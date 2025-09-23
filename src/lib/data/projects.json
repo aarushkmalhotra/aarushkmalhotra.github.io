@@ -197,5 +197,43 @@
       "primary": "hsl(45, 93%, 54%)",
       "secondary": "hsl(0, 0%, 10%)"
     }
+  },
+  {
+    "id": "album-tracks",
+    "name": "Album Tracks",
+    "tagline": "Original Music for YouTube Montages",
+    "description": "This project is a collection of original music tracks I composed and produced using SoundTrap and GarageBand. These tracks were created specifically for montages on my <a href=\"https://www.youtube.com/@sunbeam20/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline\">YouTube channel</a>. It was a journey into digital music production, exploring different beats, melodies, and moods to complement visual storytelling. Credit is required for any use of these tracks.",
+    "keyFeatures": [
+      "Original tracks composed in SoundTrap and GarageBand",
+      "Designed for use in video montages",
+      "Exploration of digital audio workstation (DAW) software",
+      "Focus on creating atmospheric and rhythmic beats"
+    ],
+    "techStack": "SoundTrap, GarageBand, Digital Audio Production",
+    "keywords": ["Audio Production", "Creative"],
+    "outcomes": "Produced a small album of tracks, gaining hands-on experience with music composition, arrangement, and mixing. These songs enhanced the quality of my YouTube videos and served as a creative outlet for exploring audio engineering.",
+    "repoUrl": null,
+    "demoUrl": "https://drive.google.com/drive/folders/1DrceaX2DRv2ve6mYF7210ikESgcIUKOd",
+    "images": ["album-tracks-1"],
+    "videoPreview": "/sunbeam-the-album-full.mp4",
+    "startDate": "2022-03-01",
+    "endDate": "2022-12-01",
+    "type": "project",
+    "theme": {
+      "primary": "hsl(280, 80%, 60%)",
+      "secondary": "hsl(50, 90%, 55%)"
+    },
+    "downloadableAudioFiles": [
+      {
+        "id": "edm-beats",
+        "title": "EDM Beats",
+        "file": "/edm-beats-voice.wav"
+      },
+      {
+        "id": "piano-beats",
+        "title": "Piano Beats",
+        "file": "/piano-beats.wav"
+      }
+    ]
   }
 ]

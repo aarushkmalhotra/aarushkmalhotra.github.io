@@ -7,9 +7,12 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ProjectDetailsClient } from "./ProjectDetailsClient";
 import { Metadata } from 'next';
-import { Check } from "lucide-react";
+import { Check, ExternalLink } from "lucide-react";
 import { ProjectHeader } from "./ProjectHeader";
 import { AudioPlayer } from "@/components/AudioPlayer";
+import { DownloadableAudioPlayer } from "@/components/DownloadableAudioPlayer";
+import Link from "next/link";
+import { Card } from "@/components/ui/card";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -66,7 +69,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
   const galleryItems = [
       ...(project.videoPreview ? [project.videoPreview] : []), 
-      ...(!project.videoPreview && project.id !== 'imdb-top-1000' ? projectImages : [])
+      ...(!project.videoPreview && project.id !== 'imdb-top-1000' && project.id !== 'album-tracks' ? projectImages : [])
   ];
     
   const TechStackAside = () => (
@@ -144,6 +147,23 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                     <AudioPlayer key={audioFile.id} audioFile={audioFile} themeColor={project.theme.primary}/>
                   ))}
                 </div>
+              </div>
+            )}
+            
+            {project.downloadableAudioFiles && project.downloadableAudioFiles.length > 0 && (
+              <div id="original-tracks">
+                 <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Original Tracks</h2>
+                 <div className="space-y-4">
+                  {project.downloadableAudioFiles.map((audioFile) => (
+                    <DownloadableAudioPlayer key={audioFile.id} audioFile={audioFile} themeColor={project.theme.primary} />
+                  ))}
+                   <Card className="p-4 sm:p-6">
+                      <Link href="https://drive.google.com/drive/folders/1DrceaX2DRv2ve6mYF7210ikESgcIUKOd" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between group">
+                        <span className="font-semibold text-lg text-muted-foreground group-hover:text-primary transition-colors">Want to listen to more? Access all songs here.</span>
+                        <ExternalLink className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors" />
+                      </Link>
+                   </Card>
+                 </div>
               </div>
             )}
 

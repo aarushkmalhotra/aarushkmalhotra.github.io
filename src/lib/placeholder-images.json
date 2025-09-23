@@ -41,6 +41,12 @@
       "description": "Banner for IMDB Top 1000 Project",
       "imageUrl": "/imdbtop1000frame1.png",
       "imageHint": "movie database"
+    },
+    {
+      "id": "album-tracks-1",
+      "description": "Banner for Album Tracks Project",
+      "imageUrl": "/albumtracksbanner.png",
+      "imageHint": "music production"
     }
   ]
 }
