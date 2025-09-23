@@ -24,7 +24,7 @@ export function ProjectDetailsClient({ project }: Props) {
     if (isStaticBuild) {
         toast({
             title: "Feature Not Available",
-            description: "AI features are not available in the static version of this portfolio.",
+            description: "AI features require a server and are not available on this statically hosted site.",
             variant: "destructive"
         })
     }
@@ -47,13 +47,13 @@ export function ProjectDetailsClient({ project }: Props) {
         </div>
         <Button onClick={handleGenerate} disabled={isStaticBuild} className="w-full bg-purple-600 hover:bg-purple-700 text-white disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed">
           <Sparkles className="w-4 h-4 mr-2"/>
-          {isStaticBuild ? "Disabled in Static Build" : "Generate with AI"}
+          {isStaticBuild ? "Disabled for Static Site" : "Generate with AI"}
         </Button>
       </div>
 
       {isStaticBuild && (
         <p className="mt-4 text-xs text-muted-foreground">
-          This is a statically exported site. AI generation requires a server and is disabled.
+          AI generation requires a server and is disabled on this statically hosted portfolio.
         </p>
       )}
     </div>
