@@ -81,7 +81,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Card className="h-full flex flex-col transition-all duration-300 ease-in-out group-hover:shadow-xl group-hover:-translate-y-1">
+      <Card className="h-full flex flex-col transition-all duration-300 ease-in-out md:group-hover:shadow-xl md:group-hover:-translate-y-1">
         <CardHeader className="p-6">
           <div className="aspect-video relative overflow-hidden rounded-lg mb-4 bg-muted">
             {image && (
