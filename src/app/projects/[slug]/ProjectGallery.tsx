@@ -10,6 +10,7 @@ import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
+import { CustomVideoPlayer } from '@/components/CustomVideoPlayer';
 
 interface ProjectGalleryProps {
   project: Project;
@@ -88,8 +89,8 @@ export function ProjectGallery({ project }: ProjectGalleryProps) {
     const [isLightboxOpen, setLightboxOpen] = useState(false);
     const [startIndex, setStartIndex] = useState(0);
 
-    const imageIds = project.id === 'album-tracks' 
-        ? project.images.filter(id => id !== 'album-tracks-1') 
+    const imageIds = (project.id === 'album-tracks' || project.id === 'imdb-top-1000')
+        ? project.images.filter(id => id !== 'album-tracks-1' && id !== 'imdb-top-1000-1') 
         : project.images;
 
     const imageItems = imageIds
@@ -133,12 +134,7 @@ export function ProjectGallery({ project }: ProjectGalleryProps) {
                                 className="w-full h-full"
                             ></iframe>
                         ) : (
-                             <video
-                                src={videoItem.url}
-                                controls
-                                controlsList="nodownload"
-                                className="w-full h-full object-contain"
-                            />
+                             <CustomVideoPlayer src={videoItem.url} themeColor={project.theme.primary} />
                         )}
                     </div>
                 )}
