@@ -56,7 +56,7 @@ function Lightbox({ open, onOpenChange, items, startIndex }: { open: boolean, on
 
                 <div className="relative flex-1 flex items-center justify-center overflow-hidden">
                     {isImage(currentItem) ? (
-                        <div className="relative w-full h-full flex items-center justify-center">
+                        <div className="relative w-full h-[100dvh] flex items-center justify-center">
                             <Image
                                 src={currentItem.imageUrl}
                                 alt={currentItem.description}

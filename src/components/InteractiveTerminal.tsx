@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Terminal, ChevronRight, User, Calendar, MapPin, Code, ExternalLink } from 'lucide-react';
 import { getProjects } from '@/lib/projects';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface Command {
   command: string;
@@ -24,18 +25,28 @@ export function InteractiveTerminal({ className = '' }: TerminalProps) {
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [isTyping, setIsTyping] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
+  const mirrorRef = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const typewriterTimerRef = useRef<number | null>(null);
+  const [caretIndex, setCaretIndex] = useState(0);
+  const [cursorVisible, setCursorVisible] = useState(true);
+  const router = useRouter();
 
   const projects = getProjects();
 
-  // Auto-focus input
+  // Click-to-focus only inside terminal container
   useEffect(() => {
-    const handleClick = () => {
+    const el = containerRef.current;
+    if (!el) return;
+    const handleMouseDown = (e: MouseEvent) => {
+      // Only focus when clicking inside the terminal area
       inputRef.current?.focus();
     };
-    document.addEventListener('click', handleClick);
-    return () => document.removeEventListener('click', handleClick);
+    el.addEventListener('mousedown', handleMouseDown);
+    return () => el.removeEventListener('mousedown', handleMouseDown);
   }, []);
 
   // Scroll to bottom on new command
@@ -62,20 +73,50 @@ export function InteractiveTerminal({ className = '' }: TerminalProps) {
     }]);
   }, []);
 
+  // Blink the block cursor (opaque flash on/off)
+  useEffect(() => {
+    const id = setInterval(() => setCursorVisible(v => !v), 650);
+    return () => clearInterval(id);
+  }, []);
+
+  // Position custom block cursor to mimic INS-style flashing block
+  const updateCursor = () => {
+    const mirror = mirrorRef.current;
+    const cursor = cursorRef.current;
+    if (!mirror || !cursor) return;
+    // Find the marker span inside mirror
+    const marker = mirror.querySelector('#caret-marker') as HTMLSpanElement | null;
+    if (!marker) return;
+    const mirrorRect = mirror.getBoundingClientRect();
+    const markerRect = marker.getBoundingClientRect();
+    const left = markerRect.left - mirrorRect.left;
+    const top = markerRect.top - mirrorRect.top;
+    cursor.style.transform = `translate(${left}px, ${top}px)`;
+  };
+
+  useEffect(() => {
+    updateCursor();
+    const onResize = () => updateCursor();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [input, caretIndex]);
+
   const typeWriter = (text: string, callback?: () => void) => {
     setIsTyping(true);
     let index = 0;
-    const timer = setInterval(() => {
+    const timer = window.setInterval(() => {
       setInput(text.slice(0, index));
       index++;
       if (index > text.length) {
         clearInterval(timer);
+        typewriterTimerRef.current = null;
         setIsTyping(false);
         setTimeout(() => {
           if (callback) callback();
         }, 500);
       }
     }, 50);
+    typewriterTimerRef.current = timer;
   };
 
   const commands = {
@@ -89,9 +130,17 @@ export function InteractiveTerminal({ className = '' }: TerminalProps) {
           <div><span className="text-blue-400">contact</span> - Get contact information</div>
           <div><span className="text-blue-400">resume</span> - View resume</div>
           <div><span className="text-blue-400">fun</span> - Try it and see!</div>
-          <div><span className="text-blue-400">clear</span> - Clear terminal</div>
+          <div><span className="text-blue-400">clear</span>/<span className="text-blue-400">cls</span> - Clear terminal</div>
           <div><span className="text-blue-400">matrix</span> - Enter the matrix...</div>
           <div><span className="text-blue-400">joke</span> - Random programming joke</div>
+          <div><span className="text-blue-400">fortune</span> - A random dev quote</div>
+          <div><span className="text-blue-400">ascii</span> - Show a banner</div>
+          <div><span className="text-blue-400">cowsay &lt;text&gt;</span> - Cow has something to say</div>
+          <div><span className="text-blue-400">cd projects</span> - Go to projects</div>
+          <div><span className="text-blue-400">cd blog</span> - Go to blog</div>
+          <div><span className="text-blue-400">cd contact</span> - Go to contact</div>
+          <div><span className="text-blue-400">cd about</span> - Go to about</div>
+          <div><span className="text-blue-400">cd ..</span> - Go home</div>
         </div>
       </div>
     ),
@@ -305,8 +354,86 @@ export function InteractiveTerminal({ className = '' }: TerminalProps) {
     setHistoryIndex(-1);
 
     // Special case for clear
-    if (trimmedCmd === 'clear') {
+    if (trimmedCmd === 'clear' || trimmedCmd === 'cls') {
       setHistory([]);
+      setInput('');
+      return;
+    }
+
+    // cd navigation (generic)
+    if (trimmedCmd === 'cd' || trimmedCmd.startsWith('cd ')) {
+      const arg = cmd.slice(2).trim();
+      const targetRaw = arg.toLowerCase();
+      let targetPath = '';
+      if (!targetRaw || targetRaw === '~' || targetRaw === '/' || targetRaw === '..' || targetRaw === 'home') {
+        targetPath = '/';
+      } else if (targetRaw.startsWith('/')) {
+        targetPath = targetRaw;
+      } else {
+        // Normalize to top-level path
+        targetPath = `/${targetRaw}`;
+      }
+      // Known top-level pages for a nicer message
+      const known = new Set(['/', '/about', '/projects', '/blog', '/contact']);
+      router.push(targetPath);
+      const node = (
+        <div className="text-gray-400">
+          Navigating to {known.has(targetPath) ? targetPath : targetPath} ...
+        </div>
+      );
+      setHistory(prev => [...prev, { command: cmd, output: node, timestamp: new Date() }]);
+      setInput('');
+      return;
+    }
+
+    // Dynamic commands with args
+    if (trimmedCmd.startsWith('cowsay ')) {
+      const text = cmd.slice(7).trim() || 'Moo!';
+      const bubble = ` ${'_'.repeat(Math.min(text.length, 40))}\n< ${text} >\n ${'-'.repeat(Math.min(text.length, 40))}`;
+      const cow = String.raw`
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+      `;
+      const node = (
+        <pre className="text-green-300 whitespace-pre leading-snug">
+{bubble + '\n' + cow}
+        </pre>
+      );
+      const newCommand: Command = { command: cmd, output: node, timestamp: new Date() };
+      setHistory(prev => [...prev, newCommand]);
+      setInput('');
+      return;
+    }
+
+    if (trimmedCmd === 'fortune') {
+      const quotes = [
+        'Talk is cheap. Show me the code. — Linus Torvalds',
+        'Programs must be written for people to read. — Harold Abelson',
+        'Simplicity is the soul of efficiency. — Austin Freeman',
+        'First, solve the problem. Then, write the code. — John Johnson',
+        'Deleted code is debugged code. — Jeff Sickel'
+      ];
+      const q = quotes[Math.floor(Math.random() * quotes.length)];
+      const node = <div className="text-purple-300">{q}</div>;
+      setHistory(prev => [...prev, { command: cmd, output: node, timestamp: new Date() }]);
+      setInput('');
+      return;
+    }
+
+    if (trimmedCmd === 'ascii') {
+      const banner = String.raw`
+ █████╗  █████╗ ██████╗ ██╗   ██╗███████╗██╗  ██╗
+██╔══██╗██╔══██╗██╔══██╗██║   ██║██╔════╝██║  ██║
+███████║███████║██████╔╝██║   ██║███████╗███████║
+██╔══██║██╔══██║██╔══██╗██║   ██║╚════██║██╔══██║
+██║  ██║██║  ██║██║  ██║╚██████╔╝███████║██║  ██║
+╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝
+      `;
+      const node = <pre className="text-cyan-300 whitespace-pre leading-tight">{banner}</pre>;
+      setHistory(prev => [...prev, { command: cmd, output: node, timestamp: new Date() }]);
       setInput('');
       return;
     }
@@ -327,8 +454,26 @@ export function InteractiveTerminal({ className = '' }: TerminalProps) {
     setInput('');
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) {
+      e.preventDefault();
+      // Cancel any ongoing typewriter
+      if (typewriterTimerRef.current) {
+        clearInterval(typewriterTimerRef.current);
+        typewriterTimerRef.current = null;
+      }
+      setIsTyping(false);
+      // Echo ^C and reset line
+      setHistory(prev => [
+        ...prev,
+        { command: '', output: <span className="text-red-400">^C</span>, timestamp: new Date() }
+      ]);
+      setInput('');
+      setCaretIndex(0);
+      return;
+    }
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
       executeCommand(input);
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
@@ -358,8 +503,18 @@ export function InteractiveTerminal({ className = '' }: TerminalProps) {
     }
   };
 
+  const handleSelect = (e: React.SyntheticEvent<HTMLTextAreaElement>) => {
+    const ta = e.currentTarget;
+    setCaretIndex(ta.selectionStart || 0);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInput(e.target.value);
+    setCaretIndex(e.target.selectionStart || e.target.value.length);
+  };
+
   return (
-    <Card className={`bg-gray-900 text-green-400 font-mono text-sm ${className}`}>
+    <Card ref={containerRef} className={`bg-gray-900 text-green-400 font-mono text-sm ${className}`}>
       <div className="flex items-center justify-between p-3 border-b border-gray-700">
         <div className="flex items-center gap-2">
           <Terminal className="w-4 h-4" />
@@ -395,26 +550,53 @@ export function InteractiveTerminal({ className = '' }: TerminalProps) {
           ))}
         </AnimatePresence>
         
-        <div className="flex items-center gap-2">
-          <ChevronRight className="w-3 h-3" />
-          <input
-            ref={inputRef}
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent outline-none text-blue-300"
-            placeholder={isTyping ? "" : "Type a command..."}
-            disabled={isTyping}
-            spellCheck={false}
-          />
-          {isTyping && (
-            <motion.div
-              animate={{ opacity: [0, 1, 0] }}
-              transition={{ duration: 0.8, repeat: Infinity }}
-              className="w-2 h-4 bg-green-400"
+        <div className="flex items-start gap-2 relative">
+          <ChevronRight className="w-3 h-3 mt-1" />
+          <div className="relative flex-1">
+            {/* Hidden mirror to measure caret position */}
+            <div
+              ref={mirrorRef}
+              aria-hidden
+              className="absolute top-0 left-0 whitespace-pre-wrap break-words pointer-events-none invisible select-none"
+              style={{
+                fontFamily: 'inherit',
+                fontSize: 'inherit',
+                lineHeight: '1.25rem',
+                padding: 0,
+                width: '100%'
+              }}
+            >
+              {input.slice(0, caretIndex)}
+              <span id="caret-marker">​</span>
+              {input.slice(caretIndex)}
+            </div>
+            {/* Textarea input */}
+            <textarea
+              ref={inputRef}
+              value={input}
+              onChange={handleChange}
+              onSelect={handleSelect}
+              onKeyDown={handleKeyDown}
+              rows={1}
+              className="w-full bg-transparent outline-none text-blue-300 resize-none overflow-hidden caret-transparent"
+              placeholder={isTyping ? "" : "Type a command... (Shift+Enter for newline)"}
+              disabled={isTyping}
+              spellCheck={false}
+              onInput={(e) => {
+                const el = e.currentTarget;
+                el.style.height = 'auto';
+                el.style.height = el.scrollHeight + 'px';
+              }}
             />
-          )}
+            {/* Blinking block cursor */}
+            {!isTyping && (
+              <div
+                ref={cursorRef}
+                className="absolute w-2 h-5 bg-green-400"
+                style={{ top: 0, left: 0, opacity: cursorVisible ? 1 : 0 }}
+              />
+            )}
+          </div>
         </div>
       </div>
     </Card>

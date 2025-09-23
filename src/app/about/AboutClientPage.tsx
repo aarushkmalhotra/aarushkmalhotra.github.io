@@ -62,7 +62,8 @@ const SkillPopover = ({
     onHoverChange: (hovered: boolean) => void;
 }) => {
     const [isHovered, setIsHovered] = useState(false);
-    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [isCoarsePointer, setIsCoarsePointer] = useState(false);
+    const [position, setPosition] = useState({ x: 0, y: 0, above: true });
     const triggerRef = useRef<HTMLDivElement>(null);
     const timeoutRef = useRef<NodeJS.Timeout>();
     
@@ -71,6 +72,8 @@ const SkillPopover = ({
     const projectCount = projectsForSkill.length;
 
     const handleMouseEnter = () => {
+        // Disable hover overlay behavior on mobile/coarse pointers
+        if (isCoarsePointer) return;
         if (timeoutRef.current) {
             clearTimeout(timeoutRef.current);
         }
@@ -79,6 +82,7 @@ const SkillPopover = ({
     };
 
     const handleMouseLeave = () => {
+        if (isCoarsePointer) return;
         timeoutRef.current = setTimeout(() => {
             setIsHovered(false);
             onHoverChange(false);
@@ -94,25 +98,38 @@ const SkillPopover = ({
             
             // Calculate center of the badge
             const badgeCenter = rect.left + rect.width / 2;
-            let x = badgeCenter;
-            let y = rect.top - popoverHeight - 20; // Position above the badge with more gap
-            
-            // Ensure popover doesn't go off-screen horizontally
+            const safe = 15;
             const halfPopoverWidth = popoverWidth / 2;
-            if (x - halfPopoverWidth < 15) {
-                x = halfPopoverWidth + 15;
-            } else if (x + halfPopoverWidth > viewportWidth - 15) {
-                x = viewportWidth - halfPopoverWidth - 15;
-            }
+            const clampedX = Math.max(safe + halfPopoverWidth, Math.min(badgeCenter, viewportWidth - safe - halfPopoverWidth));
+
+            // Prefer above; if not enough space, place below
+            const preferredTop = rect.top - popoverHeight - 20;
+            const above = preferredTop >= safe;
+            const y = above ? preferredTop : rect.bottom + 20;
             
-            // If not enough space above, show below
-            if (y < 15) {
-                y = rect.bottom + 20;
-            }
-            
-            setPosition({ x, y });
+            setPosition({ x: clampedX, y, above });
         }
     };
+
+    useEffect(() => {
+        // Detect coarse pointer (mobile/tablet) to disable hover popover
+        const update = () => {
+            try {
+                const mq = window.matchMedia('(pointer: coarse)');
+                setIsCoarsePointer(mq.matches || window.innerWidth < 768);
+            } catch {
+                setIsCoarsePointer(window.innerWidth < 768);
+            }
+        };
+        update();
+        window.addEventListener('resize', update);
+        const mq = window.matchMedia('(pointer: coarse)');
+        try { mq.addEventListener('change', update); } catch { /* older Safari */ }
+        return () => {
+            window.removeEventListener('resize', update);
+            try { mq.removeEventListener('change', update); } catch {}
+        };
+    }, []);
 
     useEffect(() => {
         if (isHovered) {
@@ -146,14 +163,14 @@ const SkillPopover = ({
         </Badge>
     );
 
-    const popoverContent = isHovered && isClickable && typeof window !== 'undefined' ? createPortal(
+    const popoverContent = isHovered && isClickable && !isCoarsePointer && typeof window !== 'undefined' ? createPortal(
         <>
             {/* Invisible hover bridge */}
             <div
                 className="fixed z-[9998] pointer-events-auto"
                 style={{
-                    left: position.x - 50,
-                    top: position.y + 240,
+                    left: position.above ? position.x : position.x,
+                    top: position.above ? position.y + 240 : position.y - 240,
                     width: 100,
                     height: 30,
                     transform: 'translateX(-50%)'
@@ -224,11 +241,18 @@ const SkillPopover = ({
                 </div>
             </div>
             
-            {/* Enhanced Arrow pointing down */}
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2">
-                <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-border" />
-                <div className="w-0 h-0 border-l-[5px] border-r-[5px] border-t-[5px] border-l-transparent border-r-transparent border-t-card absolute top-0 left-1/2 transform -translate-x-1/2 translate-y-[-1px]" />
-            </div>
+            {/* Arrow (switches based on placement) */}
+            {position.above ? (
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2">
+                    <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-border" />
+                    <div className="w-0 h-0 border-l-[5px] border-r-[5px] border-t-[5px] border-l-transparent border-r-transparent border-t-card absolute top-0 left-1/2 transform -translate-x-1/2 translate-y-[-1px]" />
+                </div>
+            ) : (
+                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2">
+                    <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-border" />
+                    <div className="w-0 h-0 border-l-[5px] border-r-[5px] border-b-[5px] border-l-transparent border-r-transparent border-b-card absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-[1px]" />
+                </div>
+            )}
         </motion.div>
         </>,
         document.body

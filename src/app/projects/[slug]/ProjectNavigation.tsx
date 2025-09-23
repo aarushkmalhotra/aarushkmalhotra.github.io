@@ -6,11 +6,12 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import type { ReadonlyURLSearchParams } from 'next/navigation';
 
 interface ProjectNavigationProps {
     prevProject?: Project;
     nextProject?: Project;
-    searchParams?: { [key: string]: string | string[] | undefined };
+    searchParams?: { [key: string]: string | string[] | undefined } | ReadonlyURLSearchParams;
 }
 
 const NavCard = ({ project, direction, searchParams }: { project: Project; direction: 'prev' | 'next', searchParams?: ProjectNavigationProps['searchParams'] }) => {
@@ -18,11 +19,19 @@ const NavCard = ({ project, direction, searchParams }: { project: Project; direc
     
     const params = new URLSearchParams();
     if (searchParams) {
-        Object.entries(searchParams).forEach(([key, value]) => {
-            if (value) {
-                params.set(key, Array.isArray(value) ? value.join(',') : value);
-            }
-        });
+        const spAny = searchParams as any;
+        if (typeof spAny?.forEach === 'function' && typeof spAny?.get === 'function') {
+            // ReadonlyURLSearchParams-like
+            spAny.forEach((value: string, key: string) => {
+                if (value != null) params.set(key, value);
+            });
+        } else {
+            Object.entries(searchParams as { [key: string]: string | string[] | undefined }).forEach(([key, value]) => {
+                if (value) {
+                    params.set(key, Array.isArray(value) ? value.join(',') : value);
+                }
+            });
+        }
     }
     const queryString = params.toString();
     const href = `/projects/${project.id}${queryString ? `?${queryString}` : ''}`;
