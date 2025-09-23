@@ -120,7 +120,7 @@
   {
     "id": "emty",
     "name": "EMTY",
-    "tagline": "Real-time Transit Data for NYC Subways",
+    "tagline": "Transit Data for NYC Subways",
     "description": "As part of the Entrepreneurship and App Design course at the STEM Institute at City College of New York, I designed an app named EMTY for NYC’s Department of Transportation. EMTY provides real-time data on individual subway car passenger loads, helping to improve commuter flow and convenience. I plan to pitch EMTY to Rep. Espaillat as part of the 2025 Congressional App Challenge.",
     "keyFeatures": [
       "Live visualization of subway car occupancy data",
