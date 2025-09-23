@@ -109,44 +109,49 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
           />
         </div>
 
-        <div className="flex flex-wrap gap-4">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="w-1/2 md:w-auto flex-grow sm:flex-grow-0">
-                <ListFilter className="mr-2 h-4 w-4" />
-                Filter
-                {activeFilterCount > 0 && (
-                   <span className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-medium text-primary-foreground">
-                    {activeFilterCount}
+        <div className="flex gap-4">
+          <div className="w-1/2 md:w-auto">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="w-full justify-between">
+                  <span>
+                    Filter
+                    {activeFilterCount > 0 && (
+                      <span className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-medium text-primary-foreground">
+                        {activeFilterCount}
+                      </span>
+                    )}
                   </span>
-                )}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              <DropdownMenuLabel>Filter by Keyword</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {allKeywords.map(keyword => (
-                <DropdownMenuCheckboxItem
-                  key={keyword}
-                  checked={!!selectedKeywords[keyword]}
-                  onCheckedChange={() => handleKeywordChange(keyword)}
-                >
-                  {keyword}
-                </DropdownMenuCheckboxItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          <Select onValueChange={(value: SortOption) => setSortOrder(value)} value={sortOrder}>
-            <SelectTrigger className="w-1/2 md:w-[180px] flex-grow sm:flex-grow-0">
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="newest">Newest</SelectItem>
-              <SelectItem value="oldest">Oldest</SelectItem>
-              <SelectItem value="alphabetical">Alphabetical</SelectItem>
-            </SelectContent>
-          </Select>
+                  <ListFilter className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <DropdownMenuLabel>Filter by Keyword</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {allKeywords.map(keyword => (
+                  <DropdownMenuCheckboxItem
+                    key={keyword}
+                    checked={!!selectedKeywords[keyword]}
+                    onCheckedChange={() => handleKeywordChange(keyword)}
+                  >
+                    {keyword}
+                  </DropdownMenuCheckboxItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          <div className="w-1/2 md:w-[180px]">
+            <Select onValueChange={(value: SortOption) => setSortOrder(value)} value={sortOrder}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="newest">Newest</SelectItem>
+                <SelectItem value="oldest">Oldest</SelectItem>
+                <SelectItem value="alphabetical">Alphabetical</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
 
