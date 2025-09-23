@@ -55,6 +55,8 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
 
   // Update URL when filters change
   useEffect(() => {
+    if (!isMounted) return;
+    
     const params = new URLSearchParams();
 
     if (searchTerm) {
@@ -74,7 +76,7 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
     // Use replace to avoid adding to browser history for every filter change
     router.replace(newUrl, { scroll: false });
 
-  }, [searchTerm, selectedKeywords, sortOrder, pathname, router]);
+  }, [searchTerm, selectedKeywords, sortOrder, pathname, router, isMounted]);
 
   const handleKeywordChange = (keyword: string) => {
     setSelectedKeywords(prev => ({

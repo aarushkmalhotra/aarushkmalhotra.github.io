@@ -40,25 +40,23 @@ const NavCard = ({ project, direction, searchParams }: { project: Project; direc
                 )}
                 <div 
                     className={cn(
-                        "absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent",
-                        direction === 'next' && 'from-black/80 via-black/50 to-transparent',
-                        direction === 'prev' && 'from-black/80 via-black/50 to-transparent'
+                        "absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"
                     )}
                 />
                 <div className="relative h-full flex flex-col justify-end p-6 text-white">
                     <div 
                         className={cn(
                             "flex items-center gap-2 text-sm text-white/80 mb-2 transition-transform duration-300",
-                            direction === 'next' && 'group-hover:translate-x-1',
-                            direction === 'prev' && 'group-hover:-translate-x-1'
+                            direction === 'next' && 'group-hover:translate-x-1 justify-end',
+                            direction === 'prev' && 'group-hover:-translate-x-1 justify-start'
                         )}
                     >
                         {direction === 'prev' && <ArrowLeft className="w-4 h-4" />}
                         <span>{direction === 'prev' ? 'Previous Project' : 'Next Project'}</span>
                         {direction === 'next' && <ArrowRight className="w-4 h-4" />}
                     </div>
-                    <h3 className="font-headline text-xl md:text-2xl font-bold transition-colors group-hover:text-primary-foreground/90">{project.name}</h3>
-                    <p className="text-sm text-white/70 line-clamp-1">{project.tagline}</p>
+                    <h3 className={cn("font-headline text-xl md:text-2xl font-bold transition-colors group-hover:text-primary-foreground/90", direction === 'next' ? 'text-right' : 'text-left')}>{project.name}</h3>
+                    <p className={cn("text-sm text-white/70 line-clamp-1", direction === 'next' ? 'text-right' : 'text-left')}>{project.tagline}</p>
                 </div>
             </Card>
         </Link>
@@ -66,6 +64,10 @@ const NavCard = ({ project, direction, searchParams }: { project: Project; direc
 }
 
 export function ProjectNavigation({ prevProject, nextProject, searchParams }: ProjectNavigationProps) {
+    if (!prevProject && !nextProject) {
+        return null;
+    }
+    
     return (
         <div className={cn(
             "grid grid-cols-1 gap-8",
@@ -78,7 +80,10 @@ export function ProjectNavigation({ prevProject, nextProject, searchParams }: Pr
             ) : <div />}
 
             {nextProject ? (
-                <div className="md:min-h-[200px]">
+                <div className={cn(
+                    "md:min-h-[200px]",
+                    !prevProject && "md:col-start-2"
+                )}>
                     <NavCard project={nextProject} direction="next" searchParams={searchParams} />
                 </div>
             ) : <div />}

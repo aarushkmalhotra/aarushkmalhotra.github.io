@@ -8,6 +8,7 @@ import { YoutubeIcon } from "@/components/icons/YoutubeIcon";
 import { ArrowLeft, ArrowUpRight, Github, Music } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 
 interface ProjectHeaderProps {
     project: Project;
@@ -44,6 +45,15 @@ const getDemoIcon = (project: Project) => {
 
 export function ProjectHeader({ project }: ProjectHeaderProps) {
     const headerRef = useRef<HTMLElement>(null);
+    const searchParams = useSearchParams();
+    const [backHref, setBackHref] = useState("/projects");
+
+    useEffect(() => {
+        const params = new URLSearchParams(searchParams.toString());
+        const queryString = params.toString();
+        setBackHref(queryString ? `/projects?${queryString}` : "/projects");
+    }, [searchParams]);
+    
     const handleScrollToSamples = () => {
         let elementId = 'ai-samples';
         if (project.id === 'album-tracks') {
@@ -80,7 +90,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                     <div className="flex items-center gap-4">
                         <div className="flex-shrink-0">
                             <Button asChild variant="outline" size="icon" className="h-9 w-9 sm:h-10 sm:w-10">
-                                <Link href="/projects" aria-label="Back to projects">
+                                <Link href={backHref} aria-label="Back to projects">
                                     <ArrowLeft className="h-4 w-4" />
                                 </Link>
                             </Button>
