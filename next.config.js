@@ -1,6 +1,4 @@
-import type {NextConfig} from 'next';
-
-const nextConfig: NextConfig = {
+const nextConfig = {
   /*
    * For deployment on GitHub Pages, we need to export the site to static files.
    * https://nextjs.org/docs/app/building-your-application/deploying/static-exports
@@ -63,4 +61,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
