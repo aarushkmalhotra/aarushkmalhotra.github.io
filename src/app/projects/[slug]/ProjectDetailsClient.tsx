@@ -6,20 +6,21 @@ import { Project } from "@/lib/projects";
 import { Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useToast } from "@/hooks/use-toast";
 
 type Props = {
   project: Project;
 };
 
 // For static export, AI functionality is not available.
-const isStaticBuild = process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_OUTPUT_MODE === 'export';
+const isStaticBuild = process.env.NEXT_PUBLIC_OUTPUT_MODE === 'export';
 
 export function ProjectDetailsClient({ project }: Props) {
-  const { toast } = useToast();
+
+  if (isStaticBuild) {
+    return null;
+  }
 
   const handleGenerate = async () => {
-    // This function will not be called in a static build because the button is not rendered.
     // In a full-stack environment, you would call your AI flow here.
   };
 
@@ -35,14 +36,12 @@ export function ProjectDetailsClient({ project }: Props) {
         </Link>
       )}
 
-      {!isStaticBuild && (
-        <div className="mt-4">
-            <Button onClick={handleGenerate} className="w-full bg-purple-600 hover:bg-purple-700 text-white">
-                <Sparkles className="w-4 h-4 mr-2"/>
-                Generate with AI
-            </Button>
-        </div>
-      )}
+      <div className="mt-4">
+          <Button onClick={handleGenerate} className="w-full bg-purple-600 hover:bg-purple-700 text-white">
+              <Sparkles className="w-4 h-4 mr-2"/>
+              Generate with AI
+          </Button>
+      </div>
     </div>
   );
 }
