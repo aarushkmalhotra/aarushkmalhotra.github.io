@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 const skills = [
   "TypeScript", "JavaScript", "HTML", "Python", "C++", "Swift", "Next.js", "Tailwind CSS",
   "Git", "Vercel", "Firebase", "Azure", "AWS", "Google Cloud", "Zapier", "WordPress", "PyTorch", 
-  "Gradio", "CUDA", "PHP", "React", "Figma", "Canva", "Discord API", "MTA API", "Google Gemini", "CSS", "AWS EC2"
+  "Gradio", "CUDA", "PHP", "React", "Figma", "Canva", "Discord API", "MTA API", "Google Gemini", "CSS", "AWS"
 ];
 
 // Skills that have projects associated with them.
@@ -20,7 +20,7 @@ const activeSkills = [
   "TypeScript", "React", "Next.js", "Azure", "Google Cloud", "Firebase", "Vercel", "Tailwind CSS",
   "JavaScript", "PHP", "WordPress", "Zapier", "Google Gemini", "CSS", "HTML",
   "Figma", "Canva", "MTA API",
-  "Python", "AWS EC2", "Discord API",
+  "Python", "AWS", "Discord API",
   "PyTorch", "Gradio", "CUDA"
 ];
 

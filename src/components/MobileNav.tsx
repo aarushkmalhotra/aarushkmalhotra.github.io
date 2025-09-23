@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import {
@@ -74,18 +75,18 @@ export function MobileNav({ navLinks }: MobileNavProps) {
           </nav>
           <div className="border-t p-4">
             <div className="flex justify-center gap-6">
-              <Link href="mailto:aarush@vernato.org" aria-label="Email">
+              <a href="mailto:aarush@vernato.org" aria-label="Email" target="_blank" rel="noopener noreferrer">
                 <Mail className="h-7 w-7 text-secondary-foreground/60 transition-colors hover:text-primary" />
-              </Link>
-              <Link href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              </a>
+              <a href="https://github.com/aarush-kumar" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                   <GithubIcon className="h-7 w-7 text-secondary-foreground/60 transition-colors hover:text-[#181717] dark:hover:text-white" />
-              </Link>
-              <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              </a>
+              <a href="https://linkedin.com/in/aarush-kumar" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                   <LinkedinIcon className="h-7 w-7 text-secondary-foreground/60 transition-colors hover:text-[#0A66C2]" />
-              </Link>
-              <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              </a>
+              <a href="https://instagram.com/aarush.kumar" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                   <InstagramIcon className="h-7 w-7 text-secondary-foreground/60 transition-colors hover:text-[#E1306C]" />
-              </Link>
+              </a>
             </div>
           </div>
         </SheetContent>
