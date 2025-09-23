@@ -1,11 +1,13 @@
 
 import { ProjectCard } from "@/components/ProjectCard";
-import { getProjects, getAllSkills } from "@/lib/projects";
+import { getProjects, getAllSkills, getRelatedSkills } from "@/lib/projects";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
-import { SkillClientPage } from "./SkillClientPage";
+// import { SkillClientPage } from "./SkillClientPage";
+import { RelatedSkills } from "./RelatedSkills";
+
 
 type Props = {
   params: { skill: string };
@@ -57,6 +59,8 @@ export default function ProjectsBySkillPage({ params }: Props) {
     : decodeURIComponent(skill).replace(/-/g, ' ');
 
   const capitalizedSkill = displaySkill.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  
+  const relatedSkills = getRelatedSkills(capitalizedSkill, allProjects);
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-16 animate-fade-in">
@@ -65,21 +69,23 @@ export default function ProjectsBySkillPage({ params }: Props) {
           Projects using <span className="text-primary">{capitalizedSkill}</span>
         </h1>
         <p className="text-lg text-muted-foreground mt-3 max-w-2xl mx-auto">
-          A deep dive into my work with {capitalizedSkill}. Use the AI assistant below to get a summary of my experience.
+          A deep dive into my work with {capitalizedSkill}.
         </p>
       </div>
       
-      <SkillClientPage skill={capitalizedSkill} projects={filteredProjects} />
+      {/* 
+        <SkillClientPage skill={capitalizedSkill} projects={filteredProjects} />
       
-      {process.env.NEXT_PUBLIC_IS_STATIC_EXPORT && (
-        <Alert className="mb-12">
-          <Terminal className="h-4 w-4" />
-          <AlertTitle>Developer Note</AlertTitle>
-          <AlertDescription>
-            The AI Skill Navigator is disabled on this static version of the site. This feature uses Server Actions and is fully functional in a server-based environment (e.g., when running locally or on Vercel).
-          </AlertDescription>
-        </Alert>
-      )}
+        {process.env.NEXT_PUBLIC_IS_STATIC_EXPORT && (
+          <Alert className="mb-12">
+            <Terminal className="h-4 w-4" />
+            <AlertTitle>Developer Note</AlertTitle>
+            <AlertDescription>
+              The AI Skill Navigator is disabled on this static version of the site. This feature uses Server Actions and is fully functional in a server-based environment (e.g., when running locally or on Vercel).
+            </AlertDescription>
+          </Alert>
+        )}
+      */}
 
       {filteredProjects.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -94,6 +100,8 @@ export default function ProjectsBySkillPage({ params }: Props) {
             <p className="text-muted-foreground">No projects found for this skill.</p>
         </div>
       )}
+
+      <RelatedSkills skills={relatedSkills} />
 
     </div>
   );

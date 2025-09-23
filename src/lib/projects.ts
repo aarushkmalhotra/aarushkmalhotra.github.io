@@ -115,3 +115,27 @@ export function getProjectNeighbors(currentProjectId: string, projectList: Proje
     
     return { prevProject, nextProject };
 }
+
+export function getRelatedSkills(currentSkill: string, allProjects: Project[]): string[] {
+  const relatedSkillCounts: Record<string, number> = {};
+
+  const projectsWithCurrentSkill = allProjects.filter(p =>
+    p.techStack.split(',').map(s => s.trim()).includes(currentSkill)
+  );
+
+  projectsWithCurrentSkill.forEach(project => {
+    project.techStack.split(',').forEach(skillName => {
+      const skill = skillName.trim();
+      if (skill !== currentSkill) {
+        relatedSkillCounts[skill] = (relatedSkillCounts[skill] || 0) + 1;
+      }
+    });
+  });
+
+  // Sort by frequency, then alphabetically
+  const sortedRelatedSkills = Object.entries(relatedSkillCounts)
+    .sort(([, aCount], [, bCount]) => bCount - aCount)
+    .map(([skill]) => skill);
+
+  return sortedRelatedSkills.slice(0, 4);
+}
