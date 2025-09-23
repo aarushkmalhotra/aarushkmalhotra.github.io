@@ -102,3 +102,17 @@ export function getAllSkills() {
     const { allSkills } = getSkills();
     return allSkills;
 }
+
+export function getProjectNeighbors(currentProjectId: string) {
+    const projects = getProjects();
+    const currentIndex = projects.findIndex(p => p.id === currentProjectId);
+    
+    if (currentIndex === -1) {
+        return { prevProject: undefined, nextProject: undefined };
+    }
+
+    const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : undefined;
+    const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex + 1] : undefined;
+    
+    return { prevProject, nextProject };
+}

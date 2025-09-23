@@ -1,7 +1,6 @@
 
-
 import { Badge } from "@/components/ui/badge";
-import { getProjectById, getProjects } from "@/lib/projects";
+import { getProjectById, getProjects, getProjectNeighbors } from "@/lib/projects";
 import { notFound } from "next/navigation";
 import { Metadata } from 'next';
 import { Check, ExternalLink } from "lucide-react";
@@ -12,6 +11,7 @@ import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { ProjectGallery } from "./ProjectGallery";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { ProjectNavigation } from "./ProjectNavigation";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -61,10 +61,12 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   if (!project) {
     notFound();
   }
+  
+  const { prevProject, nextProject } = getProjectNeighbors(project.id);
     
   const TechStackAside = () => (
     <div className="p-6 rounded-lg bg-card border">
-        <h3 className="font-headline text-xl mb-4">Tech Stack</h3>
+        <h3 className="font-headline text-xl mb-4">Skills</h3>
         <div className="flex flex-wrap gap-2">
             {project.techStack.split(',').map(tech => {
                 const skillSlug = encodeURIComponent(tech.trim().toLowerCase().replace(/\s/g, '-').replace(/\./g, ''));
@@ -169,6 +171,13 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             )}
           </aside>
         </div>
+        
+        {(prevProject || nextProject) && (
+            <div className="mt-16 md:mt-24 border-t pt-12">
+                <h2 className="font-headline text-2xl md:text-3xl text-center mb-8">Continue Exploring</h2>
+                <ProjectNavigation prevProject={prevProject} nextProject={nextProject} />
+            </div>
+        )}
       </div>
     </div>
   );

@@ -49,7 +49,7 @@ Here are the projects to analyze:
 Project Name: {{{this.name}}}
 Tagline: {{{this.tagline}}}
 Description: {{{this.description}}}
-Tech Stack: {{{this.techStack}}}
+Skills: {{{this.techStack}}}
 Outcomes: {{{this.outcomes}}}
 ---
 {{/each}}
