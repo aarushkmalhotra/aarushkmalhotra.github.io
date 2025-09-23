@@ -71,6 +71,12 @@
       "description": "YouTube Thumbnail 4",
       "imageUrl": "/ytthumbnail4.png",
       "imageHint": "youtube thumbnail"
+    },
+    {
+      "id": "simply-logo",
+      "description": "Simply Logo",
+      "imageUrl": "/simplylogo.png",
+      "imageHint": "logo"
     }
   ]
 }
