@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Project } from "@/lib/projects";
 import { ArrowLeft, ArrowUpRight, Github, Music } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface ProjectHeaderProps {
     project: Project;
@@ -22,15 +22,29 @@ const getDemoCallToAction = (project: Project) => {
 }
 
 export function ProjectHeader({ project }: ProjectHeaderProps) {
+    const headerRef = useRef<HTMLElement>(null);
     const handleScrollToSamples = () => {
         const element = document.getElementById('ai-samples');
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+        if (element && headerRef.current) {
+            // Main site header is 64px (h-16)
+            const siteHeaderHeight = 64; 
+            // This project header's height
+            const projectHeaderHeight = headerRef.current.offsetHeight;
+            const offset = siteHeaderHeight + projectHeaderHeight;
+
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
         }
     };
     
     return (
         <header 
+            ref={headerRef}
             className="sticky top-[64px] z-40"
         >
             <div className="container mx-auto px-4 pt-4">
@@ -86,7 +100,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                         )}
                          <ProjectShare project={project} />
                     </div>
-                    <div className="sm:hidden flex items-center justify-between gap-4">
+                    <div className="sm:hidden flex items-center justify-between gap-2">
                         <div className="flex items-center gap-2 flex-grow">
                              {project.id === 'rvc-ui' && (
                                 <Button onClick={handleScrollToSamples} variant="secondary" className="flex-grow">
