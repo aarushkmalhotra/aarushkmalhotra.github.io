@@ -60,7 +60,7 @@ function LatestPostCard({ post }: { post: Post }) {
 export default async function Home() {
   const allProjects = await getProjects();
   const featuredProjects = allProjects.slice(0, 3);
-  const allPosts = await getHashnodePosts("aarushkumar");
+  const allPosts = await getHashnodePosts("aarushkumar.hashnode.dev");
   const latestPost = allPosts.length > 0 ? allPosts[0] : null;
   const name = "Aarush Kumar";
 
@@ -80,7 +80,7 @@ export default async function Home() {
                 <h1 className="font-headline text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter group" data-name={name}>
                     {name.split("").map((letter, index) => (
                     <span key={index} className="name-letter" style={{ animationDelay: `${400 + index * 50}ms` }}>
-                        {letter === " " ? "\u00A0" : letter}
+                        {letter === " " ? " " : letter}
                     </span>
                     ))}
                 </h1>
@@ -120,7 +120,7 @@ export default async function Home() {
                     </p>
                 </div>
                  <Button asChild variant="link" className="text-accent p-0 mt-4 text-base">
-                    <Link href="/about">Learn more about my journey &rarr;</Link>
+                    <Link href="/about">Learn more about my journey →</Link>
                 </Button>
             </div>
              <div>
@@ -158,7 +158,7 @@ export default async function Home() {
             </div>
             <div className="text-center mt-12">
                 <Button asChild variant="link" className="text-accent text-base">
-                    <Link href="/projects">See all projects &rarr;</Link>
+                    <Link href="/projects">See all projects →</Link>
                 </Button>
             </div>
         </div>
@@ -178,7 +178,7 @@ export default async function Home() {
             </div>
             <div className="text-center mt-12">
               <Button asChild variant="link" className="text-accent text-base">
-                <Link href="/blog">Read more posts &rarr;</Link>
+                <Link href="/blog">Read more posts →</Link>
               </Button>
             </div>
           </div>

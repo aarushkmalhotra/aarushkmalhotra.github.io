@@ -48,7 +48,7 @@ function EmptyState() {
 
 
 export default async function BlogPage() {
-  const posts = await getHashnodePosts("aarushkumar");
+  const posts = await getHashnodePosts("aarushkumar.hashnode.dev");
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-16 animate-fade-in">
