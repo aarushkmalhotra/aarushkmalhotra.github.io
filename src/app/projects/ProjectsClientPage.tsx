@@ -109,12 +109,12 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
           />
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex flex-row gap-4">
           <div className="w-1/2 md:w-auto">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="w-full justify-between">
-                  <span>
+                  <span className="flex items-center">
                     Filter
                     {activeFilterCount > 0 && (
                       <span className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-medium text-primary-foreground">
@@ -125,7 +125,7 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
                   <ListFilter className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56">
+              <DropdownMenuContent className="w-56" align="start">
                 <DropdownMenuLabel>Filter by Keyword</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {allKeywords.map(keyword => (
