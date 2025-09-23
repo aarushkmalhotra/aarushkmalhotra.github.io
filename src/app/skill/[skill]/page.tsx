@@ -1,8 +1,8 @@
-
 import { ProjectCard } from "@/components/ProjectCard";
 import { getProjects } from "@/lib/projects";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import { SkillClientPage } from "./SkillClientPage";
 
 type Props = {
   params: Promise<{ skill: string }>;
@@ -74,9 +74,11 @@ export default async function ProjectsBySkillPage({ params }: Props) {
           Projects using <span className="text-primary">{capitalizedSkill}</span>
         </h1>
         <p className="text-lg text-muted-foreground mt-3 max-w-2xl mx-auto">
-          Here's a collection of my work where I've utilized {capitalizedSkill}.
+          A deep dive into my work with {capitalizedSkill}. Use the AI assistant below to get a summary of my experience.
         </p>
       </div>
+
+      <SkillClientPage skill={capitalizedSkill} projects={filteredProjects} />
       
       {filteredProjects.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -153,7 +153,7 @@ export function AboutClientPage({ allSkills, activeSkills, skillProjectMap }: Ab
           </div>
           <div className="mt-8">
             <Button asChild size="lg">
-                <Link href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+                <Link href="/resume-09-25.pdf" target="_blank" rel="noopener noreferrer">
                     <FileText className="mr-2 h-5 w-5" />
                     View My Resume
                 </Link>
