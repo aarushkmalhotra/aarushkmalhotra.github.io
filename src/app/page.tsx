@@ -61,32 +61,40 @@ export default async function Home() {
   const featuredProjects = allProjects.slice(0, 3);
   const allPosts = await getHashnodePosts("aarushkumar");
   const latestPost = allPosts.length > 0 ? allPosts[0] : null;
+  const name = "Aarush Kumar";
 
   return (
     <div className="animate-fade-in">
-      <section className="text-center border-b min-h-[calc(100dvh-65px)] flex flex-col items-center justify-center py-16 md:py-24">
+      <section className="border-b min-h-[calc(100dvh-65px)] flex flex-col items-center justify-center py-16 md:py-24 overflow-hidden">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="relative w-32 h-32 md:w-40 md:h-40 mx-auto mb-8">
-              <Image
-                src="/portrait.jpg"
-                alt="Aarush Kumar"
-                width={160}
-                height={160}
-                className="rounded-full object-cover border-4 border-primary shadow-lg"
-                data-ai-hint="professional portrait"
-                priority
-              />
+          <div className="max-w-4xl mx-auto text-center">
+            
+            <div className="animate-fade-in-up" style={{ animationDelay: '150ms' }}>
+              <Badge variant="secondary" className="px-4 py-2 text-base animate-shine">
+                  Student Founder
+              </Badge>
             </div>
-            <h1 className="font-headline text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-4">
-              <span className="animated-gradient-text">
-                Crafting Digital Experiences
-              </span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-              I'm a student founder and full-stack developer specializing in building exceptional, high-performance web applications. Welcome to my corner of the internet where I showcase my work and share my thoughts.
-            </p>
-            <div className="flex justify-center gap-4">
+
+            <div className="relative my-8 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
+                <h1 className="font-headline text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter group" data-name={name}>
+                    {name.split("").map((letter, index) => (
+                    <span key={index} className="name-letter" style={{ animationDelay: `${400 + index * 50}ms` }}>
+                        {letter === " " ? "\u00A0" : letter}
+                    </span>
+                    ))}
+                </h1>
+            </div>
+
+            <div className="animate-fade-in-up" style={{ animationDelay: '450ms' }}>
+                <h2 className="font-headline text-3xl md:text-5xl font-bold tracking-tight text-muted-foreground/80 mb-8">
+                    I see problems, then I <span className="animated-gradient-text">build solutions.</span>
+                </h2>
+                <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+                    Welcome to my corner of the internet. I'm a full-stack developer who thrives on turning frustration into functional, high-performance web applications.
+                </p>
+            </div>
+
+            <div className="flex justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '600ms' }}>
               <Button asChild size="lg">
                 <Link href="/projects">View My Work</Link>
               </Button>
