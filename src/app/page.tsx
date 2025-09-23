@@ -18,10 +18,10 @@ const skills = [
 function LatestPostCard({ post }: { post: Post }) {
     return (
         <Link href={post.url} target="_blank" rel="noopener noreferrer" className="group block h-full">
-            <Card className="h-full flex flex-col lg:flex-row transition-all duration-300 ease-in-out group-hover:shadow-xl group-hover:-translate-y-1">
+            <Card className="h-full flex flex-col lg:flex-row transition-all duration-300 ease-in-out group-hover:shadow-xl group-hover:-translate-y-1 overflow-hidden">
                 {post.coverImage && (
-                    <div className="lg:w-1/3">
-                        <div className="aspect-video relative overflow-hidden rounded-t-lg lg:rounded-l-lg lg:rounded-t-none h-full">
+                    <div className="lg:w-1/3 relative">
+                        <div className="aspect-video lg:aspect-auto lg:absolute lg:inset-0">
                             <Image
                                 src={post.coverImage.url}
                                 alt={post.title}
