@@ -66,7 +66,7 @@ export default async function Home() {
 
   return (
     <div className="animate-fade-in">
-      <section className="flex flex-col items-center justify-center py-16 md:py-24 overflow-hidden">
+      <section className="md:min-h-[calc(100dvh-65px)] flex flex-col items-center justify-center py-16 md:py-24 overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             
