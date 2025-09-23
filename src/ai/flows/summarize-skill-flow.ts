@@ -65,7 +65,7 @@ const summarizeSkillFlow = ai.defineFlow(
   },
   async (input) => {
     const { stream, response } = ai.generateStream({
-        prompt: summarizeSkillPrompt.prompt,
+        prompt: summarizeSkillPrompt,
         input: input,
         model: 'googleai/gemini-2.5-flash',
     });
