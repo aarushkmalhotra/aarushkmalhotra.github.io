@@ -158,10 +158,12 @@ export function DownloadableAudioPlayer({ audioFile, themeColor }: AudioPlayerPr
                             onClick={handleDownload}
                             size="sm"
                             variant="ghost"
-                            className="flex-shrink-0 items-center gap-2 text-muted-foreground hover:text-accent"
+                            className="group flex-shrink-0"
                         >
-                            <Download className="w-4 h-4" />
-                            Download
+                            <span className="flex items-center gap-2 text-muted-foreground group-hover:text-accent transition-colors">
+                                <Download className="w-4 h-4" />
+                                Download
+                            </span>
                         </Button>
                     </div>
 
