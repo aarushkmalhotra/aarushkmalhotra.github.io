@@ -73,8 +73,8 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
     const queryString = params.toString();
     const newUrl = queryString ? `${pathname}?${queryString}` : pathname;
     
-    // Use replace to avoid adding to browser history for every filter change
-    router.replace(newUrl, { scroll: false });
+    // Use push to avoid adding to browser history for every filter change
+    router.push(newUrl, { scroll: false });
 
   }, [searchTerm, selectedKeywords, sortOrder, pathname, router, isMounted]);
 

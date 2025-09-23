@@ -96,6 +96,10 @@ export default function ProjectDetailPage({ params, searchParams }: PageProps) {
     case "alphabetical":
       filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
       break;
+    case "newest":
+    default:
+      // The default `getProjects` is already sorted by newest
+      break;
   }
   
   const { prevProject, nextProject } = getProjectNeighbors(project.id, filtered);
