@@ -107,7 +107,7 @@ export default {
         },
         'marquee': {
             '0%': { transform: 'translateX(0)' },
-            '100%': { transform: 'translateX(-100%)' },
+            '100%': { transform: 'translateX(-50%)' },
         },
         'wave': {
           '0%, 100%': { transform: 'scaleY(0.5)' },
@@ -122,7 +122,7 @@ export default {
         'gradient-pan': 'gradient-pan 5s ease infinite',
         'shine': 'shine 4s linear infinite',
         'marquee': 'marquee 25s linear infinite',
-        'marquee-fast': 'marquee 15s linear infinite',
+        'marquee-fast': 'marquee 10s linear infinite',
         'wave': 'wave 1.2s ease-in-out infinite',
       },
     },

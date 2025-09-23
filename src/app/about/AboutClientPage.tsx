@@ -48,6 +48,51 @@ interface AboutClientPageProps {
   skillProjectMap: Record<string, Project[]>;
 }
 
+const SkillBadge = ({ skill, isClickable, skillProjectMap }: { skill: string, isClickable: boolean, skillProjectMap: Record<string, Project[]> }) => {
+    const skillSlug = encodeURIComponent(skill.toLowerCase().replace(/\s/g, '-').replace(/\./g, ''));
+    const projectsForSkill = skillProjectMap[skill] || [];
+    const projectCount = projectsForSkill.length;
+
+    const badge = (
+        <Badge 
+            className={cn(
+                "text-lg px-6 py-3 transition-colors duration-300 ease-in-out",
+                isClickable ? "hover:bg-primary hover:text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" : "opacity-50 cursor-not-allowed",
+            )}
+            variant="default"
+        >
+        {skill}
+        </Badge>
+    );
+
+    return (
+        <div className="mx-4 flex-shrink-0">
+        {isClickable ? (
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Link href={`/skill/${skillSlug}`} aria-label={`View projects for ${skill}`}>
+                            {badge}
+                        </Link>
+                    </TooltipTrigger>
+                    <TooltipContent className="z-50 bg-popover text-popover-foreground">
+                        <div className="text-center p-2">
+                            <p className="font-bold text-base mb-2">
+                                {projectCount} {projectCount === 1 ? 'Project' : 'Projects'}
+                            </p>
+                            <ul className="text-sm text-muted-foreground list-none p-0 m-0 space-y-1">
+                                {projectsForSkill.map(p => <li key={p.id}>{p.name}</li>)}
+                            </ul>
+                            <Button variant="link" size="sm" className="mt-2 text-accent p-0 h-auto">View Projects</Button>
+                        </div>
+                    </TooltipContent>
+                </Tooltip>
+            ) : (
+                <div>{badge}</div>
+            )}
+        </div>
+    );
+};
+
 const ExperienceItem = ({ item, index }: { item: typeof experience[0], index: number }) => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -114,52 +159,17 @@ export function AboutClientPage({ allSkills, activeSkills, skillProjectMap }: Ab
         
         <TooltipProvider delayDuration={100}>
             <div id="skill-carousel-wrapper" className="relative w-full overflow-hidden">
-                <div id="skill-carousel" className="relative w-full group">
+                <div id="skill-carousel" className="relative w-full group flex overflow-hidden">
                     <div className="flex animate-marquee-fast group-hover:[animation-play-state:paused]">
-                        {[...allSkills, ...allSkills].map((skill, index) => {
+                        {allSkills.map((skill, index) => {
                             const isClickable = activeSkills.some(s => s.toLowerCase() === skill.toLowerCase());
-                            const skillSlug = encodeURIComponent(skill.toLowerCase().replace(/\s/g, '-').replace(/\./g, ''));
-                            const projectsForSkill = skillProjectMap[skill] || [];
-                            const projectCount = projectsForSkill.length;
-
-                            const badge = (
-                                <Badge 
-                                    className={cn(
-                                        "text-lg px-6 py-3 transition-colors duration-300 ease-in-out",
-                                        isClickable ? "hover:bg-primary hover:text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" : "opacity-50 cursor-not-allowed",
-                                    )}
-                                    variant="default"
-                                >
-                                {skill}
-                                </Badge>
-                            );
-
-                            return (
-                                <div key={index} className="mx-4 flex-shrink-0">
-                                {isClickable ? (
-                                        <Tooltip>
-                                            <TooltipTrigger asChild>
-                                                <Link href={`/skill/${skillSlug}`} aria-label={`View projects for ${skill}`}>
-                                                    {badge}
-                                                </Link>
-                                            </TooltipTrigger>
-                                            <TooltipContent className="z-50 bg-popover text-popover-foreground">
-                                                <div className="text-center p-2">
-                                                    <p className="font-bold text-base mb-2">
-                                                        {projectCount} {projectCount === 1 ? 'Project' : 'Projects'}
-                                                    </p>
-                                                    <ul className="text-sm text-muted-foreground list-none p-0 m-0 space-y-1">
-                                                        {projectsForSkill.map(p => <li key={p.id}>{p.name}</li>)}
-                                                    </ul>
-                                                    <Button variant="link" size="sm" className="mt-2 text-accent p-0 h-auto">View Projects</Button>
-                                                </div>
-                                            </TooltipContent>
-                                        </Tooltip>
-                                    ) : (
-                                        <div>{badge}</div>
-                                    )}
-                                </div>
-                            );
+                            return <SkillBadge key={`${skill}-${index}-1`} skill={skill} isClickable={isClickable} skillProjectMap={skillProjectMap} />
+                        })}
+                    </div>
+                     <div className="flex animate-marquee-fast group-hover:[animation-play-state:paused]" aria-hidden="true">
+                        {allSkills.map((skill, index) => {
+                            const isClickable = activeSkills.some(s => s.toLowerCase() === skill.toLowerCase());
+                            return <SkillBadge key={`${skill}-${index}-2`} skill={skill} isClickable={isClickable} skillProjectMap={skillProjectMap} />
                         })}
                     </div>
                 </div>
