@@ -171,7 +171,7 @@
     "id": "imdb-top-1000",
     "name": "IMDB Top 1000",
     "tagline": "My First JavaScript Project",
-    "description": "This was my first dive into JavaScript, built on Code.org's App Lab. This app lets users browse and search the top 1000 IMDB movies, serving as a practical exercise in data handling and UI development. It represents a foundational step in my coding journey.",
+    "description": "This was my first dive into vanilla JavaScript on Code.org's App Lab, and served as my final project for AP Computer Science Principles. This app lets users browse and search the top 1000 IMDB movies, serving as a practical exercise in data handling and UI development. It represents a foundational step in my coding journey.",
     "keyFeatures": [
       "Browse and search IMDB's top 1000 movies",
       "Built with vanilla JavaScript on Code.org",
@@ -183,8 +183,8 @@
     "demoUrl": "https://studio.code.org/projects/applab/w8PJdUtl1-DUKphmZ3zI9p0ZFzbPeqC5T_C0WHmYhVU",
     "images": ["imdb-1"],
     "videoPreview": "/imdbtop1000demo.mp4",
-    "startDate": "2022-09-01",
-    "endDate": "2022-12-01",
+    "startDate": "2023-09-01",
+    "endDate": "2024-05-01",
     "type": "project",
     "theme": {
       "primary": "hsl(45, 93%, 54%)",

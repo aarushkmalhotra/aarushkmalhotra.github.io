@@ -66,7 +66,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
   const galleryItems = [
       ...(project.videoPreview ? [project.videoPreview] : []), 
-      ...projectImages
+      ...(!project.videoPreview ? projectImages : [])
   ];
     
   const TechStackAside = () => (
