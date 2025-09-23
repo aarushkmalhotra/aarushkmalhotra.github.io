@@ -69,8 +69,12 @@ function Lightbox({ open, onOpenChange, items, startIndex }: { open: boolean, on
                     )}
                 </div>
                 
-                <Button variant="ghost" size="icon" onClick={handlePrev} className="absolute left-4 top-1/2 -translate-y-1/2 z-50 text-white hover:bg-white/20 hover:text-white hidden md:inline-flex"><ChevronLeft size={32} /></Button>
-                <Button variant="ghost" size="icon" onClick={handleNext} className="absolute right-4 top-1/2 -translate-y-1/2 z-50 text-white hover:bg-white/20 hover:text-white hidden md:inline-flex"><ChevronRight size={32} /></Button>
+                {items.length > 1 && (
+                    <>
+                        <Button variant="ghost" size="icon" onClick={handlePrev} className="absolute left-4 top-1/2 -translate-y-1/2 z-50 text-white hover:bg-white/20 hover:text-white hidden md:inline-flex"><ChevronLeft size={32} /></Button>
+                        <Button variant="ghost" size="icon" onClick={handleNext} className="absolute right-4 top-1/2 -translate-y-1/2 z-50 text-white hover:bg-white/20 hover:text-white hidden md:inline-flex"><ChevronRight size={32} /></Button>
+                    </>
+                )}
 
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/80 text-sm bg-black/50 px-3 py-1 rounded-full">
                     {currentIndex + 1} / {items.length}
@@ -84,13 +88,17 @@ export function ProjectGallery({ project }: ProjectGalleryProps) {
     const [isLightboxOpen, setLightboxOpen] = useState(false);
     const [startIndex, setStartIndex] = useState(0);
 
-    const imageItems = project.images
+    const imageIds = project.id === 'album-tracks' 
+        ? project.images.filter(id => id !== 'album-tracks-1') 
+        : project.images;
+
+    const imageItems = imageIds
         .map(id => PlaceHolderImages.find(img => img.id === id))
         .filter((img): img is ImagePlaceholder => !!img)
         .map(img => ({ ...img, type: 'image' as const }));
     
-    const videoItem = project.videoPreview ? (project.videoPreview.includes('youtube.com') 
-        ? { type: 'iframe' as const, url: project.videoPreview }
+    const videoItem = project.videoPreview ? (project.videoPreview.includes('youtube.com') || project.videoPreview.includes('youtu.be')
+        ? { type: 'iframe' as const, url: project.videoPreview.replace('youtu.be/', 'www.youtube.com/embed/') }
         : { type: 'video' as const, url: project.videoPreview }) 
         : null;
 
@@ -139,7 +147,7 @@ export function ProjectGallery({ project }: ProjectGalleryProps) {
                     <Carousel
                         opts={{
                             align: "start",
-                            loop: imageOnlyItems.length > 1,
+                            loop: imageOnlyItems.length > 2,
                         }}
                         className="w-full"
                     >
@@ -161,10 +169,12 @@ export function ProjectGallery({ project }: ProjectGalleryProps) {
                                 </CarouselItem>
                             ))}
                         </CarouselContent>
-                        <div className={cn(imageOnlyItems.length <= 2 ? 'hidden' : 'block')}>
-                            <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2" />
-                            <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2" />
-                        </div>
+                         {imageOnlyItems.length > 2 && (
+                            <>
+                                <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2" />
+                                <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2" />
+                            </>
+                        )}
                     </Carousel>
                 )}
             </div>
