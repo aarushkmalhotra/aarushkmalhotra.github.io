@@ -145,7 +145,7 @@
     "id": "cifar-10-cnn",
     "name": "CIFAR-10 CNN Object Classification Model",
     "tagline": "Deep Learning for Image Recognition with Veritas AI",
-    "description": "As an AI Scholar at Veritas AI, I led the development of our group's capstone project. We used the CIFAR-10 dataset for object and image detection by building and customizing a convolutional neural network (CNN).\nThis project was completed under the expert mentorship of Jason Jabour, a Computer Science PhD candidate at Harvard University.",
+    "description": "Object Classification Model",
     "keyFeatures": [
       "Custom Convolutional Neural Network (CNN) architecture",
       "Trained on the CIFAR-10 dataset for object recognition",
@@ -168,5 +168,3 @@
     }
   }
 ]
-
-    

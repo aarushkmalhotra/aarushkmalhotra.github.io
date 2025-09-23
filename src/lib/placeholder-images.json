@@ -33,7 +33,7 @@
     {
       "id": "cifar-1",
       "description": "Banner for CIFAR-10 CNN Project",
-      "imageUrl": "https://images.unsplash.com/photo-1590859808308-3d2d9c515b1a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxuZXVyYWwlMjBuZXR3b3JrfGVufDB8fHx8MTc1ODU5NzMwNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "/veritasaibanner.png",
       "imageHint": "neural network"
     }
   ]
