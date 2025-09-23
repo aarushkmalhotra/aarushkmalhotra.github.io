@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { InteractiveTerminal } from "@/components/InteractiveTerminal";
 
 // Important: To make this form work, you need a Formspree account.
 // 1. Create a new form on formspree.io.
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <div className="container mx-auto px-4 py-8 md:py-16 animate-fade-in">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="font-headline text-4xl md:text-5xl font-bold tracking-tight">Get In Touch</h1>
           <p className="text-lg text-muted-foreground mt-3">
@@ -21,8 +22,11 @@ export default function ContactPage() {
           </p>
         </div>
 
-        <div className="bg-card border p-8 rounded-lg shadow-sm">
-          <form action={FORMSPREE_URL} method="POST">
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Traditional Contact Form */}
+          <div className="bg-card border p-8 rounded-lg shadow-sm">
+            <h2 className="text-xl font-semibold mb-6">Send a Message</h2>
+            <form action={FORMSPREE_URL} method="POST">
             <div className="grid grid-cols-1 gap-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
@@ -87,10 +91,20 @@ export default function ContactPage() {
               </div>
             </div>
           </form>
-        </div>
-        <p className="text-center text-xs text-muted-foreground mt-4">
+          <p className="text-center text-xs text-muted-foreground mt-4">
             This form is powered by <a href="https://formspree.io" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">Formspree</a>.
-        </p>
+          </p>
+        </div>
+
+        {/* Interactive Terminal */}
+        <div>
+          <h2 className="text-xl font-semibold mb-6">Or Explore Via Terminal</h2>
+          <InteractiveTerminal />
+          <p className="text-xs text-muted-foreground mt-4 text-center">
+            Click anywhere in the terminal and start typing commands!
+          </p>
+        </div>
+      </div>
       </div>
     </div>
   );

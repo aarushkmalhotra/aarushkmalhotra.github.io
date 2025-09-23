@@ -4,12 +4,13 @@
 import { Badge } from "@/components/ui/badge";
 import { Briefcase, GraduationCap, FileText } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import type { Project } from "@/lib/projects";
 import { Button } from "@/components/ui/button";
+import { SkillVisualization } from "@/components/SkillVisualization";
+import { createPortal } from "react-dom";
 
 const experience = [
   {
@@ -48,10 +49,90 @@ interface AboutClientPageProps {
   skillProjectMap: Record<string, Project[]>;
 }
 
-const SkillBadge = ({ skill, isClickable, skillProjectMap }: { skill: string, isClickable: boolean, skillProjectMap: Record<string, Project[]> }) => {
+// Custom skill popover component that renders above everything
+const SkillPopover = ({ 
+    skill, 
+    isClickable, 
+    skillProjectMap, 
+    onHoverChange 
+}: { 
+    skill: string; 
+    isClickable: boolean; 
+    skillProjectMap: Record<string, Project[]>;
+    onHoverChange: (hovered: boolean) => void;
+}) => {
+    const [isHovered, setIsHovered] = useState(false);
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const triggerRef = useRef<HTMLDivElement>(null);
+    const timeoutRef = useRef<NodeJS.Timeout>();
+    
     const skillSlug = encodeURIComponent(skill.toLowerCase().replace(/\s/g, '-').replace(/\./g, ''));
     const projectsForSkill = skillProjectMap[skill] || [];
     const projectCount = projectsForSkill.length;
+
+    const handleMouseEnter = () => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
+        setIsHovered(true);
+        onHoverChange(true);
+    };
+
+    const handleMouseLeave = () => {
+        timeoutRef.current = setTimeout(() => {
+            setIsHovered(false);
+            onHoverChange(false);
+        }, 200); // Longer delay to allow movement to popover
+    };
+
+    const updatePosition = () => {
+        if (triggerRef.current) {
+            const rect = triggerRef.current.getBoundingClientRect();
+            const viewportWidth = window.innerWidth;
+            const popoverWidth = 320; // max-width of popover
+            const popoverHeight = 240; // approximate height
+            
+            // Calculate center of the badge
+            const badgeCenter = rect.left + rect.width / 2;
+            let x = badgeCenter;
+            let y = rect.top - popoverHeight - 20; // Position above the badge with more gap
+            
+            // Ensure popover doesn't go off-screen horizontally
+            const halfPopoverWidth = popoverWidth / 2;
+            if (x - halfPopoverWidth < 15) {
+                x = halfPopoverWidth + 15;
+            } else if (x + halfPopoverWidth > viewportWidth - 15) {
+                x = viewportWidth - halfPopoverWidth - 15;
+            }
+            
+            // If not enough space above, show below
+            if (y < 15) {
+                y = rect.bottom + 20;
+            }
+            
+            setPosition({ x, y });
+        }
+    };
+
+    useEffect(() => {
+        if (isHovered) {
+            updatePosition();
+            const handleResize = () => updatePosition();
+            const handlePositionUpdate = () => updatePosition();
+            
+            // Update position more frequently while hovered to handle marquee movement
+            const positionInterval = setInterval(updatePosition, 16); // ~60fps
+            
+            window.addEventListener('resize', handleResize);
+            window.addEventListener('scroll', handlePositionUpdate);
+            
+            return () => {
+                window.removeEventListener('resize', handleResize);
+                window.removeEventListener('scroll', handlePositionUpdate);
+                clearInterval(positionInterval);
+            };
+        }
+    }, [isHovered]);
 
     const badge = (
         <Badge 
@@ -61,42 +142,114 @@ const SkillBadge = ({ skill, isClickable, skillProjectMap }: { skill: string, is
             )}
             variant="default"
         >
-        {skill}
+            {skill}
         </Badge>
     );
 
+    const popoverContent = isHovered && isClickable && typeof window !== 'undefined' ? createPortal(
+        <>
+            {/* Invisible hover bridge */}
+            <div
+                className="fixed z-[9998] pointer-events-auto"
+                style={{
+                    left: position.x - 50,
+                    top: position.y + 240,
+                    width: 100,
+                    height: 30,
+                    transform: 'translateX(-50%)'
+                }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            />
+            <motion.div 
+                initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
+                className="fixed z-[9999] bg-card text-card-foreground border border-border rounded-lg shadow-xl backdrop-blur-sm min-w-[280px] max-w-[320px] skill-popover"
+                style={{
+                    left: position.x,
+                    top: position.y,
+                    transform: 'translateX(-50%)',
+                    pointerEvents: 'auto'
+                }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            >
+            <div className="p-6">
+                {/* Header */}
+                <div className="text-center mb-4">
+                    <h3 className="text-lg font-bold text-foreground mb-1">{skill}</h3>
+                    <p className="text-sm text-muted-foreground">
+                        {projectCount} {projectCount === 1 ? 'Project' : 'Projects'}
+                    </p>
+                </div>
+                
+                {/* Projects List */}
+                {projectsForSkill.length > 0 && (
+                    <div className="mb-4">
+                        <h4 className="text-sm font-semibold text-foreground mb-2">Recent Projects:</h4>
+                        <ul className="space-y-2">
+                            {projectsForSkill.slice(0, 3).map(p => (
+                                <li key={p.id} className="flex items-center gap-2">
+                                    <div className="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0" />
+                                    <span className="text-sm text-foreground truncate">{p.name}</span>
+                                </li>
+                            ))}
+                            {projectsForSkill.length > 3 && (
+                                <li className="flex items-center gap-2">
+                                    <div className="w-1.5 h-1.5 bg-muted-foreground rounded-full flex-shrink-0" />
+                                    <span className="text-xs text-muted-foreground">
+                                        +{projectsForSkill.length - 3} more project{projectsForSkill.length - 3 !== 1 ? 's' : ''}
+                                    </span>
+                                </li>
+                            )}
+                        </ul>
+                    </div>
+                )}
+                
+                {/* Call to Action */}
+                <div className="text-center pt-2 border-t border-border">
+                    <Link 
+                        href={`/skill/${skillSlug}`}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md text-sm font-medium transition-colors cursor-pointer"
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        <span>Explore all projects</span>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                    </Link>
+                </div>
+            </div>
+            
+            {/* Enhanced Arrow pointing down */}
+            <div className="absolute top-full left-1/2 transform -translate-x-1/2">
+                <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-border" />
+                <div className="w-0 h-0 border-l-[5px] border-r-[5px] border-t-[5px] border-l-transparent border-r-transparent border-t-card absolute top-0 left-1/2 transform -translate-x-1/2 translate-y-[-1px]" />
+            </div>
+        </motion.div>
+        </>,
+        document.body
+    ) : null;
+
     return (
         <div className="mx-4 flex-shrink-0">
-        {isClickable ? (
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Link href={`/skill/${skillSlug}`} aria-label={`View projects for ${skill}`}>
-                            {badge}
-                        </Link>
-                    </TooltipTrigger>
-                    <TooltipContent className="z-50 bg-popover text-popover-foreground">
-                        <div className="p-2 text-center">
-                            <p className="mb-2 text-base font-bold">
-                                {projectCount} {projectCount === 1 ? 'Project' : 'Projects'}
-                            </p>
-                            <ul className="m-0 list-none space-y-1 p-0 text-sm text-muted-foreground">
-                                {projectsForSkill.map(p => (
-                                    <li key={p.id}>
-                                        <Link href={`/projects/${p.id}`} className="underline-offset-4 hover:text-primary hover:underline">
-                                            {p.name}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                            <Button variant="link" size="sm" asChild className="mt-2 h-auto p-0 text-accent">
-                               <Link href={`/skill/${skillSlug}`}>View All</Link>
-                            </Button>
-                        </div>
-                    </TooltipContent>
-                </Tooltip>
-            ) : (
-                <div>{badge}</div>
-            )}
+            <div
+                ref={triggerRef}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+            >
+                {isClickable ? (
+                    <Link href={`/skill/${skillSlug}`} aria-label={`View projects for ${skill}`}>
+                        {badge}
+                    </Link>
+                ) : (
+                    <div>{badge}</div>
+                )}
+            </div>
+            {popoverContent}
         </div>
     );
 };
@@ -133,14 +286,13 @@ const ExperienceItem = ({ item, index }: { item: typeof experience[0], index: nu
   );
 };
 
-export function AboutClientPage({ allSkills, activeSkills, skillProjectMap }: AboutClientPageProps) {
-    const journeyRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: journeyRef,
-        offset: ["start center", "end end"]
-    });
-    
-  return (
+export default function AboutClientPage({ allSkills, activeSkills, skillProjectMap }: AboutClientPageProps) {
+  const journeyRef = useRef(null);
+  const [isSkillHovered, setIsSkillHovered] = useState(false);
+  const { scrollYProgress } = useScroll({
+    target: journeyRef,
+    offset: ["start end", "end start"]
+  });  return (
     <div className="animate-fade-in">
       <section className="flex flex-col justify-center min-h-[calc(100dvh-65px)] container mx-auto px-4 py-8 md:py-16">
         <div className="max-w-6xl mx-auto text-center">
@@ -173,26 +325,22 @@ export function AboutClientPage({ allSkills, activeSkills, skillProjectMap }: Ab
       <section className="py-16 md:py-24 border-t">
         <h2 className="font-headline text-3xl md:text-4xl font-bold text-center mb-12">My Skillset</h2>
         
-        <TooltipProvider delayDuration={100}>
-            <div id="skill-carousel-wrapper" className="relative w-full overflow-hidden">
-                <div id="skill-carousel" className="relative w-full group flex overflow-hidden">
-                    <div className="flex animate-marquee-fast group-hover:[animation-play-state:paused]">
-                        {allSkills.map((skill, index) => {
-                            const isClickable = activeSkills.some(s => s.toLowerCase() === skill.toLowerCase());
-                            return <SkillBadge key={`${skill}-${index}-1`} skill={skill} isClickable={isClickable} skillProjectMap={skillProjectMap} />
-                        })}
-                    </div>
-                     <div className="flex animate-marquee-fast group-hover:[animation-play-state:paused]" aria-hidden="true">
-                        {allSkills.map((skill, index) => {
-                            const isClickable = activeSkills.some(s => s.toLowerCase() === skill.toLowerCase());
-                            return <SkillBadge key={`${skill}-${index}-2`} skill={skill} isClickable={isClickable} skillProjectMap={skillProjectMap} />
-                        })}
-                    </div>
+        <div id="skill-carousel-wrapper" className="relative w-full overflow-hidden">
+            <div id="skill-carousel" className={cn("relative w-full group flex overflow-hidden", isSkillHovered && "[&_.marquee-content]:[animation-play-state:paused]")}>
+                <div className={cn("flex animate-marquee group-hover:[animation-play-state:paused] marquee-content whitespace-nowrap", isSkillHovered && "[animation-play-state:paused]")}>
+                    {allSkills.map((skill, index) => {
+                        const isClickable = activeSkills.some(s => s.toLowerCase() === skill.toLowerCase());
+                        return <SkillPopover key={`${skill}-${index}-1`} skill={skill} isClickable={isClickable} skillProjectMap={skillProjectMap} onHoverChange={setIsSkillHovered} />
+                    })}
+                    {allSkills.map((skill, index) => {
+                        const isClickable = activeSkills.some(s => s.toLowerCase() === skill.toLowerCase());
+                        return <SkillPopover key={`${skill}-${index}-2`} skill={skill} isClickable={isClickable} skillProjectMap={skillProjectMap} onHoverChange={setIsSkillHovered} />
+                    })}
                 </div>
-                <div className="absolute inset-y-0 left-0 w-1/12 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"></div>
-                <div className="absolute inset-y-0 right-0 w-1/12 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"></div>
             </div>
-        </TooltipProvider>
+            <div className="absolute inset-y-0 left-0 w-1/12 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute inset-y-0 right-0 w-1/12 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"></div>
+        </div>
       </section>
       
       <section className="pt-16 md:pt-24 border-t">

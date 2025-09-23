@@ -1,5 +1,5 @@
 
-import { AboutClientPage } from "./AboutClientPage";
+import AboutClientPage from "./AboutClientPage";
 import { Metadata } from "next";
 import { getSkills } from "@/lib/projects";
 

@@ -7,7 +7,7 @@ import { Mail } from "lucide-react";
 
 export function Footer() {
     return (
-      <footer className="border-t">
+      <footer className="border-t relative z-50 bg-background">
         <div className="container mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between">
           <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} Aarush Kumar. All rights reserved.

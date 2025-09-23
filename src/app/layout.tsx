@@ -6,6 +6,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
 import { ScrollToTop } from '@/components/ScrollToTop';
+import { ParticleBackground } from '@/components/ParticleBackground';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://aarushkmalhotra.github.io/'),
@@ -51,7 +52,8 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased">
         <Providers>
-          <div className="flex flex-col min-h-screen">
+          <ParticleBackground intensity="medium" />
+          <div className="flex flex-col min-h-screen relative z-10">
             <Header />
             <main className="flex-grow">{children}</main>
             <Footer />
