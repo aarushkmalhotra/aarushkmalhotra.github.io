@@ -1,7 +1,14 @@
+import { Metadata } from "next";
+
 // Important: To make this form work, you need a Formspree account.
 // 1. Create a new form on formspree.io.
 // 2. Replace the placeholder URL below with your own Formspree form endpoint URL.
 const FORMSPREE_URL = "https://formspree.io/f/mzzjpwwl";
+
+export const metadata: Metadata = {
+  title: "Contact – Aarush's Portfolio",
+  description: "Have a project in mind, a question, or just want to say hi? Get in touch with me.",
+};
 
 export default function ContactPage() {
   return (

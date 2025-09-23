@@ -1,6 +1,11 @@
 import { ProjectCard } from "@/components/ProjectCard";
 import { getProjects } from "@/lib/projects";
-import { Separator } from "@/components/ui/separator";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Projects – Aarush's Portfolio",
+  description: "A collection of projects I've built. Each one represents a unique challenge and a story of creative problem-solving.",
+};
 
 export default async function ProjectsPage() {
   const allProjects = await getProjects();

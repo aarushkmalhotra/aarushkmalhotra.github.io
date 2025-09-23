@@ -16,10 +16,10 @@ import { Button } from "@/components/ui/button";
 import { getHashnodePosts } from "@/lib/hashnode";
 
 export const metadata: Metadata = {
-  title: "Blog | Aarush's Portfolio",
+  title: "Blog – Aarush's Portfolio",
   description: "My thoughts on technology, development, and everything in between.",
   openGraph: {
-    title: "Blog | Aarush's Portfolio",
+    title: "Blog – Aarush's Portfolio",
     description: "My thoughts on technology, development, and everything in between.",
     images: [
       {

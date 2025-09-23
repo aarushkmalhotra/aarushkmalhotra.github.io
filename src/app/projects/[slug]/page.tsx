@@ -12,11 +12,11 @@ import { ProjectHeader } from "./ProjectHeader";
 import { AudioPlayer } from "@/components/AudioPlayer";
 
 type Props = {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug } = params;
   const project = await getProjectById(slug);
 
   if (!project) {
@@ -28,10 +28,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const firstImage = PlaceHolderImages.find(img => img.id === project.images[0]);
 
   return {
-    title: `${project.name} | Aarush's Portfolio`,
+    title: `${project.name} – Aarush's Portfolio`,
     description: project.tagline,
     openGraph: {
-        title: `${project.name} | Aarush's Portfolio`,
+        title: `${project.name} – Aarush's Portfolio`,
         description: project.tagline,
         images: firstImage ? [
             {
@@ -52,8 +52,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default async function ProjectDetailPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   const project = await getProjectById(slug);
 
   if (!project) {
