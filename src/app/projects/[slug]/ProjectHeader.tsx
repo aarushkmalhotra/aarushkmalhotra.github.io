@@ -131,7 +131,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                                     </Link>
                                 </Button>
                             )}
-                            {project.demoUrl && (
+                            {project.demoUrl && project.id !== 'album-tracks' && (
                                 <Button asChild variant="secondary" className="flex-grow">
                                     <Link href={project.demoUrl} target="_blank" rel="noopener noreferrer">
                                         {getDemoCallToAction(project)}
