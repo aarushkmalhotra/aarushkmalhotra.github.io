@@ -58,3 +58,23 @@ export async function getProjectById(id: string): Promise<Project | undefined> {
   const projects = await getProjects();
   return projects.find((p) => p.id === id);
 }
+
+export async function getSkills() {
+    const projects = await getProjects();
+    const skillSet = new Set<string>();
+    
+    projects.forEach(project => {
+        project.techStack.split(',').forEach(skill => {
+            skillSet.add(skill.trim());
+        });
+    });
+
+    const activeSkills = Array.from(skillSet).sort();
+    
+    const allSkills = [
+        ...activeSkills,
+        "Swift", "C++" // Add skills without projects here
+    ].sort();
+
+    return { allSkills, activeSkills };
+}

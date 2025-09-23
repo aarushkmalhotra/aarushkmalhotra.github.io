@@ -13,6 +13,9 @@ interface ProjectHeaderProps {
 }
 
 const getDemoCallToAction = (project: Project) => {
+    if (project.id === 'cifar-10-cnn') {
+      return 'View Slides';
+    }
     if (project.id === 'simplify-me' || project.id === 'vernato') {
         return 'Use for Free';
     }

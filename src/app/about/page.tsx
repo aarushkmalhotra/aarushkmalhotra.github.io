@@ -1,6 +1,7 @@
 
 import { AboutClientPage } from "./AboutClientPage";
 import { Metadata } from "next";
+import { getSkills } from "@/lib/projects";
 
 export const metadata: Metadata = {
   title: "About – Aarush's Portfolio",
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
   }
 };
 
-export default function AboutPage() {
-  return <AboutClientPage />;
+export default async function AboutPage() {
+  const { allSkills, activeSkills } = await getSkills();
+  return <AboutClientPage allSkills={allSkills} activeSkills={activeSkills} />;
 }

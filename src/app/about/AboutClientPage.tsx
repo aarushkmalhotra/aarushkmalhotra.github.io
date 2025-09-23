@@ -8,22 +8,6 @@ import { useRef } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-const skills = [
-  "TypeScript", "JavaScript", "HTML", "Python", "C++", "Swift", "Next.js", "Tailwind CSS",
-  "Git", "Vercel", "Firebase", "Azure", "AWS", "Google Cloud", "Zapier", "WordPress", "PyTorch", 
-  "Gradio", "CUDA", "PHP", "React", "Figma", "Canva", "Discord API", "MTA API", "Google Gemini", "CSS", "AWS"
-];
-
-// Skills that have projects associated with them.
-// This should be kept in sync with projects data.
-const activeSkills = [
-  "TypeScript", "React", "Next.js", "Azure", "Google Cloud", "Firebase", "Vercel", "Tailwind CSS",
-  "JavaScript", "PHP", "WordPress", "Zapier", "Google Gemini", "CSS", "HTML",
-  "Figma", "Canva", "MTA API",
-  "Python", "AWS", "Discord API",
-  "PyTorch", "Gradio", "CUDA"
-];
-
 const experience = [
   {
     role: "B.S. in Computer Science",
@@ -54,6 +38,11 @@ const experience = [
     icon: <Briefcase className="w-5 h-5 text-primary" />
   },
 ];
+
+interface AboutClientPageProps {
+  allSkills: string[];
+  activeSkills: string[];
+}
 
 const ExperienceItem = ({ item, index }: { item: typeof experience[0], index: number }) => {
   const ref = useRef(null);
@@ -87,7 +76,7 @@ const ExperienceItem = ({ item, index }: { item: typeof experience[0], index: nu
   );
 };
 
-export function AboutClientPage() {
+export function AboutClientPage({ allSkills, activeSkills }: AboutClientPageProps) {
     const journeyRef = useRef(null);
     const { scrollYProgress } = useScroll({
         target: journeyRef,
@@ -120,7 +109,7 @@ export function AboutClientPage() {
         <h2 className="font-headline text-3xl md:text-4xl font-bold text-center mb-12">My Skillset</h2>
         <div className="relative w-full overflow-hidden group [mask-image:linear-gradient(to-right,transparent,black_10%,black_90%,transparent)]">
             <div className="flex animate-marquee group-hover:[animation-play-state:paused]">
-                {[...skills, ...skills].map((skill, index) => {
+                {[...allSkills, ...allSkills].map((skill, index) => {
                     const isClickable = activeSkills.some(s => s.toLowerCase() === skill.toLowerCase());
                     const skillSlug = encodeURIComponent(skill.toLowerCase().replace(/\s/g, '-').replace(/\./g, ''));
                     

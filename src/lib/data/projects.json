@@ -11,7 +11,7 @@
       "Designed for individuals, educators, and organizations",
       "Engaging and measurable pronunciation training"
     ],
-    "techStack": "TypeScript, React, Next.js, Azure, Google Cloud, Firebase, Vercel, Tailwind CSS",
+    "techStack": "TypeScript, React, Next.js, Azure, Google Cloud, Firebase, Vercel, Tailwind CSS, Git",
     "outcomes": "Successfully developed and deployed a an AI model for pronunciation scoring.\nThe platform is currently in beta with a select group of users, gathering feedback to refine the learning experience and prepare for a public launch.",
     "repoUrl": null,
     "demoUrl": "https://www.vernato.org",
@@ -143,9 +143,9 @@
   },
   {
     "id": "cifar-10-cnn",
-    "name": "CIFAR-10 CNN Object Classification Model",
-    "tagline": "Deep Learning for Image Recognition with Veritas AI",
-    "description": "Object Classification Model",
+    "name": "CIFAR-10 CNN",
+    "tagline": "Object Classification Model",
+    "description": "As an AI Scholar at Veritas AI, I led the development of our group's capstone project. We used the CIFAR-10 dataset for object and image detection by building and customizing a convolutional neural network (CNN).\nThis project was completed under the expert mentorship of Jason Jabour, a Computer Science PhD candidate at Harvard University.",
     "keyFeatures": [
       "Custom Convolutional Neural Network (CNN) architecture",
       "Trained on the CIFAR-10 dataset for object recognition",
