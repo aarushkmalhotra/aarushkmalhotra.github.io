@@ -64,9 +64,12 @@ const summarizeSkillFlow = ai.defineFlow(
     outputSchema: z.string(),
   },
   async (input) => {
+    // First, render the prompt with the given input.
+    const renderedPrompt = await summarizeSkillPrompt(input);
+
+    // Then, pass the rendered prompt to the generateStream method.
     const { stream, response } = ai.generateStream({
-        prompt: summarizeSkillPrompt,
-        input: input,
+        ...renderedPrompt,
         model: 'googleai/gemini-2.5-flash',
     });
 
