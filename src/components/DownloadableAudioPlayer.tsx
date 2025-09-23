@@ -2,7 +2,7 @@
 "use client";
 
 import { DownloadableAudioFile } from "@/lib/projects";
-import { Download, Pause, Play, Music2 } from "lucide-react";
+import { Download, Play, Music2 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Button } from "./ui/button";
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "./ui/alert-dialog";
@@ -145,7 +145,7 @@ export function DownloadableAudioPlayer({ audioFile, themeColor }: AudioPlayerPr
                     style={{ borderColor: themeColor, color: themeColor }}
                 >
                     <div className="absolute inset-0 flex items-center justify-center">
-                        {isPlaying ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8" />}
+                        {!isPlaying && <Play className="w-8 h-8" />}
                     </div>
                     {isPlaying && <Waveform color={themeColor} />}
                     <span className="sr-only">{isPlaying ? "Pause" : "Play"}</span>
@@ -158,9 +158,8 @@ export function DownloadableAudioPlayer({ audioFile, themeColor }: AudioPlayerPr
                             onClick={handleDownload}
                             size="sm"
                             variant="ghost"
-                            className="flex-shrink-0"
                         >
-                            <Download className="w-4 h-4" />
+                            <Download className="w-4 h-4 mr-2" />
                             Download
                         </Button>
                     </div>

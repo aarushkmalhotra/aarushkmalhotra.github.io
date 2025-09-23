@@ -3,7 +3,7 @@
 
 import { AudioFile } from "@/lib/projects";
 import { Badge } from "./ui/badge";
-import { Play, Pause, Music4, Sparkles } from "lucide-react";
+import { Play, Music4, Sparkles } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Button } from "./ui/button";
 
@@ -11,6 +11,22 @@ interface AudioPlayerProps {
     audioFile: AudioFile;
     themeColor: string;
 }
+
+const Waveform = ({ color }: { color: string }) => (
+    <div className="flex items-center justify-center gap-0.5 h-full w-[120px]">
+      {Array.from({ length: 15 }).map((_, i) => (
+        <span
+          key={i}
+          className="w-0.5 h-2 bg-current animate-wave"
+          style={{
+            backgroundColor: color,
+            animationDelay: `${i * 0.1}s`,
+            animationDuration: `${Math.random() * (1.5 - 0.5) + 0.5}s`,
+          }}
+        />
+      ))}
+    </div>
+);
 
 export function AudioPlayer({ audioFile, themeColor }: AudioPlayerProps) {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -138,13 +154,16 @@ export function AudioPlayer({ audioFile, themeColor }: AudioPlayerProps) {
                     onClick={togglePlayPause} 
                     size="icon"
                     variant="outline"
-                    className="flex-shrink-0 w-16 h-16 rounded-full text-foreground"
+                    className="flex-shrink-0 w-16 h-16 rounded-full text-foreground relative overflow-hidden"
                     style={{
                         borderColor: themeColor,
                         color: themeColor
                     }}
                 >
-                    {isPlaying ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8" />}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        {!isPlaying && <Play className="w-8 h-8" />}
+                    </div>
+                    {isPlaying && <Waveform color={themeColor} />}
                     <span className="sr-only">{isPlaying ? "Pause" : "Play"}</span>
                 </Button>
 
