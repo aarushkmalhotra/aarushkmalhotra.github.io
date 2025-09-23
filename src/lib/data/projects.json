@@ -98,17 +98,21 @@
     },
     "audioFiles": [
       {
-        "id": "ajab-si",
-        "title": "Ajab Si - AI Cover",
-        "file": "/arijit_1100_ajabsi.mp3",
-        "originalArtist": "Placeholder Artist",
-        "originalLabel": "T-Series"
-      },
-      {
         "id": "yetu-ne-kya-kiya",
         "title": "Ye Tune Kya Kiya - AI Cover",
         "file": "/arijit_1000_yetunekyakiya.mp3",
-        "originalArtist": "Placeholder Artist",
+        "originalArtist": "Javed Bashir",
+        "originalComposer": "Pritam",
+        "originalLyricist": "Rajat Arora",
+        "originalLabel": "T-Series"
+      },
+      {
+        "id": "ajab-si",
+        "title": "Ajab Si - AI Cover",
+        "file": "/arijit_1100_ajabsi.mp3",
+        "originalArtist": "KK",
+        "originalComposer": "Vishal-Shekhar",
+        "originalLyricist": "Vishal Dadlani",
         "originalLabel": "T-Series"
       }
     ]

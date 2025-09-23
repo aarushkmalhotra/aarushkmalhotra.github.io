@@ -8,6 +8,8 @@ export interface AudioFile {
   file: string;
   originalArtist: string;
   originalLabel: string;
+  originalComposer: string;
+  originalLyricist: string;
 }
 
 export interface Project {
