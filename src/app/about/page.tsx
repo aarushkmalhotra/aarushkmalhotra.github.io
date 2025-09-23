@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   }
 };
 
-export default async function AboutPage() {
-  const { allSkills, activeSkills, skillProjectMap } = await getSkills();
+export default function AboutPage() {
+  const { allSkills, activeSkills, skillProjectMap } = getSkills();
   return <AboutClientPage allSkills={allSkills} activeSkills={activeSkills} skillProjectMap={skillProjectMap} />;
 }

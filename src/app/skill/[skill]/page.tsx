@@ -1,6 +1,7 @@
 
+
 import { ProjectCard } from "@/components/ProjectCard";
-import { getProjects } from "@/lib/projects";
+import { getProjects, getSkills as getAllSkillsData } from "@/lib/projects";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 // import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -12,30 +13,24 @@ type Props = {
 };
 
 // Function to get all unique skills from projects for static generation
-async function getAllSkills() {
-    const projects = await getProjects();
-    const allSkills = new Set<string>();
-    projects.forEach(project => {
-        project.techStack.split(',').forEach(skill => {
-            allSkills.add(skill.trim());
-        });
-    });
-    return Array.from(allSkills);
+function getAllSkills() {
+    const { allSkills } = getAllSkillsData();
+    return allSkills;
 }
 
 // Generate static paths for each skill
-export async function generateStaticParams() {
-  const skills = await getAllSkills();
+export function generateStaticParams() {
+  const skills = getAllSkills();
   return skills.map((skill) => ({
     skill: encodeURIComponent(skill.toLowerCase().replace(/\s/g, '-').replace(/\./g, '')),
   }));
 }
 
 // Generate metadata for the page
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export function generateMetadata({ params }: Props): Metadata {
   const { skill } = params;
   const decodedSkill = decodeURIComponent(skill.replace(/-/g, ' '));
-  const capitalizedSkill = decodedSkill.charAt(0).toUpperCase() + decodedSkill.slice(1);
+  const capitalizedSkill = decodedSkill.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
   return {
     title: `Projects with ${capitalizedSkill} – Aarush's Portfolio`,
@@ -44,9 +39,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // The page component
-export default async function ProjectsBySkillPage({ params }: Props) {
+export default function ProjectsBySkillPage({ params }: Props) {
   const { skill } = params;
-  const allProjects = await getProjects();
+  const allProjects = getProjects();
   
   // This logic needs to be robust enough to handle the slug transformation.
   // "nextjs" in URL should match "Next.js" in tech stack.
@@ -58,7 +53,7 @@ export default async function ProjectsBySkillPage({ params }: Props) {
 
   if (filteredProjects.length === 0) {
     // A simple way to find the original skill name before it was slugified.
-    const allSkills = await getAllSkills();
+    const allSkills = getAllSkills();
     const originalSkill = allSkills.find(s => s.toLowerCase().replace(/\s/g, '-').replace(/\./g, '') === skill);
     if (!originalSkill) notFound(); // Truly not found
   }
@@ -107,4 +102,3 @@ export default async function ProjectsBySkillPage({ params }: Props) {
     </div>
   );
 }
-

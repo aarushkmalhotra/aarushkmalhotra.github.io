@@ -68,7 +68,7 @@ export function getProjectById(id: string): Project | undefined {
   return projects.find((p) => p.id === id);
 }
 
-export async function getSkills() {
+export function getSkills() {
     const projects = getProjects();
     const skillSet = new Set<string>();
     const skillProjectMap: Record<string, Project[]> = {};
@@ -95,4 +95,10 @@ export async function getSkills() {
     const uniqueAllSkills = [...new Set(allSkills)];
 
     return { allSkills: uniqueAllSkills, activeSkills, skillProjectMap };
+}
+
+// Function to get all unique skills from projects for static generation
+export function getAllSkills() {
+    const { allSkills } = getSkills();
+    return allSkills;
 }
