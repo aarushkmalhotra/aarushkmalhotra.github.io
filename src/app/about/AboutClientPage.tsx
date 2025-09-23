@@ -105,7 +105,7 @@ export function AboutClientPage() {
             <div className="flex animate-marquee group-hover:[animation-play-state:paused]">
                 {[...skills, ...skills].map((skill, index) => (
                     <Link
-                        href={`/projects/skill/${encodeURIComponent(skill.toLowerCase().replace(/\s/g, '-'))}`}
+                        href={`/skill/${encodeURIComponent(skill.toLowerCase().replace(/\s/g, '-'))}`}
                         key={index}
                         className="mx-4 flex-shrink-0"
                     >
