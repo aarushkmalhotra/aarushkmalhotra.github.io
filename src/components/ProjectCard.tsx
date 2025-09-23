@@ -1,3 +1,6 @@
+
+"use client";
+
 import {
   Card,
   CardContent,
@@ -13,6 +16,7 @@ import { Badge } from "./ui/badge";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { ArrowUpRightIcon } from "./icons/ArrowUpRightIcon";
 import { format, parseISO } from "date-fns";
+import { useState } from "react";
 
 interface ProjectCardProps {
   project: Project;
@@ -31,6 +35,7 @@ const formatDateRange = (startDate: string, endDate: string | null) => {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
   const firstImageId = project.images[0];
   const image = PlaceHolderImages.find((img) => img.id === firstImageId);
   const allSkills = project.techStack.split(",").map(s => s.trim());
@@ -41,8 +46,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
     if (project.id === 'cifar-10-cnn') {
       return 'View Slides';
     }
-    if (project.id === 'simplify-me' || project.id === 'vernato') {
-      return 'Use for Free';
+    if (project.id === 'simplify-me' || project.id === 'vernato' || project.id === 'imdb-top-1000') {
+      return 'View Demo';
     }
     if (project.id === 'emty') {
       return 'View Linktree';
@@ -57,22 +62,40 @@ export function ProjectCard({ project }: ProjectCardProps) {
   }
 
   return (
-    <Link href={`/projects/${project.id}`} className="group block h-full">
+    <Link 
+      href={`/projects/${project.id}`} 
+      className="group block h-full"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <Card className="h-full flex flex-col transition-all duration-300 ease-in-out group-hover:shadow-xl group-hover:-translate-y-1">
         <CardHeader className="p-6">
-          {image ? (
-            <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
-              <Image
-                src={image.imageUrl}
-                alt={project.name}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-                data-ai-hint={image.imageHint}
-              />
-            </div>
-          ) : (
-            <div className="aspect-video relative overflow-hidden rounded-lg mb-4 bg-muted" />
-          )}
+          <div className="aspect-video relative overflow-hidden rounded-lg mb-4 bg-muted">
+            {image && (
+                <>
+                    {/* Desktop: Video on hover */}
+                    {project.videoPreview && (
+                        <video
+                            src={project.videoPreview}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 hidden md:block ${isHovered ? 'opacity-100' : 'opacity-0'}`}
+                        />
+                    )}
+                    
+                    {/* Fallback Image */}
+                    <Image
+                        src={image.imageUrl}
+                        alt={project.name}
+                        fill
+                        className={`object-cover transition-transform duration-300 ${!project.videoPreview && 'group-hover:scale-105'}`}
+                        data-ai-hint={image.imageHint}
+                    />
+                </>
+            )}
+          </div>
           <CardTitle className="font-headline text-2xl group-hover:text-primary transition-colors">
             {project.name}
           </CardTitle>

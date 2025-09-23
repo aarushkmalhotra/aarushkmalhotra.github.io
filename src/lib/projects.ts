@@ -23,6 +23,7 @@ export interface Project {
   repoUrl: string | null;
   demoUrl: string | null;
   images: string[];
+  videoPreview?: string;
   theme: {
     primary: string;
     secondary: string;

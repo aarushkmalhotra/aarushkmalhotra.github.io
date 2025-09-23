@@ -63,6 +63,11 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   const projectImages = project.images
     .map((id) => PlaceHolderImages.find((img) => img.id === id))
     .filter(Boolean);
+
+  const galleryItems = [
+      ...(project.videoPreview ? [project.videoPreview] : []), 
+      ...projectImages
+  ];
     
   const TechStackAside = () => (
     <div className="p-6 rounded-lg bg-card border">
@@ -142,21 +147,39 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               </div>
             )}
 
-            {projectImages.length > 0 && (
+            {galleryItems.length > 0 && (
               <div>
                 <h2 className="font-headline text-3xl mb-6 prose prose-lg dark:prose-invert max-w-none">Gallery</h2>
                 <div className="grid grid-cols-1 gap-6">
-                    {projectImages.map((image) => image && (
-                        <div key={image.id} className="aspect-video relative overflow-hidden rounded-lg shadow-md">
-                            <Image
-                                src={image.imageUrl}
-                                alt={`${project.name} screenshot`}
-                                fill
-                                className="object-cover"
-                                data-ai-hint={image.imageHint}
+                    {galleryItems.map((item, index) => {
+                      if (typeof item === 'string' && item.endsWith('.mp4')) {
+                        return (
+                          <div key={index} className="aspect-video relative overflow-hidden rounded-lg shadow-md bg-black">
+                            <video
+                              src={item}
+                              controls
+                              className="w-full h-full object-contain"
                             />
-                        </div>
-                    ))}
+                          </div>
+                        )
+                      }
+                      
+                      const image = item as typeof projectImages[0];
+                      if (image) {
+                        return (
+                          <div key={image.id} className="aspect-video relative overflow-hidden rounded-lg shadow-md">
+                              <Image
+                                  src={image.imageUrl}
+                                  alt={`${project.name} screenshot`}
+                                  fill
+                                  className="object-cover"
+                                  data-ai-hint={image.imageHint}
+                              />
+                          </div>
+                        )
+                      }
+                      return null;
+                    })}
                 </div>
               </div>
             )}

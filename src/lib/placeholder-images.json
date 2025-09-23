@@ -35,6 +35,12 @@
       "description": "Banner for CIFAR-10 CNN Project",
       "imageUrl": "/veritasaibanner.png",
       "imageHint": "neural network"
+    },
+    {
+      "id": "imdb-1",
+      "description": "Banner for IMDB Top 1000 Project",
+      "imageUrl": "/imdbtop1000frame1.png",
+      "imageHint": "movie database"
     }
   ]
 }

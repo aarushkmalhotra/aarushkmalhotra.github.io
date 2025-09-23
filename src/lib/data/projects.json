@@ -26,9 +26,9 @@
   },
   {
     "id": "emty",
-    "name": "EMTY",
-    "tagline": "Transit Data for NYC Subways",
-    "description": "As part of the Entrepreneurship and App Design course at the STEM Institute at City College of New York, I designed an app named EMTY for NYC’s Department of Transportation. EMTY provides real-time data on individual subway car passenger loads, helping to improve commuter flow and convenience. I plan to pitch EMTY to Rep. Espaillat as part of the 2025 Congressional App Challenge.\nAdditionally, I earned a Gold Award in this course for our research poster, which highlighted how real-time data on passenger loads and waiting times can enhance the commuting experience. For more details, visit linktr.ee/emty7",
+    "name": "EMTY Commuting App",
+    "tagline": "Real-Time Subway Occupancy Data",
+    "description": "Designed UX in Figma to display real-time subway car occupancy; built secure real-time backend with Firebase Auth and Realtime Database. Presented EMTY at the U.S. Capitol and to Congressman Adriano Espaillat’s office.",
     "keyFeatures": [
       "Live visualization of subway car occupancy data",
       "Designed UX in Figma for intuitive data display",
@@ -36,7 +36,7 @@
       "Pitched to the U.S. Capitol and Congressman's office"
     ],
     "techStack": "Figma, Canva, Firebase, MTA API",
-    "outcomes": "Designed a high-fidelity prototype praised for its clarity and user-centric approach. The prototype was used to secure stakeholder buy-in for a full-scale development project.",
+    "outcomes": "Designed a high-fidelity prototype praised for its clarity and user-centric approach. The prototype was used to secure stakeholder buy-in for a full-scale development project. I earned a Gold Award for our research poster, which highlighted how real-time data can enhance the commuting experience. For more details, visit linktr.ee/emty7.",
     "repoUrl": null,
     "demoUrl": "https://linktr.ee/emty7",
     "images": ["emty-1"],
@@ -165,6 +165,30 @@
     "theme": {
       "primary": "hsl(204, 86%, 53%)",
       "secondary": "hsl(348, 100%, 61%)"
+    }
+  },
+   {
+    "id": "imdb-top-1000",
+    "name": "IMDB Top 1000",
+    "tagline": "My First JavaScript Project",
+    "description": "This was my first dive into JavaScript, built on Code.org's App Lab. This app lets users browse and search the top 1000 IMDB movies, serving as a practical exercise in data handling and UI development. It represents a foundational step in my coding journey.",
+    "keyFeatures": [
+      "Browse and search IMDB's top 1000 movies",
+      "Built with vanilla JavaScript on Code.org",
+      "Demonstrates fundamental data manipulation and UI skills"
+    ],
+    "techStack": "JavaScript, Code.org App Lab, HTML, CSS",
+    "outcomes": "Successfully created my first functional web application, solidifying core programming concepts and igniting my passion for front-end development.",
+    "repoUrl": null,
+    "demoUrl": "https://studio.code.org/projects/applab/w8PJdUtl1-DUKphmZ3zI9p0ZFzbPeqC5T_C0WHmYhVU",
+    "images": ["imdb-1"],
+    "videoPreview": "/imdbtop1000demo.mp4",
+    "startDate": "2022-09-01",
+    "endDate": "2022-12-01",
+    "type": "project",
+    "theme": {
+      "primary": "hsl(45, 93%, 54%)",
+      "secondary": "hsl(0, 0%, 10%)"
     }
   }
 ]
