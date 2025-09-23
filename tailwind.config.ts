@@ -117,7 +117,7 @@ export default {
         'fade-in-up': 'fade-in-up 0.6s ease-in-out both',
         'gradient-pan': 'gradient-pan 5s ease infinite',
         'shine': 'shine 4s linear infinite',
-        'marquee': 'marquee 40s linear infinite',
+        'marquee': 'marquee 25s linear infinite',
       },
     },
   },
