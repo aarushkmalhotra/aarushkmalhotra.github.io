@@ -4,7 +4,7 @@
     "id": "vernato",
     "name": "Vernato",
     "tagline": "AI-Powered Pronunciation Platform",
-    "description": "Vernato is an AI-powered pronunciation improvement platform helping learners speak with clarity and confidence. Our PronScore™ model combines accuracy, fluency, and completeness into a single score, giving users actionable feedback that actually drives progress. Built at the intersection of language learning and technology, Vernato is designed for individuals, educators, and organizations seeking a smarter way to master spoken language. We’re on a mission to make effective pronunciation training accessible, measurable, and engaging worldwide.",
+    "description": "Vernato is an AI-powered pronunciation improvement platform helping learners speak with clarity and confidence. Our PronScore™ model combines accuracy, fluency, and completeness into a single score, giving users actionable feedback that actually drives progress.\nBuilt at the intersection of language learning and technology, Vernato is designed for individuals, educators, and organizations seeking a smarter way to master spoken language. We’re on a mission to make effective pronunciation training accessible, measurable, and engaging worldwide.",
     "keyFeatures": [
       "PronScore™ model for comprehensive feedback",
       "Actionable insights on accuracy, fluency, and completeness",
@@ -28,7 +28,7 @@
     "id": "simplify-me",
     "name": "Simplify Me.",
     "tagline": "Understand Terms of Service in Plain English.",
-    "description": "You know when you sign up for a new website or download a shiny new app, and you’re hit with a wall of text that seems to go on forever? Yeah, that’s the Terms of Service. It’s like reading a novel written in legal jargon, and honestly, who has time for that? Our mission is simple: to help you make informed decisions about your privacy. We’ll give you the key details you need to know, like what data is being collected, how it’s used, and who it’s shared with. Please be informed that we are based on the ToS;DR infrastructure and it abides their Terms of Service. Go check it out for yourself. Trust us, it ain’t too long.",
+    "description": "You know when you sign up for a new website or download a shiny new app, and you’re hit with a wall of text that seems to go on forever? Yeah, that’s the Terms of Service. It’s like reading a novel written in legal jargon, and honestly, who has time for that?\nOur mission is simple: to help you make informed decisions about your privacy. We’ll give you the key details you need to know, like what data is being collected, how it’s used, and who it’s shared with. Please be informed that we are based on the ToS;DR infrastructure and it abides their Terms of Service. Go check it out for yourself. Trust us, it ain’t too long.",
     "keyFeatures": [
       "Translates complex legal jargon into plain English",
       "Summarizes key data collection and privacy policies",
@@ -52,7 +52,7 @@
     "id": "simply",
     "name": "Simply",
     "tagline": "AI Discord Bot for Decoding Privacy Policies & ToS",
-    "description": "Simply is an advanced Discord AI bot designed to decode the complexities of Privacy Policies and Terms of Service. Leveraging the power of Google Gemini, Simply streamlines the interpretation of legal documents by providing precise and easily understandable summaries. This project is a core component of the Simplify Me. ecosystem. Although the bot is no longer active on Discord, its powerful summarization engine can be accessed at simplifyme.org. *Credit for the foundational codebase goes to Echoshard on GitHub (github.com/Echoshard/Gemini_Discordbot).*",
+    "description": "Simply is an advanced Discord AI bot designed to decode the complexities of Privacy Policies and Terms of Service. Leveraging the power of Google Gemini, Simply streamlines the interpretation of legal documents by providing precise and easily understandable summaries.\nThis project is a core component of the Simplify Me. ecosystem. Although the bot is no longer active on Discord, its powerful summarization engine can be accessed at simplifyme.org. *Credit for the foundational codebase goes to Echoshard on GitHub (github.com/Echoshard/Gemini_Discordbot).*",
     "keyFeatures": [
       "Multi-Format Support: Processes various file types, including images, PDFs, and text files.",
       "Contextual Analysis: Maintains a history window of up to 15 previous messages for coherent conversations.",
@@ -77,7 +77,7 @@
     "id": "rvc-ui",
     "name": "RVC UI & Songs",
     "tagline": "Voice Transformation for Songs",
-    "description": "Retrieval Based Voice Conversion (RVC) is a technique used in speech processing where a system learns to transform one speaker's voice into another's by retrieving similar-sounding samples from a large database. After seeing AI-generated songs and covers gaining popularity on social media, I embarked on an exciting journey to create samples where the renowned Hindi singer Arijit Singh could sing various songs beyond his originals. To achieve this, I leveraged preexisting datasets trained between 1200–2000 epochs. This entire project was run locally on my Windows machine using Python and its powerful libraries. Additionally, I trained the model with a dataset of my own voice to better understand the challenges of RVC and dataset creation.",
+    "description": "Retrieval Based Voice Conversion (RVC) is a technique used in speech processing where a system learns to transform one speaker's voice into another's by retrieving similar-sounding samples from a large database.\nAfter seeing AI-generated songs and covers gaining popularity on social media, I embarked on an exciting journey to create samples where the renowned Hindi singer Arijit Singh could sing various songs beyond his originals. To achieve this, I leveraged preexisting datasets trained between 1200–2000 epochs. This entire project was run locally on my Windows machine using Python and its powerful libraries. Additionally, I trained the model with a dataset of my own voice to better understand the challenges of RVC and dataset creation.",
     "keyFeatures": [
       "Utilized Retrieval-Based Voice Conversion (RVC) for voice transformation.",
       "Leveraged pre-trained models to generate AI song covers.",

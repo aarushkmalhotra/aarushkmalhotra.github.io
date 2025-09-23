@@ -98,7 +98,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           <div className="lg:col-span-2 space-y-12">
             <div className="prose prose-lg dark:prose-invert max-w-none">
               <h2 className="font-headline text-3xl">Overview</h2>
-              <p>{project.description}</p>
+              {project.description.split('\n').map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
             </div>
             
             {project.keyFeatures && project.keyFeatures.length > 0 && (
@@ -125,7 +127,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             
             <div className="prose prose-lg dark:prose-invert max-w-none">
                 <h2 className="font-headline text-3xl">Outcomes</h2>
-                <p>{project.outcomes}</p>
+                {project.outcomes.split('\n').map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
             </div>
             
             {project.audioFiles && project.audioFiles.length > 0 && (
