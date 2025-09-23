@@ -66,7 +66,6 @@ export default function ProjectDetailLoading() {
 
           {/* Aside Skeleton */}
           <aside className="hidden lg:block lg:col-span-1 space-y-4">
-            <Skeleton className="h-32 w-full rounded-lg" />
             <Skeleton className="h-24 w-full rounded-lg" />
             <Skeleton className="h-48 w-full rounded-lg" />
           </aside>

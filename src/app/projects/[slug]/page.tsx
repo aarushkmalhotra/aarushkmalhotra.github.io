@@ -3,7 +3,6 @@
 import { Badge } from "@/components/ui/badge";
 import { getProjectById, getProjects } from "@/lib/projects";
 import { notFound } from "next/navigation";
-import { ProjectDetailsClient } from "./ProjectDetailsClient";
 import { Metadata } from 'next';
 import { Check, ExternalLink } from "lucide-react";
 import { ProjectHeader } from "./ProjectHeader";
@@ -112,10 +111,6 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                 <KeyFeaturesAside />
               </div>
             )}
-            
-            <div className="lg:hidden">
-              <ProjectDetailsClient project={project} />
-            </div>
 
             <div className="lg:hidden">
               <TechStackAside />
@@ -162,7 +157,6 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
           </div>
           <aside className="hidden lg:block lg:col-span-1 space-y-4 sticky top-[184px] self-start">
-            <ProjectDetailsClient project={project} />
             <TechStackAside />
             {project.keyFeatures && project.keyFeatures.length > 0 && (
               <KeyFeaturesAside />
