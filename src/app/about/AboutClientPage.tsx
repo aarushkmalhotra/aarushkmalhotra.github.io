@@ -100,7 +100,7 @@ export function AboutClientPage() {
       <section className="py-16 md:py-24 border-t mt-16 md:mt-24">
         <h2 className="font-headline text-3xl md:text-4xl font-bold text-center mb-12">My Skillset</h2>
         <div className="relative w-full overflow-hidden group [mask-image:linear-gradient(to-right,transparent,black_10%,black_90%,transparent)]">
-            <div className="flex animate-marquee group-hover:pause">
+            <div className="flex animate-marquee group-hover:[animation-play-state:paused]">
                 {[...skills, ...skills].map((skill, index) => (
                     <Badge key={index} className="text-lg px-6 py-3 mx-4 flex-shrink-0" variant="default">
                     {skill}
