@@ -1,6 +1,6 @@
 
 import { Badge } from "@/components/ui/badge";
-import { getProjectById, getProjects, getProjectNeighbors } from "@/lib/projects";
+import { getProjectById, getProjects } from "@/lib/projects";
 import { notFound } from "next/navigation";
 import { Metadata } from 'next';
 import { Check, ExternalLink } from "lucide-react";
@@ -11,9 +11,7 @@ import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { ProjectGallery } from "./ProjectGallery";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { ProjectNavigation } from "./ProjectNavigation";
-
-type SortOption = "newest" | "oldest" | "alphabetical";
+import { ProjectDetailClientPage } from "./ProjectDetailClientPage";
 
 interface PageProps {
   params: { slug: string };
@@ -65,44 +63,7 @@ export default function ProjectDetailPage({ params, searchParams }: PageProps) {
     notFound();
   }
   
-  // Apply filters to get the correct neighbors
   const allProjects = getProjects();
-  const searchTerm = (searchParams?.search as string) || '';
-  const keywordsParam = (searchParams?.keywords as string) || '';
-  const sortOrder = (searchParams?.sort as SortOption) || 'newest';
-
-  let filtered = allProjects;
-
-  if (searchTerm) {
-    filtered = filtered.filter(p =>
-      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.tagline.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.techStack.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }
-
-  const activeKeywords = keywordsParam ? keywordsParam.split(',') : [];
-  if (activeKeywords.length > 0) {
-    filtered = filtered.filter(p =>
-      activeKeywords.every(keyword => p.keywords.includes(keyword))
-    );
-  }
-
-  switch (sortOrder) {
-    case "oldest":
-      filtered = [...filtered].reverse();
-      break;
-    case "alphabetical":
-      filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
-      break;
-    case "newest":
-    default:
-      // The default `getProjects` is already sorted by newest
-      break;
-  }
-  
-  const { prevProject, nextProject } = getProjectNeighbors(project.id, filtered);
     
   const TechStackAside = () => (
     <div className="p-6 rounded-lg bg-card border">
@@ -212,12 +173,7 @@ export default function ProjectDetailPage({ params, searchParams }: PageProps) {
           </aside>
         </div>
         
-        {(prevProject || nextProject) && (
-            <div className="mt-16 md:mt-24 border-t pt-12">
-                <h2 className="font-headline text-2xl md:text-3xl text-center mb-8">Continue Exploring</h2>
-                <ProjectNavigation prevProject={prevProject} nextProject={nextProject} searchParams={searchParams} />
-            </div>
-        )}
+        <ProjectDetailClientPage project={project} allProjects={allProjects} searchParams={searchParams} />
       </div>
     </div>
   );
