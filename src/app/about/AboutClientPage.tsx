@@ -109,60 +109,60 @@ export function AboutClientPage({ allSkills, activeSkills, skillProjectMap }: Ab
         </div>
       </section>
 
-      <section className="py-16 md:py-24 border-t">
-        <h2 className="font-headline text-3xl md:text-4xl font-bold text-center mb-12">My Skillset</h2>
-        <div className="relative w-full overflow-hidden group [mask-image:linear-gradient(to-right,transparent,black_10%,black_90%,transparent)]">
-            <TooltipProvider delayDuration={100}>
-                <div className="flex animate-marquee group-hover:[animation-play-state:paused]">
-                    {[...allSkills, ...allSkills].map((skill, index) => {
-                        const isClickable = activeSkills.some(s => s.toLowerCase() === skill.toLowerCase());
-                        const skillSlug = encodeURIComponent(skill.toLowerCase().replace(/\s/g, '-').replace(/\./g, ''));
-                        const projectsForSkill = skillProjectMap[skill] || [];
-                        const projectCount = projectsForSkill.length;
+      <TooltipProvider delayDuration={100}>
+        <section className="py-16 md:py-24 border-t">
+          <h2 className="font-headline text-3xl md:text-4xl font-bold text-center mb-12">My Skillset</h2>
+          <div className="relative w-full overflow-hidden group [mask-image:linear-gradient(to-right,transparent,black_10%,black_90%,transparent)]">
+              <div className="flex animate-marquee group-hover:[animation-play-state:paused]">
+                  {[...allSkills, ...allSkills].map((skill, index) => {
+                      const isClickable = activeSkills.some(s => s.toLowerCase() === skill.toLowerCase());
+                      const skillSlug = encodeURIComponent(skill.toLowerCase().replace(/\s/g, '-').replace(/\./g, ''));
+                      const projectsForSkill = skillProjectMap[skill] || [];
+                      const projectCount = projectsForSkill.length;
 
-                        const badge = (
-                            <Badge 
-                                className={cn(
-                                    "text-lg px-6 py-3 transition-colors duration-300 ease-in-out",
-                                    isClickable ? "hover:bg-primary hover:text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" : "opacity-50 cursor-not-allowed",
-                                )}
-                                variant="default"
-                            >
-                               {skill}
-                            </Badge>
-                        );
+                      const badge = (
+                          <Badge 
+                              className={cn(
+                                  "text-lg px-6 py-3 transition-colors duration-300 ease-in-out",
+                                  isClickable ? "hover:bg-primary hover:text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" : "opacity-50 cursor-not-allowed",
+                              )}
+                              variant="default"
+                          >
+                             {skill}
+                          </Badge>
+                      );
 
-                        return (
-                            <div key={index} className="mx-4 flex-shrink-0">
-                               {isClickable ? (
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Link href={`/skill/${skillSlug}`} aria-label={`View projects for ${skill}`}>
-                                                {badge}
-                                            </Link>
-                                        </TooltipTrigger>
-                                        <TooltipContent className="z-50">
-                                            <div className="text-center p-2">
-                                                <p className="font-bold text-base mb-2">
-                                                    {projectCount} {projectCount === 1 ? 'Project' : 'Projects'}
-                                                </p>
-                                                <ul className="text-sm text-muted-foreground list-none p-0 m-0 space-y-1">
-                                                    {projectsForSkill.map(p => <li key={p.id}>{p.name}</li>)}
-                                                </ul>
-                                                <Button variant="link" size="sm" className="mt-2 text-accent p-0 h-auto">View Projects</Button>
-                                            </div>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                ) : (
-                                    <div>{badge}</div>
-                                )}
-                            </div>
-                        );
-                    })}
-                </div>
-            </TooltipProvider>
-        </div>
-      </section>
+                      return (
+                          <div key={index} className="mx-4 flex-shrink-0">
+                             {isClickable ? (
+                                  <Tooltip>
+                                      <TooltipTrigger asChild>
+                                          <Link href={`/skill/${skillSlug}`} aria-label={`View projects for ${skill}`}>
+                                              {badge}
+                                          </Link>
+                                      </TooltipTrigger>
+                                      <TooltipContent>
+                                          <div className="text-center p-2">
+                                              <p className="font-bold text-base mb-2">
+                                                  {projectCount} {projectCount === 1 ? 'Project' : 'Projects'}
+                                              </p>
+                                              <ul className="text-sm text-muted-foreground list-none p-0 m-0 space-y-1">
+                                                  {projectsForSkill.map(p => <li key={p.id}>{p.name}</li>)}
+                                              </ul>
+                                              <Button variant="link" size="sm" className="mt-2 text-accent p-0 h-auto">View Projects</Button>
+                                          </div>
+                                      </TooltipContent>
+                                  </Tooltip>
+                              ) : (
+                                  <div>{badge}</div>
+                              )}
+                          </div>
+                      );
+                  })}
+              </div>
+          </div>
+        </section>
+      </TooltipProvider>
       
       <section className="pt-16 md:pt-24 border-t">
         <h2 className="font-headline text-3xl md:text-4xl font-bold text-center mb-16">My Journey</h2>
