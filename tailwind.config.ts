@@ -122,6 +122,7 @@ export default {
         'gradient-pan': 'gradient-pan 5s ease infinite',
         'shine': 'shine 4s linear infinite',
         'marquee': 'marquee 25s linear infinite',
+        'marquee-fast': 'marquee 15s linear infinite',
         'wave': 'wave 1.2s ease-in-out infinite',
       },
     },

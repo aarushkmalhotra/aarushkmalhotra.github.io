@@ -115,7 +115,7 @@ export function AboutClientPage({ allSkills, activeSkills, skillProjectMap }: Ab
         <TooltipProvider delayDuration={100}>
             <div id="skill-carousel-wrapper" className="relative w-full overflow-hidden">
                 <div id="skill-carousel" className="relative w-full group">
-                    <div className="flex animate-marquee group-hover:[animation-play-state:paused]">
+                    <div className="flex animate-marquee-fast group-hover:[animation-play-state:paused]">
                         {[...allSkills, ...allSkills].map((skill, index) => {
                             const isClickable = activeSkills.some(s => s.toLowerCase() === skill.toLowerCase());
                             const skillSlug = encodeURIComponent(skill.toLowerCase().replace(/\s/g, '-').replace(/\./g, ''));
