@@ -3,23 +3,9 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { getProjects } from "@/lib/projects";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Terminal } from "lucide-react";
-import dynamic from 'next/dynamic';
-import { Skeleton } from "@/components/ui/skeleton";
-
-// Dynamically import the component that uses server actions
-const SkillClientPage = dynamic(
-  () => import('./SkillClientPage').then(mod => mod.SkillClientPage),
-  { 
-    ssr: false,
-    loading: () => (
-        <div className="mb-12">
-            <Skeleton className="h-48 w-full" />
-        </div>
-    )
-  }
-);
+// import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+// import { Terminal } from "lucide-react";
+// import { SkillClientPage } from "./SkillClientPage";
 
 type Props = {
   params: { skill: string };
@@ -84,8 +70,6 @@ export default async function ProjectsBySkillPage({ params }: Props) {
 
   const capitalizedSkill = displaySkill.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
-  const isStaticExport = process.env.NEXT_PUBLIC_IS_STATIC_EXPORT === 'true';
-
   return (
     <div className="container mx-auto px-4 py-8 md:py-16 animate-fade-in">
       <div className="text-center mb-12">
@@ -97,17 +81,14 @@ export default async function ProjectsBySkillPage({ params }: Props) {
         </p>
       </div>
       
-      {isStaticExport ? (
-        <Alert className="mb-12">
-          <Terminal className="h-4 w-4" />
-          <AlertTitle>AI Feature Disabled</AlertTitle>
-          <AlertDescription>
-            The AI-powered skill analysis is unavailable in this statically-exported version of the site. Please run the project locally to use this feature.
-          </AlertDescription>
-        </Alert>
-      ) : (
-        <SkillClientPage skill={capitalizedSkill} projects={filteredProjects} />
-      )}
+      {/* 
+        NOTE FOR VERCEL/SERVER DEPLOYMENT:
+        The AI Skill Navigator feature uses Server Actions, which are not compatible with static export (`output: 'export'`).
+        To re-enable this feature for a server environment:
+        1. Uncomment the `SkillClientPage` import at the top of this file.
+        2. Uncomment the `<SkillClientPage ... />` component below.
+      */}
+      {/* <SkillClientPage skill={capitalizedSkill} projects={filteredProjects} /> */}
       
       {filteredProjects.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -126,3 +107,4 @@ export default async function ProjectsBySkillPage({ params }: Props) {
     </div>
   );
 }
+
