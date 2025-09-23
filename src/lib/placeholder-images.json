@@ -1,3 +1,4 @@
+
 {
   "placeholderImages": [
     {
@@ -23,6 +24,12 @@
       "description": "Banner for Simply Discord Bot",
       "imageUrl": "/simplybanner.png",
       "imageHint": "AI bot logo"
+    },
+    {
+      "id": "rvc-1",
+      "description": "Banner for RVC UI Project",
+      "imageUrl": "https://picsum.photos/seed/rvc/1200/630",
+      "imageHint": "sound wave"
     }
   ]
 }

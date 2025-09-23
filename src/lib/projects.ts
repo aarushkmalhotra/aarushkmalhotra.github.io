@@ -1,5 +1,14 @@
+
 import projectsData from './data/projects.json';
 import { compareDesc, parseISO } from 'date-fns';
+
+export interface AudioFile {
+  id: string;
+  title: string;
+  file: string;
+  originalArtist: string;
+  originalLabel: string;
+}
 
 export interface Project {
   id: string;
@@ -19,6 +28,7 @@ export interface Project {
   startDate: string;
   endDate: string | null;
   type?: 'project' | 'contribution';
+  audioFiles?: AudioFile[];
 }
 
 // In a real app, you might fetch this from a CMS or API

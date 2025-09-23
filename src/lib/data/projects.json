@@ -74,6 +74,46 @@
     }
   },
   {
+    "id": "rvc-ui",
+    "name": "Retrieval Based Voice Conversion UI",
+    "tagline": "AI-Powered Voice Transformation for Song Covers",
+    "description": "Retrieval Based Voice Conversion (RVC) is a technique used in speech processing where a system learns to transform one speaker's voice into another's by retrieving similar-sounding samples from a large database. After seeing AI-generated songs and covers gaining popularity on social media, I embarked on an exciting journey to create samples where the renowned Hindi singer Arijit Singh could sing various songs beyond his originals. To achieve this, I leveraged preexisting datasets trained between 1200–2000 epochs. This entire project was run locally on my Windows machine using Python and its powerful libraries. Additionally, I trained the model with a dataset of my own voice to better understand the challenges of RVC and dataset creation.",
+    "keyFeatures": [
+      "Utilized Retrieval-Based Voice Conversion (RVC) for voice transformation.",
+      "Leveraged pre-trained models to generate AI song covers.",
+      "Created a custom voice dataset to experiment with model training.",
+      "Hands-on experience with local AI model implementation."
+    ],
+    "techStack": "PyTorch, Gradio, Python, CUDA",
+    "outcomes": "Successfully produced high-quality AI-generated song samples, demonstrating a practical understanding of voice conversion technologies. This project provided deep insights into the nuances of AI model training, dataset management, and the creative potential of generative AI in music.",
+    "repoUrl": null,
+    "demoUrl": null,
+    "images": ["rvc-1"],
+    "startDate": "2023-07-01",
+    "endDate": "2024-01-01",
+    "type": "project",
+    "theme": {
+      "primary": "hsl(330, 80%, 55%)",
+      "secondary": "hsl(20, 80%, 55%)"
+    },
+    "audioFiles": [
+      {
+        "id": "ajab-si",
+        "title": "Ajab Si - AI Cover",
+        "file": "/arijit_1100_ajabsi.mp3",
+        "originalArtist": "Placeholder Artist",
+        "originalLabel": "T-Series"
+      },
+      {
+        "id": "yetu-ne-kya-kiya",
+        "title": "Ye Tune Kya Kiya - AI Cover",
+        "file": "/arijit_1000_yetunekyakiya.mp3",
+        "originalArtist": "Placeholder Artist",
+        "originalLabel": "T-Series"
+      }
+    ]
+  },
+  {
     "id": "emty",
     "name": "EMTY",
     "tagline": "Real-time Transit Data Prototype",
