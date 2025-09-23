@@ -9,7 +9,7 @@ import { Metadata } from "next";
 // import { SkillClientPage } from "./SkillClientPage";
 
 type Props = {
-  params: { skill: string };
+  params: Promise<{ skill: string }>;
 };
 
 // Generate static paths for each skill
@@ -21,8 +21,8 @@ export function generateStaticParams() {
 }
 
 // Generate metadata for the page
-export function generateMetadata({ params }: Props): Metadata {
-  const { skill } = params;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { skill } = await params;
   const decodedSkill = decodeURIComponent(skill.replace(/-/g, ' '));
   const capitalizedSkill = decodedSkill.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
@@ -33,8 +33,9 @@ export function generateMetadata({ params }: Props): Metadata {
 }
 
 // The page component
-export default function ProjectsBySkillPage({ params }: Props) {
-  const { skill } = params;
+
+export default async function ProjectsBySkillPage({ params }: Props) {
+  const { skill } = await params;
   const allProjects = getProjects();
   
   // This logic needs to be robust enough to handle the slug transformation.
