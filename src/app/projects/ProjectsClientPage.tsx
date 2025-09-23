@@ -109,7 +109,7 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
           />
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="w-1/2 md:w-auto flex-grow sm:flex-grow-0">
@@ -151,7 +151,7 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
       </div>
 
       {filteredAndSortedProjects.length > 0 ? (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredAndSortedProjects.map((project, index) => (
             <div key={project.id} style={{ animationDelay: `${index * 100}ms` }} className="animate-fade-in-up">
               <ProjectCard project={project} />
