@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
 type Props = {
-  params: { skill: string };
+  params: Promise<{ skill: string }>;
 };
 
 // Function to get all unique skills from projects for static generation
@@ -30,7 +30,7 @@ export async function generateStaticParams() {
 
 // Generate metadata for the page
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { skill } = params;
+  const { skill } = await params;
   const decodedSkill = decodeURIComponent(skill.replace(/-/g, ' '));
   const capitalizedSkill = decodedSkill.charAt(0).toUpperCase() + decodedSkill.slice(1);
 
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // The page component
 export default async function ProjectsBySkillPage({ params }: Props) {
-  const { skill } = params;
+  const { skill } = await params;
   const allProjects = await getProjects();
   
   // This logic needs to be robust enough to handle the slug transformation.
