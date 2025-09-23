@@ -62,10 +62,16 @@ export async function getProjectById(id: string): Promise<Project | undefined> {
 export async function getSkills() {
     const projects = await getProjects();
     const skillSet = new Set<string>();
+    const skillProjectMap: Record<string, Project[]> = {};
     
     projects.forEach(project => {
-        project.techStack.split(',').forEach(skill => {
-            skillSet.add(skill.trim());
+        project.techStack.split(',').forEach(skillName => {
+            const skill = skillName.trim();
+            skillSet.add(skill);
+            if (!skillProjectMap[skill]) {
+                skillProjectMap[skill] = [];
+            }
+            skillProjectMap[skill].push(project);
         });
     });
 
@@ -74,7 +80,10 @@ export async function getSkills() {
     const allSkills = [
         ...activeSkills,
         "Swift", "C++" // Add skills without projects here
-    ].sort();
+    ].sort((a, b) => a.localeCompare(b));
 
-    return { allSkills, activeSkills };
+    // Deduplicate allSkills
+    const uniqueAllSkills = [...new Set(allSkills)];
+
+    return { allSkills: uniqueAllSkills, activeSkills, skillProjectMap };
 }
