@@ -12,11 +12,11 @@ import { ProjectHeader } from "./ProjectHeader";
 import { AudioPlayer } from "@/components/AudioPlayer";
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = params;
+  const { slug } = await params;
   const project = await getProjectById(slug);
 
   if (!project) {
@@ -53,7 +53,7 @@ export async function generateStaticParams() {
 }
 
 export default async function ProjectDetailPage({ params }: PageProps) {
-  const { slug } = params;
+  const { slug } = await params;
   const project = await getProjectById(slug);
 
   if (!project) {
