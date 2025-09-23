@@ -122,7 +122,7 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
                 )}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
+            <DropdownMenuContent className="w-full max-w-[280px]">
               <DropdownMenuLabel>Filter by Keyword</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {allKeywords.map(keyword => (
