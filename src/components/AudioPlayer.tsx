@@ -138,12 +138,12 @@ export function AudioPlayer({ audioFile, themeColor }: AudioPlayerProps) {
 
     const getCreditText = () => {
         if (audioFile.id === 'ajab-si') {
-            return `Licensed to YouTube by ${audioFile.originalLabel} (on behalf of composer/lyricist ${audioFile.originalLyricist} & music director duo ${audioFile.originalComposer}; original artist ${audioFile.originalArtist}); [Publishing Rights: Placeholder] and [Indian music rights societies].`
+            return `Licensed to YouTube by ${audioFile.originalLabel} (on behalf of composer/lyricist ${audioFile.originalLyricist} & music director duo ${audioFile.originalComposer}; original artist ${audioFile.originalArtist}); and Indian music rights societies.`
         }
         if (audioFile.id === 'yetu-ne-kya-kiya') {
-            return `Licensed to YouTube by ${audioFile.originalLabel} (on behalf of composer ${audioFile.originalComposer} & lyricist ${audioFile.originalLyricist}; original artist ${audioFile.originalArtist}); [Publishing Rights: Placeholder] and [Indian music rights societies].`
+            return `Licensed to YouTube by ${audioFile.originalLabel} (on behalf of composer ${audioFile.originalComposer} & lyricist ${audioFile.originalLyricist}; original artist ${audioFile.originalArtist}); and Indian music rights societies.`
         }
-        return `Licensed to YouTube by ${audioFile.originalLabel} (on behalf of ${audioFile.originalArtist}); [Placeholder for Publishing Rights] and [X] music rights societies.`
+        return `Licensed to YouTube by ${audioFile.originalLabel} (on behalf of ${audioFile.originalArtist}); and [X] music rights societies.`
     }
 
 
