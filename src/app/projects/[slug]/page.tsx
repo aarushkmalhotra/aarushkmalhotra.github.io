@@ -86,17 +86,6 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               <h2 className="font-headline text-3xl">Overview</h2>
               <p>{project.description}</p>
             </div>
-
-            {project.audioFiles && project.audioFiles.length > 0 && (
-              <div id="ai-samples">
-                <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">AI Generated Samples</h2>
-                <div className="space-y-4">
-                  {project.audioFiles.map((audioFile) => (
-                    <AudioPlayer key={audioFile.id} audioFile={audioFile} themeColor={project.theme.primary}/>
-                  ))}
-                </div>
-              </div>
-            )}
             
             {project.keyFeatures && project.keyFeatures.length > 0 && (
               <div>
@@ -124,6 +113,17 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                 <h2 className="font-headline text-3xl">Outcomes</h2>
                 <p>{project.outcomes}</p>
             </div>
+            
+            {project.audioFiles && project.audioFiles.length > 0 && (
+              <div id="ai-samples">
+                <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">AI Generated Samples</h2>
+                <div className="space-y-4">
+                  {project.audioFiles.map((audioFile) => (
+                    <AudioPlayer key={audioFile.id} audioFile={audioFile} themeColor={project.theme.primary}/>
+                  ))}
+                </div>
+              </div>
+            )}
             
             {projectImages.length > 0 && (
               <div>

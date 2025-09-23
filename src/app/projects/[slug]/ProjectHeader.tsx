@@ -30,7 +30,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
             const siteHeaderHeight = 64; 
             // This project header's height
             const projectHeaderHeight = headerRef.current.offsetHeight;
-            const offset = siteHeaderHeight + projectHeaderHeight;
+            const offset = siteHeaderHeight + projectHeaderHeight + 20;
 
             const elementPosition = element.getBoundingClientRect().top;
             const offsetPosition = elementPosition + window.pageYOffset - offset;

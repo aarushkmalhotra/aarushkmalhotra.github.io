@@ -7,26 +7,29 @@ import { Sparkles } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useToast } from "@/hooks/use-toast";
 
 type Props = {
   project: Project;
 };
 
-// AI functionality is disabled for static export builds
+// For static export, AI functionality is not available.
+// We check this to disable the button, but still render the component.
 const isStaticBuild = process.env.NODE_ENV === 'production';
 
 export function ProjectDetailsClient({ project }: Props) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const handleGenerate = async () => {
-    setError("AI features are not available in the static version of this portfolio.");
+    if (isStaticBuild) {
+        toast({
+            title: "Feature Not Available",
+            description: "AI features are not available in the static version of this portfolio.",
+            variant: "destructive"
+        })
+    }
+    // In a full-stack environment, you would call your AI flow here.
   };
-
-  // Don't render the AI section for static builds
-  if (isStaticBuild) {
-    return null;
-  }
 
   return (
     <div className="p-6 rounded-lg bg-card border">
@@ -42,13 +45,17 @@ export function ProjectDetailsClient({ project }: Props) {
             </Link>
           )}
         </div>
-        <Button onClick={handleGenerate} disabled={isLoading} className="w-full bg-purple-600 hover:bg-purple-700 text-white">
+        <Button onClick={handleGenerate} disabled={isStaticBuild} className="w-full bg-purple-600 hover:bg-purple-700 text-white disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed">
           <Sparkles className="w-4 h-4 mr-2"/>
-          {isLoading ? "Generating..." : "Generate with AI"}
+          {isStaticBuild ? "Disabled in Static Build" : "Generate with AI"}
         </Button>
       </div>
 
-      {error && <p className="mt-4 text-destructive">{error}</p>}
+      {isStaticBuild && (
+        <p className="mt-4 text-xs text-muted-foreground">
+          This is a statically exported site. AI generation requires a server and is disabled.
+        </p>
+      )}
     </div>
   );
 }
