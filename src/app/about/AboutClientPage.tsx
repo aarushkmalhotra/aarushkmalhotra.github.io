@@ -2,7 +2,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { Briefcase, GraduationCap } from "lucide-react";
+import { Briefcase, GraduationCap, FileText } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
@@ -150,6 +150,14 @@ export function AboutClientPage({ allSkills, activeSkills, skillProjectMap }: Ab
             <p>
                 The truth is, I just get really bothered when things don't work well. I end up building tools to fix whatever's driving me crazy. I'm always down to chat with people who also think technology should actually help people instead of just being impressive.
             </p>
+          </div>
+          <div className="mt-8">
+            <Button asChild size="lg">
+                <Link href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+                    <FileText className="mr-2 h-5 w-5" />
+                    View My Resume
+                </Link>
+            </Button>
           </div>
         </div>
       </section>

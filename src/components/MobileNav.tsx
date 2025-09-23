@@ -9,7 +9,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "./ui/button";
-import { Mail, Menu, PanelLeftClose } from "lucide-react";
+import { FileText, Mail, Menu, PanelLeftClose } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { GithubIcon } from "./icons/GithubIcon";
@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils";
 interface NavLink {
   href: string;
   label: string;
+  isExternal?: boolean;
 }
 
 interface MobileNavProps {
@@ -63,12 +64,15 @@ export function MobileNav({ navLinks }: MobileNavProps) {
               <SheetClose asChild key={link.href}>
                 <Link
                   href={link.href}
+                  target={link.isExternal ? "_blank" : undefined}
+                  rel={link.isExternal ? "noopener noreferrer" : undefined}
                   className={cn(
-                    "transition-colors hover:text-foreground",
+                    "transition-colors hover:text-foreground flex items-center gap-2",
                     pathname === link.href ? "text-primary" : "text-muted-foreground"
                   )}
                 >
                   {link.label}
+                  {link.isExternal && <FileText className="w-4 h-4" />}
                 </Link>
               </SheetClose>
             ))}
