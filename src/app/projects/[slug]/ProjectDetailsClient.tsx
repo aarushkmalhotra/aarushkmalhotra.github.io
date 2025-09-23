@@ -1,7 +1,6 @@
 
 "use client";
 
-import { generateProjectHighlights, GenerateProjectHighlightsOutput } from "@/ai/flows/generate-project-highlights";
 import { Button } from "@/components/ui/button";
 import { Project } from "@/lib/projects";
 import { Sparkles } from "lucide-react";
@@ -13,29 +12,21 @@ type Props = {
   project: Project;
 };
 
+// AI functionality is disabled for static export builds
+const isStaticBuild = process.env.NODE_ENV === 'production';
+
 export function ProjectDetailsClient({ project }: Props) {
-  const [highlights, setHighlights] = useState<GenerateProjectHighlightsOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleGenerate = async () => {
-    setIsLoading(true);
-    setError(null);
-    setHighlights(null);
-    try {
-      const result = await generateProjectHighlights({
-        projectName: project.name,
-        techStack: project.techStack,
-        features: project.description, // Using description as features for simplicity
-        outcomes: project.outcomes,
-      });
-      setHighlights(result);
-    } catch (e) {
-      setError("Failed to generate highlights. Please try again.");
-      console.error(e);
-    }
-    setIsLoading(false);
+    setError("AI features are not available in the static version of this portfolio.");
   };
+
+  // Don't render the AI section for static builds
+  if (isStaticBuild) {
+    return null;
+  }
 
   return (
     <div className="p-6 rounded-lg bg-card border">
@@ -57,13 +48,7 @@ export function ProjectDetailsClient({ project }: Props) {
         </Button>
       </div>
 
-      {isLoading && <p className="mt-4 text-muted-foreground">Analyzing project data...</p>}
       {error && <p className="mt-4 text-destructive">{error}</p>}
-      {highlights && (
-        <div className="mt-4 prose dark:prose-invert max-w-none">
-            <p className="text-lg">{highlights.highlights}</p>
-        </div>
-      )}
     </div>
   );
 }
