@@ -16,13 +16,13 @@ export function Footer() {
             <a href="mailto:aarush@vernato.org" aria-label="Email" target="_blank" rel="noopener noreferrer">
                 <Mail className="h-6 w-6 text-secondary-foreground/60 transition-colors hover:text-primary" />
             </a>
-            <a href="https://github.com/aarush-kumar" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <a href="https://github.com/simplifyme7" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                 <GithubIcon className="h-6 w-6 text-secondary-foreground/60 transition-colors hover:text-[#181717] dark:hover:text-white" />
             </a>
-            <a href="https://linkedin.com/in/aarush-kumar" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <a href="https://linkedin.com/in/kumaraarush" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                 <LinkedinIcon className="h-6 w-6 text-secondary-foreground/60 transition-colors hover:text-[#0A66C2]" />
             </a>
-            <a href="https://instagram.com/aarush.kumar" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <a href="https://instagram.com/aarush.nyc" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <InstagramIcon className="h-6 w-6 text-secondary-foreground/60 transition-colors hover:text-[#E1306C]" />
             </a>
           </div>
