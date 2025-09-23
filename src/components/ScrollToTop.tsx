@@ -36,7 +36,7 @@ export function ScrollToTop() {
         size="icon"
         onClick={scrollToTop}
         className={cn(
-          'bg-background/80 backdrop-blur-sm transition-opacity duration-300',
+          'bg-background/80 backdrop-blur-sm transition-opacity duration-300 hover:bg-primary hover:text-primary-foreground',
           isVisible ? 'opacity-100' : 'opacity-0',
           !isVisible && 'pointer-events-none'
         )}

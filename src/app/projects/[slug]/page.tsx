@@ -15,7 +15,6 @@ import { ProjectDetailClientPage } from "./ProjectDetailClientPage";
 
 interface PageProps {
   params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -55,7 +54,7 @@ export function generateStaticParams() {
   }));
 }
 
-export default function ProjectDetailPage({ params, searchParams }: PageProps) {
+export default function ProjectDetailPage({ params }: PageProps) {
   const { slug } = params;
   const project = getProjectById(slug);
 
@@ -173,7 +172,7 @@ export default function ProjectDetailPage({ params, searchParams }: PageProps) {
           </aside>
         </div>
         
-        <ProjectDetailClientPage project={project} allProjects={allProjects} searchParams={searchParams} />
+        <ProjectDetailClientPage project={project} allProjects={allProjects} />
       </div>
     </div>
   );

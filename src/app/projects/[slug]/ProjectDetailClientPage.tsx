@@ -1,25 +1,26 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useMemo } from "react";
 import { Project, getProjectNeighbors } from "@/lib/projects";
 import { ProjectNavigation } from "./ProjectNavigation";
+import { useSearchParams } from 'next/navigation';
 
 type SortOption = "newest" | "oldest" | "alphabetical";
 
 interface ProjectDetailClientPageProps {
   project: Project;
   allProjects: Project[];
-  searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export function ProjectDetailClientPage({
   project,
   allProjects,
-  searchParams,
 }: ProjectDetailClientPageProps) {
-  const searchTerm = (searchParams?.search as string) || "";
-  const keywordsParam = (searchParams?.keywords as string) || "";
-  const sortOrder = (searchParams?.sort as SortOption) || "newest";
+  const searchParams = useSearchParams();
+
+  const searchTerm = (searchParams?.get('search') as string) || "";
+  const keywordsParam = (searchParams?.get('keywords') as string) || "";
+  const sortOrder = (searchParams?.get('sort') as SortOption) || "newest";
 
   const { prevProject, nextProject } = useMemo(() => {
     let filtered = allProjects;
