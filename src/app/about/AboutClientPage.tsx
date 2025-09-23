@@ -75,14 +75,22 @@ const SkillBadge = ({ skill, isClickable, skillProjectMap }: { skill: string, is
                         </Link>
                     </TooltipTrigger>
                     <TooltipContent className="z-50 bg-popover text-popover-foreground">
-                        <div className="text-center p-2">
-                            <p className="font-bold text-base mb-2">
+                        <div className="p-2 text-center">
+                            <p className="mb-2 text-base font-bold">
                                 {projectCount} {projectCount === 1 ? 'Project' : 'Projects'}
                             </p>
-                            <ul className="text-sm text-muted-foreground list-none p-0 m-0 space-y-1">
-                                {projectsForSkill.map(p => <li key={p.id}>{p.name}</li>)}
+                            <ul className="m-0 list-none space-y-1 p-0 text-sm text-muted-foreground">
+                                {projectsForSkill.map(p => (
+                                    <li key={p.id}>
+                                        <Link href={`/projects/${p.id}`} className="underline-offset-4 hover:text-primary hover:underline">
+                                            {p.name}
+                                        </Link>
+                                    </li>
+                                ))}
                             </ul>
-                            <Button variant="link" size="sm" className="mt-2 text-accent p-0 h-auto">View Projects</Button>
+                            <Button variant="link" size="sm" asChild className="mt-2 h-auto p-0 text-accent">
+                               <Link href={`/skill/${skillSlug}`}>View All</Link>
+                            </Button>
                         </div>
                     </TooltipContent>
                 </Tooltip>
@@ -153,7 +161,7 @@ export function AboutClientPage({ allSkills, activeSkills, skillProjectMap }: Ab
           </div>
           <div className="mt-8">
             <Button asChild size="lg">
-                <Link href="/resume-09-25.pdf" target="_blank" rel="noopener noreferrer">
+                <Link href="/resume.pdf" target="_blank" rel="noopener noreferrer">
                     <FileText className="mr-2 h-5 w-5" />
                     View My Resume
                 </Link>
@@ -203,3 +211,5 @@ export function AboutClientPage({ allSkills, activeSkills, skillProjectMap }: Ab
     </div>
   );
 }
+
+    

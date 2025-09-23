@@ -15,7 +15,7 @@ const navLinks = [
   { href: "/blog", label: "Blog" },
   { href: "/about", "label": "About" },
   { href: "/contact", label: "Contact" },
-  { href: "/resume-09-25.pdf", label: "Resume", isExternal: true },
+  { href: "/resume.pdf", label: "Resume", isExternal: true },
 ];
 
 export function Header() {
@@ -62,3 +62,5 @@ export function Header() {
     </header>
   );
 }
+
+    
