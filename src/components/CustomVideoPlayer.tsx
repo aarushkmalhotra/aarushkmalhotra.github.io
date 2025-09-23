@@ -231,7 +231,7 @@ export function CustomVideoPlayer({ src, themeColor }: CustomVideoPlayerProps) {
                                         <div {...props}>
                                             <div 
                                                 className="absolute bottom-0 w-full rounded-full" 
-                                                style={{ height: `${state.valueNow}%`, backgroundColor: themeColor }}
+                                                style={{ height: `${state.value}%`, backgroundColor: themeColor }}
                                             />
                                         </div>
                                     )}
