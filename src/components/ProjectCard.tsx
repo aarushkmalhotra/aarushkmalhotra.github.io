@@ -86,7 +86,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <div className="aspect-video relative overflow-hidden rounded-lg mb-4 bg-muted">
             {image && (
                 <>
-                    {/* Desktop: Video on hover */}
                     {project.videoPreview && (
                         <video
                             ref={videoRef}
@@ -98,12 +97,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
                         />
                     )}
                     
-                    {/* Fallback Image */}
                     <Image
                         src={image.imageUrl}
                         alt={project.name}
                         fill
-                        className={`object-cover transition-transform duration-300 ${!project.videoPreview && 'group-hover:scale-105'}`}
+                        className={`object-cover transition-transform duration-300 ${!project.videoPreview ? 'group-hover:scale-105' : ''} ${project.videoPreview && isHovered ? 'md:opacity-0' : 'opacity-100'}`}
                         data-ai-hint={image.imageHint}
                     />
                 </>
