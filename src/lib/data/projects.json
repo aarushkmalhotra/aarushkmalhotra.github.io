@@ -12,6 +12,7 @@
       "Engaging and measurable pronunciation training"
     ],
     "techStack": "TypeScript, React, Next.js, Azure, Google Cloud, Firebase, Vercel, Tailwind CSS, Git",
+    "keywords": ["AI", "Web Development", "Active Website", "EdTech"],
     "outcomes": "Successfully developed and deployed a an AI model for pronunciation scoring.\nThe platform is currently in beta with a select group of users, gathering feedback to refine the learning experience and prepare for a public launch.",
     "repoUrl": null,
     "demoUrl": "https://www.vernato.org",
@@ -36,6 +37,7 @@
       "Pitched to the U.S. Capitol and Congressman's office"
     ],
     "techStack": "Figma, Canva, Firebase, MTA API",
+    "keywords": ["Prototyping", "UI/UX", "Mobile App"],
     "outcomes": "I earned a Gold Award in this course for our research poster, which highlighted how real-time data on passenger loads and waiting times can enhance the commuting experience. For more details on EMTY, visit linktr.ee/emty7.",
     "repoUrl": null,
     "demoUrl": "https://linktr.ee/emty7",
@@ -60,6 +62,7 @@
       "Powered by the ToS;DR community-driven infrastructure"
     ],
     "techStack": "JavaScript, PHP, WordPress, Zapier, Google Gemini, CSS, HTML",
+    "keywords": ["AI", "Web Development", "Active Website", "LegalTech"],
     "outcomes": "Empowered thousands of users to make more informed decisions about their digital privacy.\nThe project has been recognized for its user-centric approach to data transparency and has contributed to the broader conversation about online privacy rights.",
     "repoUrl": null,
     "demoUrl": "https://simplifyme.org",
@@ -85,6 +88,7 @@
       "High-Accuracy Summaries: Extensively trained on legal texts to handle documents up to 70,000 words."
     ],
     "techStack": "Python, AWS, Google Gemini, Discord API",
+    "keywords": ["AI", "Chatbot", "LegalTech"],
     "outcomes": "Successfully developed and deployed a Discord bot capable of simplifying complex legal documents, demonstrating skills in AI integration, API usage, and cloud deployment.\nThe technology now powers the core summarization features of the Simplify Me. web platform.",
     "repoUrl": "https://github.com/aarushkmalhotra/Simply",
     "demoUrl": "https://simplifyme.org",
@@ -109,6 +113,7 @@
       "Hands-on experience with local AI model implementation."
     ],
     "techStack": "PyTorch, Gradio, Python, CUDA",
+    "keywords": ["AI", "Machine Learning", "Audio Processing"],
     "outcomes": "Successfully produced high-quality AI-generated song samples, demonstrating a practical understanding of voice conversion technologies.\nThis project provided deep insights into the nuances of AI model training, dataset management, and the creative potential of generative AI in music.",
     "repoUrl": null,
     "demoUrl": null,
@@ -153,6 +158,7 @@
       "Mentored by a Harvard PhD candidate in Computer Science"
     ],
     "techStack": "Python, PyTorch, CNN, Deep Learning",
+    "keywords": ["AI", "Machine Learning", "Computer Vision"],
     "outcomes": "Developed a high-accuracy object classification model and presented the findings, methodology, and results in a comprehensive presentation.",
     "repoUrl": null,
     "demoUrl": "https://docs.google.com/presentation/d/1SxtFXwkSP7j3ouTHC2i0pD7lLCfUJtWJVXgNG7_GLuo/",
@@ -178,6 +184,7 @@
       "Demonstrates fundamental data manipulation and UI skills"
     ],
     "techStack": "JavaScript, Code.org App Lab, HTML, CSS",
+    "keywords": ["Web Development", "UI/UX", "First Project"],
     "outcomes": "Successfully created my first functional web application, solidifying core programming concepts and igniting my passion for front-end development.",
     "repoUrl": null,
     "demoUrl": "https://studio.code.org/projects/applab/w8PJdUtl1-DUKphmZ3zI9p0ZFzbPeqC5T_C0WHmYhVU",

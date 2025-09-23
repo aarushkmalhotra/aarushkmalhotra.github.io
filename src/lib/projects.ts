@@ -19,6 +19,7 @@ export interface Project {
   description: string;
   keyFeatures?: string[];
   techStack: string;
+  keywords: string[];
   outcomes: string;
   repoUrl: string | null;
   demoUrl: string | null;
@@ -35,7 +36,7 @@ export interface Project {
 }
 
 // In a real app, you might fetch this from a CMS or API
-export async function getProjects(): Promise<Project[]> {
+export function getProjects(): Project[] {
   const projects = projectsData as Project[];
   
   // Sort projects by end date (nulls first for "Present"), then by start date
@@ -55,13 +56,13 @@ export async function getProjects(): Promise<Project[]> {
   return projects;
 }
 
-export async function getProjectById(id: string): Promise<Project | undefined> {
-  const projects = await getProjects();
+export function getProjectById(id: string): Project | undefined {
+  const projects = getProjects();
   return projects.find((p) => p.id === id);
 }
 
 export async function getSkills() {
-    const projects = await getProjects();
+    const projects = getProjects();
     const skillSet = new Set<string>();
     const skillProjectMap: Record<string, Project[]> = {};
     
