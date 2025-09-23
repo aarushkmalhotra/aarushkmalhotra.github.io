@@ -2,11 +2,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
-import { Play, Pause, Volume2, Maximize } from 'lucide-react';
+import { Play, Pause, Volume2, Maximize, VolumeX, Volume1 } from 'lucide-react';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
-import ReactSlider from 'react-slider';
 
 interface CustomVideoPlayerProps {
     src: string;
@@ -25,14 +23,13 @@ export function CustomVideoPlayer({ src, themeColor }: CustomVideoPlayerProps) {
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
     const [volume, setVolume] = useState(1);
+    const [lastVolume, setLastVolume] = useState(1);
     const [isScrubbing, setIsScrubbing] = useState(false);
     const [showControls, setShowControls] = useState(true);
-    const [isVolumeOpen, setVolumeOpen] = useState(false);
 
     const videoRef = useRef<HTMLVideoElement>(null);
     const playerContainerRef = useRef<HTMLDivElement>(null);
-    const progressBarRef = useRef<HTMLDivElement>(null);
-    const scrubContainerRef = useRef<HTMLDivElement>(null);
+    const timelineContainerRef = useRef<HTMLDivElement>(null);
     let controlsTimeout: NodeJS.Timeout;
 
     const togglePlayPause = (e: React.MouseEvent) => {
@@ -66,11 +63,29 @@ export function CustomVideoPlayer({ src, themeColor }: CustomVideoPlayerProps) {
         }
     };
     
-    const handleVolumeChange = (value: number) => {
-        if (videoRef.current) {
-            const newVolume = value / 100;
-            videoRef.current.volume = newVolume;
-            setVolume(newVolume);
+    const handleVolumeChange = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!videoRef.current) return;
+        const volumeScrubber = e.currentTarget;
+        const rect = volumeScrubber.getBoundingClientRect();
+        const newVolume = (e.clientX - rect.left) / rect.width;
+        const clampedVolume = Math.max(0, Math.min(1, newVolume));
+        
+        videoRef.current.volume = clampedVolume;
+        setVolume(clampedVolume);
+        setLastVolume(clampedVolume);
+    };
+
+    const toggleMute = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (!videoRef.current) return;
+
+        if (volume > 0) {
+            setLastVolume(volume);
+            setVolume(0);
+            videoRef.current.volume = 0;
+        } else {
+            setVolume(lastVolume);
+            videoRef.current.volume = lastVolume;
         }
     };
 
@@ -116,48 +131,32 @@ export function CustomVideoPlayer({ src, themeColor }: CustomVideoPlayerProps) {
     }, [isScrubbing]);
     
     useEffect(() => {
-        const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
-        if (progressBarRef.current) {
-            progressBarRef.current.style.width = `${progress}%`;
-        }
-    }, [currentTime, duration]);
+        const handleTimelineUpdate = (e: MouseEvent) => {
+            if (!timelineContainerRef.current || !videoRef.current) return;
+            const rect = timelineContainerRef.current.getBoundingClientRect();
+            const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width;
+            videoRef.current.currentTime = percent * duration;
+        };
 
-
-    const handleScrub = (e: MouseEvent) => {
-        if (!scrubContainerRef.current || !videoRef.current || duration === 0) return;
-        const scrubRect = scrubContainerRef.current.getBoundingClientRect();
-        const clickRatio = (e.clientX - scrubRect.left) / scrubRect.width;
-        const newTime = Math.max(0, Math.min(clickRatio, 1)) * duration;
-        
-        videoRef.current.currentTime = newTime;
-        setCurrentTime(newTime);
-    };
-
-    const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-        e.stopPropagation();
-        setIsScrubbing(true);
-        handleScrub(e.nativeEvent);
-    };
-
-    useEffect(() => {
         const handleMouseUp = (e: MouseEvent) => {
             if (isScrubbing) {
                 setIsScrubbing(false);
-                handleScrub(e);
+                handleTimelineUpdate(e);
             }
         };
 
         const handleMouseMoveScrub = (e: MouseEvent) => {
             if (isScrubbing) {
-                handleScrub(e);
+                handleTimelineUpdate(e);
             }
         };
 
-        document.addEventListener('mousemove', handleMouseMoveScrub);
         document.addEventListener('mouseup', handleMouseUp);
+        document.addEventListener('mousemove', handleMouseMoveScrub);
+
         return () => {
-            document.removeEventListener('mousemove', handleMouseMoveScrub);
             document.removeEventListener('mouseup', handleMouseUp);
+            document.removeEventListener('mousemove', handleMouseMoveScrub);
         };
     }, [isScrubbing, duration]);
 
@@ -165,7 +164,7 @@ export function CustomVideoPlayer({ src, themeColor }: CustomVideoPlayerProps) {
     return (
         <div 
             ref={playerContainerRef}
-            className="relative w-full h-full bg-black group cursor-pointer" 
+            className="relative w-full h-full bg-black group/player cursor-pointer" 
             onClick={handleContainerClick}
             onMouseMove={handleMouseMove}
             onMouseLeave={() => { if (isPlaying) setShowControls(false) }}
@@ -198,6 +197,22 @@ export function CustomVideoPlayer({ src, themeColor }: CustomVideoPlayerProps) {
                     )}
                     onClick={(e) => e.stopPropagation()}
                 >
+                     <div 
+                        ref={timelineContainerRef}
+                        onMouseDown={(e) => { e.stopPropagation(); setIsScrubbing(true); }}
+                        className="h-3 -top-1 relative group/timeline"
+                    >
+                        <div className="bg-white/30 h-1 group-hover/timeline:h-1.5 absolute top-1/2 -translate-y-1/2 w-full rounded-full transition-all duration-200">
+                             <div 
+                                className="h-full rounded-full" 
+                                style={{ 
+                                    width: `${(currentTime / duration) * 100}%`,
+                                    backgroundColor: themeColor
+                                }}
+                             />
+                        </div>
+                    </div>
+
                     <div className="flex items-center gap-2 md:gap-4 text-white">
                         <Button
                             onClick={togglePlayPause}
@@ -207,42 +222,39 @@ export function CustomVideoPlayer({ src, themeColor }: CustomVideoPlayerProps) {
                         >
                             {isPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current" />}
                         </Button>
-                        <span className="text-xs w-10 text-center">{formatTime(currentTime)}</span>
-                        <div
-                            ref={scrubContainerRef}
-                            className="flex-grow bg-white/30 rounded-full h-1.5 cursor-pointer"
-                            onMouseDown={handleMouseDown}
-                        >
-                            <div ref={progressBarRef} className="h-full rounded-full pointer-events-none" style={{ backgroundColor: themeColor }}></div>
+                        
+                        <div className="flex items-center gap-2 group/volume">
+                            <Button onClick={toggleMute} size="icon" variant="ghost" className="w-8 h-8 hover:bg-white/20">
+                                {volume === 0 ? <VolumeX className="w-5 h-5" /> : volume < 0.5 ? <Volume1 className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                            </Button>
+                            <div className="w-0 group-hover/volume:w-20 transition-all duration-300 overflow-hidden">
+                                <div 
+                                    className="w-full h-1.5 bg-white/30 rounded-full cursor-pointer"
+                                    onMouseDown={(e) => {
+                                        e.stopPropagation();
+                                        const scrubber = e.currentTarget;
+                                        const handleVolumeDrag = (moveEvent: MouseEvent) => {
+                                            const rect = scrubber.getBoundingClientRect();
+                                            const newVolume = (moveEvent.clientX - rect.left) / rect.width;
+                                            const clampedVolume = Math.max(0, Math.min(1, newVolume));
+                                            if (videoRef.current) videoRef.current.volume = clampedVolume;
+                                            setVolume(clampedVolume);
+                                        };
+                                        const handleMouseUp = () => {
+                                            document.removeEventListener('mousemove', handleVolumeDrag);
+                                            document.removeEventListener('mouseup', handleMouseUp);
+                                        };
+                                        handleVolumeDrag(e.nativeEvent);
+                                        document.addEventListener('mousemove', handleVolumeDrag);
+                                        document.addEventListener('mouseup', handleMouseUp);
+                                    }}
+                                >
+                                    <div className="h-full rounded-full" style={{ width: `${volume * 100}%`, backgroundColor: themeColor }}></div>
+                                </div>
+                            </div>
                         </div>
-                        <span className="text-xs w-10 text-center">{formatTime(duration)}</span>
-                         <Popover open={isVolumeOpen} onOpenChange={setVolumeOpen}>
-                            <PopoverTrigger asChild>
-                                <Button size="icon" variant="ghost" className="w-8 h-8 hover:bg-white/20">
-                                    <Volume2 className="w-5 h-5" />
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-2 bg-black/60 border-none mb-2" side="top">
-                                <ReactSlider
-                                    className="h-24 w-6"
-                                    thumbClassName="h-4 w-4 bg-white rounded-full cursor-pointer -left-1 focus:outline-none focus:ring-2 focus:ring-white/50"
-                                    trackClassName="w-1 bg-white/30 rounded-full mx-auto"
-                                    renderTrack={(props, state) => (
-                                        <div {...props}>
-                                            <div 
-                                                className="absolute bottom-0 w-full rounded-full" 
-                                                style={{ height: `${state.value}%`, backgroundColor: themeColor }}
-                                            />
-                                        </div>
-                                    )}
-                                    orientation="vertical"
-                                    defaultValue={volume * 100}
-                                    onChange={handleVolumeChange}
-                                    onAfterChange={() => setVolumeOpen(false)}
-                                    invert
-                                />
-                            </PopoverContent>
-                        </Popover>
+
+                        <span className="text-xs ml-auto">{formatTime(currentTime)} / {formatTime(duration)}</span>
 
                         <Button onClick={toggleFullScreen} size="icon" variant="ghost" className="w-8 h-8 hover:bg-white/20">
                             <Maximize className="w-5 h-5" />
