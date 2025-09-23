@@ -66,7 +66,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
   const galleryItems = [
       ...(project.videoPreview ? [project.videoPreview] : []), 
-      ...(!project.videoPreview ? projectImages : [])
+      ...(!project.videoPreview && project.id !== 'imdb-top-1000' ? projectImages : [])
   ];
     
   const TechStackAside = () => (
@@ -158,6 +158,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                             <video
                               src={item}
                               controls
+                              controlsList="nodownload"
                               className="w-full h-full object-contain"
                             />
                           </div>
