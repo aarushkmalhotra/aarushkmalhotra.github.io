@@ -115,7 +115,7 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in': 'fade-in 0.6s ease-in-out forwards',
         'fade-in-up': 'fade-in-up 0.6s ease-in-out both',
-        'gradient-pan': 'gradient-pan 10s ease infinite',
+        'gradient-pan': 'gradient-pan 5s ease infinite',
         'letter-fade-in': 'letter-fade-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
         'shine': 'shine 4s linear infinite'
       },
