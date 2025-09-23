@@ -12,7 +12,7 @@
       "Engaging and measurable pronunciation training"
     ],
     "techStack": "TypeScript, React, Next.js, Azure, Google Cloud, Firebase, Vercel, Tailwind CSS, Git",
-    "keywords": ["AI", "Web Development", "Active Website", "EdTech"],
+    "keywords": ["AI & Machine Learning", "Web Development", "Creative Tech"],
     "outcomes": "Successfully developed and deployed a an AI model for pronunciation scoring.\nThe platform is currently in beta with a select group of users, gathering feedback to refine the learning experience and prepare for a public launch.",
     "repoUrl": null,
     "demoUrl": "https://www.vernato.org",
@@ -37,7 +37,7 @@
       "Pitched to the U.S. Capitol and Congressman's office"
     ],
     "techStack": "Figma, Canva, Firebase, MTA API",
-    "keywords": ["Prototyping", "UI/UX", "Mobile App"],
+    "keywords": ["UI/UX & Design"],
     "outcomes": "I earned a Gold Award in this course for our research poster, which highlighted how real-time data on passenger loads and waiting times can enhance the commuting experience. For more details on EMTY, visit linktr.ee/emty7.",
     "repoUrl": null,
     "demoUrl": "https://linktr.ee/emty7",
@@ -54,7 +54,7 @@
     "id": "simplify-me",
     "name": "Simplify Me.",
     "tagline": "Understand Terms of Service in Plain English.",
-    "description": "You know when you sign up for a new website or download a shiny new app, and you’re hit with a wall of text that seems to go on forever? Yeah, that’s the Terms of Service. It’s like reading a novel written in legal jargon, and honestly, who has time for that?\nOur mission is simple: to help you make informed decisions about your privacy. We’ll give you the key details you need to know, like what data is being collected, how it’s used, and who it’s shared with. Please be informed that we are based on the ToS;DR infrastructure and it abides their Terms of Service. Go check it out for yourself. Trust us, it ain’t too long.",
+    "description": "You know when you sign up for a new website or download a shiny new app, and you’re hit with a wall of text that seems to go on for ever? Yeah, that’s the Terms of Service. It’s like reading a novel written in legal jargon, and honestly, who has time for that?\nOur mission is simple: to help you make informed decisions about your privacy. We’ll give you the key details you need to know, like what data is being collected, how it’s used, and who it’s shared with. Please be informed that we are based on the ToS;DR infrastructure and it abides their Terms of Service. Go check it out for yourself. Trust us, it ain’t too long.",
     "keyFeatures": [
       "Translates complex legal jargon into plain English",
       "Summarizes key data collection and privacy policies",
@@ -62,7 +62,7 @@
       "Powered by the ToS;DR community-driven infrastructure"
     ],
     "techStack": "JavaScript, PHP, WordPress, Zapier, Google Gemini, CSS, HTML",
-    "keywords": ["AI", "Web Development", "Active Website", "LegalTech"],
+    "keywords": ["AI & Machine Learning", "Web Development", "Creative Tech"],
     "outcomes": "Empowered thousands of users to make more informed decisions about their digital privacy.\nThe project has been recognized for its user-centric approach to data transparency and has contributed to the broader conversation about online privacy rights.",
     "repoUrl": null,
     "demoUrl": "https://simplifyme.org",
@@ -88,7 +88,7 @@
       "High-Accuracy Summaries: Extensively trained on legal texts to handle documents up to 70,000 words."
     ],
     "techStack": "Python, AWS, Google Gemini, Discord API",
-    "keywords": ["AI", "Chatbot", "LegalTech"],
+    "keywords": ["AI & Machine Learning", "Creative Tech"],
     "outcomes": "Successfully developed and deployed a Discord bot capable of simplifying complex legal documents, demonstrating skills in AI integration, API usage, and cloud deployment.\nThe technology now powers the core summarization features of the Simplify Me. web platform.",
     "repoUrl": "https://github.com/aarushkmalhotra/Simply",
     "demoUrl": "https://simplifyme.org",
@@ -114,7 +114,7 @@
       "Consistent branding across channel content."
     ],
     "techStack": "Adobe Photoshop, Adobe Illustrator, GIMP",
-    "keywords": ["Graphic Design", "UI/UX", "Creative"],
+    "keywords": ["UI/UX & Design", "Creative Tech"],
     "outcomes": "Developed a strong portfolio of eye-catching thumbnails that have improved viewer engagement and channel growth. This creative outlet hones my skills in visual communication, branding, and user psychology, complementing my technical work as a developer.",
     "repoUrl": null,
     "demoUrl": "https://www.youtube.com/@sunbeam20/",
@@ -139,7 +139,7 @@
       "Hands-on experience with local AI model implementation."
     ],
     "techStack": "PyTorch, Gradio, Python, CUDA",
-    "keywords": ["AI", "Machine Learning", "Audio Processing"],
+    "keywords": ["AI & Machine Learning", "Creative Tech"],
     "outcomes": "Successfully produced high-quality AI-generated song samples, demonstrating a practical understanding of voice conversion technologies.\nThis project provided deep insights into the nuances of AI model training, dataset management, and the creative potential of generative AI in music.",
     "repoUrl": null,
     "demoUrl": null,
@@ -184,7 +184,7 @@
       "Mentored by a Harvard PhD candidate in Computer Science"
     ],
     "techStack": "Python, PyTorch, CNN, Deep Learning",
-    "keywords": ["AI", "Machine Learning", "Computer Vision"],
+    "keywords": ["AI & Machine Learning"],
     "outcomes": "Developed a high-accuracy object classification model and presented the findings, methodology, and results in a comprehensive presentation.",
     "repoUrl": null,
     "demoUrl": "https://docs.google.com/presentation/d/1SxtFXwkSP7j3ouTHC2i0pD7lLCfUJtWJVXgNG7_GLuo/",
@@ -210,7 +210,7 @@
       "Demonstrates fundamental data manipulation and UI skills"
     ],
     "techStack": "JavaScript, Code.org App Lab, HTML, CSS",
-    "keywords": ["Web Development", "UI/UX", "First Project"],
+    "keywords": ["Web Development", "UI/UX & Design"],
     "outcomes": "Successfully created my first functional web application, solidifying core programming concepts and igniting my passion for front-end development.",
     "repoUrl": null,
     "demoUrl": "https://studio.code.org/projects/applab/w8PJdUtl1-DUKphmZ3zI9p0ZFzbPeqC5T_C0WHmYhVU",
@@ -236,7 +236,7 @@
       "Focus on creating atmospheric and rhythmic beats"
     ],
     "techStack": "SoundTrap, GarageBand, Digital Audio Production",
-    "keywords": ["Audio Production", "Creative"],
+    "keywords": ["Creative Tech"],
     "outcomes": "Produced a small album of tracks, gaining hands-on experience with music composition, arrangement, and mixing. These songs enhanced the quality of my YouTube videos and served as a creative outlet for exploring audio engineering.",
     "repoUrl": null,
     "demoUrl": "https://drive.google.com/drive/folders/1DrceaX2DRv2ve6mYF7210ikESgcIUKOd",

@@ -109,10 +109,10 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
           />
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline">
+              <Button variant="outline" className="w-full sm:w-auto md:w-auto flex-grow sm:flex-grow-0">
                 <ListFilter className="mr-2 h-4 w-4" />
                 Filter
                 {activeFilterCount > 0 && (
@@ -138,7 +138,7 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
           </DropdownMenu>
 
           <Select onValueChange={(value: SortOption) => setSortOrder(value)} value={sortOrder}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full sm:w-[180px] flex-grow sm:flex-grow-0">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
