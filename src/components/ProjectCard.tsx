@@ -86,75 +86,76 @@ export function ProjectCard({ project }: ProjectCardProps) {
     return <ArrowUpRightIcon className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />;
   }
 
+  const ctaUrl = `/projects/${project.id}`;
+
   return (
-    <Link 
-      href={`/projects/${project.id}`} 
-      className="group block h-full"
+    <Card 
+      className="h-full flex flex-col transition-all duration-300 ease-in-out md:hover:shadow-xl md:hover:-translate-y-1 group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Card className="h-full flex flex-col transition-all duration-300 ease-in-out md:group-hover:shadow-xl md:group-hover:-translate-y-1">
+      <Link href={ctaUrl} className="block">
         <CardHeader className="p-6">
-          <div className="aspect-video relative overflow-hidden rounded-lg mb-4 bg-muted">
-            {image && (
-                <>
-                    {project.videoPreview && project.videoPreview.endsWith('.mp4') && (
-                        <video
-                            ref={videoRef}
-                            src={project.videoPreview}
-                            loop
-                            muted
-                            playsInline
-                            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 hidden md:block ${isHovered ? 'opacity-100' : 'opacity-0'}`}
-                        />
-                    )}
-                    
-                    <Image
-                        src={image.imageUrl}
-                        alt={project.name}
-                        fill
-                        className={`object-cover transition-transform duration-300 ${!project.videoPreview ? 'group-hover:scale-105' : ''} ${project.videoPreview && project.videoPreview.endsWith('.mp4') && isHovered ? 'md:opacity-0' : 'opacity-100'}`}
-                        data-ai-hint={image.imageHint}
-                    />
-                </>
-            )}
-          </div>
-          <CardTitle className="font-headline text-2xl group-hover:text-primary transition-colors">
-            {project.name}
-          </CardTitle>
-          <p className="text-sm text-muted-foreground">{formatDateRange(project.startDate, project.endDate)}</p>
-
-          <CardDescription>{project.tagline}</CardDescription>
-        </CardHeader>
-        <CardContent className="flex-grow p-6 pt-0">
-            <p className="text-sm text-muted-foreground line-clamp-3">{project.description}</p>
-        </CardContent>
-        <CardFooter className="p-6 pt-0 flex-col items-start gap-4">
-            <div className="flex flex-wrap gap-2">
-                {skillsToShow.map((tech) => {
-                  const skillSlug = encodeURIComponent(tech.toLowerCase().replace(/\s/g, '-').replace(/\./g, ''));
-                  return (
-                    <Link key={tech} href={`/skill/${skillSlug}`} onClick={(e) => e.stopPropagation()} className="z-10">
-                        <Badge variant="secondary" className="transition-colors hover:bg-primary/20 hover:text-primary">
-                            {tech}
-                        </Badge>
-                    </Link>
-                  )
-                })}
-                {remainingSkillsCount > 0 && (
-                    <Badge variant="secondary">
-                        +{remainingSkillsCount}
-                    </Badge>
-                )}
+            <div className="aspect-video relative overflow-hidden rounded-lg mb-4 bg-muted">
+              {image && (
+                  <>
+                      {project.videoPreview && project.videoPreview.endsWith('.mp4') && (
+                          <video
+                              ref={videoRef}
+                              src={project.videoPreview}
+                              loop
+                              muted
+                              playsInline
+                              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 hidden md:block ${isHovered ? 'opacity-100' : 'opacity-0'}`}
+                          />
+                      )}
+                      
+                      <Image
+                          src={image.imageUrl}
+                          alt={project.name}
+                          fill
+                          className={`object-cover transition-transform duration-300 ${!project.videoPreview ? 'group-hover:scale-105' : ''} ${project.videoPreview && project.videoPreview.endsWith('.mp4') && isHovered ? 'md:opacity-0' : 'opacity-100'}`}
+                          data-ai-hint={image.imageHint}
+                      />
+                  </>
+              )}
             </div>
-             <span className={cn(
-                "text-sm text-accent flex items-center gap-1",
-                project.id === 'simply' && 'hidden md:flex'
-              )}>
-                {getCallToAction()} {getCallToActionIcon()}
-            </span>
-        </CardFooter>
-      </Card>
-    </Link>
+            <CardTitle className="font-headline text-2xl group-hover:text-primary transition-colors">
+              {project.name}
+            </CardTitle>
+            <p className="text-sm text-muted-foreground">{formatDateRange(project.startDate, project.endDate)}</p>
+
+            <CardDescription>{project.tagline}</CardDescription>
+        </CardHeader>
+      </Link>
+      <CardContent className="flex-grow p-6 pt-0">
+          <p className="text-sm text-muted-foreground line-clamp-3">{project.description}</p>
+      </CardContent>
+      <CardFooter className="p-6 pt-0 flex-col items-start gap-4">
+          <div className="flex flex-wrap gap-2">
+              {skillsToShow.map((tech) => {
+                const skillSlug = encodeURIComponent(tech.toLowerCase().replace(/\s/g, '-').replace(/\./g, ''));
+                return (
+                  <Link key={tech} href={`/skill/${skillSlug}`} className="z-10">
+                      <Badge variant="secondary" className="transition-colors hover:bg-primary/20 hover:text-primary">
+                          {tech}
+                      </Badge>
+                  </Link>
+                )
+              })}
+              {remainingSkillsCount > 0 && (
+                  <Badge variant="secondary">
+                      +{remainingSkillsCount}
+                  </Badge>
+              )}
+          </div>
+           <Link href={ctaUrl} className={cn(
+              "text-sm text-accent flex items-center gap-1",
+              project.id === 'simply' && 'hidden md:flex'
+            )}>
+              {getCallToAction()} {getCallToActionIcon()}
+          </Link>
+      </CardFooter>
+    </Card>
   );
 }
