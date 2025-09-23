@@ -12,7 +12,7 @@
       "Engaging and measurable pronunciation training"
     ],
     "techStack": "TypeScript, React, Next.js, Azure, Google Cloud, Firebase, Vercel, Tailwind CSS",
-    "outcomes": "Successfully developed and deployed a an AI model for pronunciation scoring. The platform is currently in beta with a select group of users, gathering feedback to refine the learning experience and prepare for a public launch.",
+    "outcomes": "Successfully developed and deployed a an AI model for pronunciation scoring.\nThe platform is currently in beta with a select group of users, gathering feedback to refine the learning experience and prepare for a public launch.",
     "repoUrl": null,
     "demoUrl": "https://www.vernato.org",
     "images": ["vernato-1"],
@@ -22,6 +22,30 @@
      "theme": {
       "primary": "hsl(196, 75%, 52%)",
       "secondary": "hsl(45, 100%, 55%)"
+    }
+  },
+  {
+    "id": "emty",
+    "name": "EMTY",
+    "tagline": "Transit Data for NYC Subways",
+    "description": "As part of the Entrepreneurship and App Design course at the STEM Institute at City College of New York, I designed an app named EMTY for NYC’s Department of Transportation. EMTY provides real-time data on individual subway car passenger loads, helping to improve commuter flow and convenience. I plan to pitch EMTY to Rep. Espaillat as part of the 2025 Congressional App Challenge.\nAdditionally, I earned a Gold Award in this course for our research poster, which highlighted how real-time data on passenger loads and waiting times can enhance the commuting experience.",
+    "keyFeatures": [
+      "Live visualization of subway car occupancy data",
+      "Designed UX in Figma for intuitive data display",
+      "Secure real-time backend with Firebase",
+      "Pitched to the U.S. Capitol and Congressman's office"
+    ],
+    "techStack": "Figma, Canva, Firebase, MTA API",
+    "outcomes": "Designed a high-fidelity prototype praised for its clarity and user-centric approach. The prototype was used to secure stakeholder buy-in for a full-scale development project. For more details, visit linktr.ee/emty7.",
+    "repoUrl": null,
+    "demoUrl": "https://linktr.ee/emty7",
+    "images": ["emty-1"],
+    "startDate": "2024-08-01",
+    "endDate": "2025-04-01",
+    "type": "project",
+     "theme": {
+      "primary": "hsl(210, 40%, 50%)",
+      "secondary": "hsl(160, 60%, 45%)"
     }
   },
   {
@@ -36,7 +60,7 @@
       "Powered by the ToS;DR community-driven infrastructure"
     ],
     "techStack": "JavaScript, PHP, WordPress, Zapier, Google Gemini, CSS, HTML",
-    "outcomes": "Empowered thousands of users to make more informed decisions about their digital privacy. The project has been recognized for its user-centric approach to data transparency and has contributed to the broader conversation about online privacy rights.",
+    "outcomes": "Empowered thousands of users to make more informed decisions about their digital privacy.\nThe project has been recognized for its user-centric approach to data transparency and has contributed to the broader conversation about online privacy rights.",
     "repoUrl": null,
     "demoUrl": "https://simplifyme.org",
     "images": ["simplify-me-1"],
@@ -61,7 +85,7 @@
       "High-Accuracy Summaries: Extensively trained on legal texts to handle documents up to 70,000 words."
     ],
     "techStack": "Python, AWS, Google Gemini, Discord API",
-    "outcomes": "Successfully developed and deployed a Discord bot capable of simplifying complex legal documents, demonstrating skills in AI integration, API usage, and cloud deployment. The technology now powers the core summarization features of the Simplify Me. web platform.",
+    "outcomes": "Successfully developed and deployed a Discord bot capable of simplifying complex legal documents, demonstrating skills in AI integration, API usage, and cloud deployment.\nThe technology now powers the core summarization features of the Simplify Me. web platform.",
     "repoUrl": "https://github.com/aarushkmalhotra/Simply",
     "demoUrl": "https://simplifyme.org",
     "images": ["simply-1"],
@@ -85,7 +109,7 @@
       "Hands-on experience with local AI model implementation."
     ],
     "techStack": "PyTorch, Gradio, Python, CUDA",
-    "outcomes": "Successfully produced high-quality AI-generated song samples, demonstrating a practical understanding of voice conversion technologies. This project provided deep insights into the nuances of AI model training, dataset management, and the creative potential of generative AI in music.",
+    "outcomes": "Successfully produced high-quality AI-generated song samples, demonstrating a practical understanding of voice conversion technologies.\nThis project provided deep insights into the nuances of AI model training, dataset management, and the creative potential of generative AI in music.",
     "repoUrl": null,
     "demoUrl": null,
     "images": ["rvc-1"],
@@ -118,27 +142,31 @@
     ]
   },
   {
-    "id": "emty",
-    "name": "EMTY",
-    "tagline": "Transit Data for NYC Subways",
-    "description": "As part of the Entrepreneurship and App Design course at the STEM Institute at City College of New York, I designed an app named EMTY for NYC’s Department of Transportation. EMTY provides real-time data on individual subway car passenger loads, helping to improve commuter flow and convenience. I plan to pitch EMTY to Rep. Espaillat as part of the 2025 Congressional App Challenge.",
+    "id": "cifar-10-cnn",
+    "name": "CIFAR-10 CNN Object Classification Model",
+    "tagline": "Deep Learning for Image Recognition with Veritas AI",
+    "description": "As an AI Scholar at Veritas AI, I led the development of our group's capstone project. We used the CIFAR-10 dataset for object and image detection by building and customizing a convolutional neural network (CNN).\nThis project was completed under the expert mentorship of Jason Jabour, a Computer Science PhD candidate at Harvard University.",
     "keyFeatures": [
-      "Live visualization of subway car occupancy data",
-      "Designed UX in Figma for intuitive data display",
-      "Secure real-time backend with Firebase",
-      "Pitched to the U.S. Capitol and Congressman's office"
+      "Custom Convolutional Neural Network (CNN) architecture",
+      "Trained on the CIFAR-10 dataset for object recognition",
+      "Led a group capstone project as a Veritas AI Scholar",
+      "Mentored by a Harvard PhD candidate in Computer Science"
     ],
-    "techStack": "Figma, Canva, Firebase, MTA API",
-    "outcomes": "Designed a high-fidelity prototype praised for its clarity and user-centric approach. Additionally, I earned a Gold Award in the course for our research poster, which highlighted how real-time data on passenger loads and waiting times can enhance the commuting experience. The prototype was used to secure stakeholder buy-in for a full-scale development project.",
+    "techStack": "Python, PyTorch, CNN, Deep Learning",
+    "outcomes": "Developed a high-accuracy object classification model and presented the findings, methodology, and results in a comprehensive presentation.",
     "repoUrl": null,
-    "demoUrl": "https://linktr.ee/emty7",
-    "images": ["emty-1"],
-    "startDate": "2024-08-01",
-    "endDate": "2025-04-01",
+    "demoUrl": "https://docs.google.com/presentation/d/1SxtFXwkSP7j3ouTHC2i0pD7lLCfUJtWJVXgNG7_GLuo/",
+    "images": [
+      "cifar-1"
+    ],
+    "startDate": "2024-09-01",
+    "endDate": "2024-11-01",
     "type": "project",
-     "theme": {
-      "primary": "hsl(210, 40%, 50%)",
-      "secondary": "hsl(160, 60%, 45%)"
+    "theme": {
+      "primary": "hsl(204, 86%, 53%)",
+      "secondary": "hsl(348, 100%, 61%)"
     }
   }
 ]
+
+    
