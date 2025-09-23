@@ -1,15 +1,14 @@
 
-
 import { ProjectCard } from "@/components/ProjectCard";
 import { getProjects, getAllSkills } from "@/lib/projects";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-// import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-// import { Terminal } from "lucide-react";
-// import { SkillClientPage } from "./SkillClientPage";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Terminal } from "lucide-react";
+import { SkillClientPage } from "./SkillClientPage";
 
 type Props = {
-  params: Promise<{ skill: string }>;
+  params: { skill: string };
 };
 
 // Generate static paths for each skill
@@ -22,7 +21,7 @@ export function generateStaticParams() {
 
 // Generate metadata for the page
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { skill } = await params;
+  const { skill } = params;
   const decodedSkill = decodeURIComponent(skill.replace(/-/g, ' '));
   const capitalizedSkill = decodedSkill.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
@@ -33,9 +32,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // The page component
-
-export default async function ProjectsBySkillPage({ params }: Props) {
-  const { skill } = await params;
+export default function ProjectsBySkillPage({ params }: Props) {
+  const { skill } = params;
   const allProjects = getProjects();
   
   // This logic needs to be robust enough to handle the slug transformation.
@@ -71,15 +69,18 @@ export default async function ProjectsBySkillPage({ params }: Props) {
         </p>
       </div>
       
-      {/* 
-        NOTE FOR VERCEL/SERVER DEPLOYMENT:
-        The AI Skill Navigator feature uses Server Actions, which are not compatible with static export (`output: 'export'`).
-        To re-enable this feature for a server environment:
-        1. Uncomment the `SkillClientPage` import at the top of this file.
-        2. Uncomment the `<SkillClientPage ... />` component below.
-      */}
-      {/* <SkillClientPage skill={capitalizedSkill} projects={filteredProjects} /> */}
+      <SkillClientPage skill={capitalizedSkill} projects={filteredProjects} />
       
+      {process.env.NEXT_PUBLIC_IS_STATIC_EXPORT && (
+        <Alert className="mb-12">
+          <Terminal className="h-4 w-4" />
+          <AlertTitle>Developer Note</AlertTitle>
+          <AlertDescription>
+            The AI Skill Navigator is disabled on this static version of the site. This feature uses Server Actions and is fully functional in a server-based environment (e.g., when running locally or on Vercel).
+          </AlertDescription>
+        </Alert>
+      )}
+
       {filteredProjects.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project, index) => (

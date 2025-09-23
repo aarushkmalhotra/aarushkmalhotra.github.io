@@ -41,6 +41,13 @@ export function SkillClientPage({ skill, projects }: SkillClientPageProps) {
     setError(null);
     setSummary("");
 
+    // This feature is disabled in static builds.
+    if (process.env.NEXT_PUBLIC_IS_STATIC_EXPORT) {
+      setError("AI summaries are disabled in this static build, but they work in a server environment!");
+      setIsLoading(false);
+      return;
+    }
+
     try {
       // We only need to pass the relevant fields to the AI flow.
       const projectsForAI = projects.map(p => ({
@@ -85,7 +92,7 @@ export function SkillClientPage({ skill, projects }: SkillClientPageProps) {
                 {simplyLogo && (
                     <Image src={simplyLogo.imageUrl} alt="Simply Logo" width={32} height={32} className="rounded-md" />
                 )}
-              AI-powered with Simply
+              AI Skill Navigator
             </CardTitle>
             <Button 
               onClick={handleGenerateSummary} 
@@ -96,6 +103,7 @@ export function SkillClientPage({ skill, projects }: SkillClientPageProps) {
               }}
             >
               {isLoading ? "Generating..." : `Analyze my ${skill} experience`}
+              <Sparkles className="ml-2 h-4 w-4" />
             </Button>
           </div>
         </div>
@@ -110,8 +118,8 @@ export function SkillClientPage({ skill, projects }: SkillClientPageProps) {
                 )}
             </CardContent>
         )}
-        <CardFooter className="p-4" style={{ backgroundColor: 'var(--simply-bg)', borderTop: '1px solid var(--simply-border)'}}>
-            <Link href="/projects/simply" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+        <CardFooter className="p-4 flex justify-end" style={{ backgroundColor: 'var(--simply-bg)', borderTop: '1px solid var(--simply-border)'}}>
+            <Link href="/projects/simply" className="text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
                 Powered by Simply
             </Link>
         </CardFooter>
