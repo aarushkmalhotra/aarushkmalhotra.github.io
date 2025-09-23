@@ -3,7 +3,7 @@
 
 import { AudioFile } from "@/lib/projects";
 import { Badge } from "./ui/badge";
-import { Play, Pause, Music4, Bot } from "lucide-react";
+import { Play, Pause, Music4, Sparkles } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Button } from "./ui/button";
 
@@ -110,7 +110,7 @@ export function AudioPlayer({ audioFile, themeColor }: AudioPlayerProps) {
                     <div className="flex items-center justify-between">
                         <h4 className="font-headline text-lg sm:text-xl font-semibold" style={{ color: themeColor }}>{audioFile.title}</h4>
                         <Badge variant="destructive" className="flex-shrink-0 items-center gap-1">
-                            <Bot className="w-3.5 h-3.5" />
+                            <Sparkles className="w-3.5 h-3.5" />
                             AI Generated
                         </Badge>
                     </div>
