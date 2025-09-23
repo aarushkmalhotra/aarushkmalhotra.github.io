@@ -3,7 +3,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Briefcase, GraduationCap } from "lucide-react";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useRef } from "react";
 
 const skills = [
@@ -42,13 +42,15 @@ const ExperienceItem = ({ item, index }: { item: typeof experience[0], index: nu
     offset: ["start end", "center center"]
   });
 
+  const y = useTransform(scrollYProgress, [0, 1], [20, 0]);
+
   return (
     <div ref={ref} className="relative pl-12 md:pl-0 mb-12">
         <div className="absolute top-0 left-4 md:left-1/2 -translate-x-1/2 -translate-y-1 bg-background border-2 border-primary w-10 h-10 rounded-full flex items-center justify-center z-10">
             {item.icon}
         </div>
         <motion.div 
-            style={{ opacity: scrollYProgress, y: scrollYProgress.to((v) => (1 - v) * 20) }}
+            style={{ opacity: scrollYProgress, y }}
             className={`md:flex items-center w-full ${index % 2 !== 0 ? 'md:flex-row-reverse' : ''}`}
         >
             <div className="md:w-1/2"></div>
@@ -72,12 +74,7 @@ export function AboutClientPage() {
         target: journeyRef,
         offset: ["start center", "end end"]
     });
-    const scaleY = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001
-    });
-
+    
   return (
     <div className="container mx-auto px-4 py-8 md:py-16 animate-fade-in">
       <section className="grid items-center">
@@ -119,7 +116,7 @@ export function AboutClientPage() {
           <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 h-full w-0.5 bg-border"></div>
           <motion.div
             className="absolute left-4 md:left-1/2 md:-translate-x-1/2 h-full w-0.5 bg-primary origin-top"
-            style={{ scaleY }}
+            style={{ scaleY: scrollYProgress }}
           />
           {experience.map((item, index) => (
             <ExperienceItem key={index} item={item} index={index} />
