@@ -9,9 +9,10 @@ import { getHashnodePosts, type Post } from "@/lib/hashnode";
 import { ArrowUpRightIcon } from "@/components/icons/ArrowUpRightIcon";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { cn } from "@/lib/utils";
 
 const skills = [
-  "TypeScript", "Next.js", "Tailwind CSS", "Firebase", "Google Cloud", "AWS"
+  "TypeScript", "Next.js", "Tailwind CSS", "Firebase", "Azure", "AWS"
 ];
 
 function LatestPostCard({ post }: { post: Post }) {
@@ -125,11 +126,16 @@ export default async function Home() {
              <div>
                 <h3 className="font-headline text-2xl font-bold mb-6">Core Skillset</h3>
                 <div className="flex flex-wrap gap-3">
-                    {skills.map((skill) => (
-                        <Badge key={skill} className="text-base px-4 py-2" variant="default">
-                        {skill}
-                        </Badge>
-                    ))}
+                    {skills.map((skill) => {
+                      const skillSlug = encodeURIComponent(skill.toLowerCase().replace(/\s/g, '-').replace(/\./g, ''));
+                      return (
+                        <Link key={skill} href={`/skill/${skillSlug}`}>
+                            <Badge className="text-base px-4 py-2 transition-colors hover:bg-primary hover:text-primary-foreground" variant="default">
+                            {skill}
+                            </Badge>
+                        </Link>
+                      )
+                    })}
                 </div>
             </div>
         </div>
