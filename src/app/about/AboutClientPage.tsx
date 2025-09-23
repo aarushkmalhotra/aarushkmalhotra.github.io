@@ -3,7 +3,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Briefcase, GraduationCap } from "lucide-react";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
 const skills = [
@@ -78,9 +78,9 @@ export function AboutClientPage() {
   return (
     <div className="container mx-auto px-4 py-8 md:py-16 animate-fade-in">
       <section className="grid items-center">
-        <div>
+        <div className="max-w-5xl mx-auto text-center">
           <h1 className="font-headline text-4xl md:text-5xl font-bold tracking-tight mb-4">I build tools to fix what's broken.</h1>
-          <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground space-y-4">
+          <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground space-y-4 text-left md:text-center">
             <p>
                 I'm a student founder based in Manhattan, currently studying Computer Science at Macaulay Honors College at CCNY (expected graduation May 2029). I've lived in way too many countries and been through way too many school systems. CBSE, IGCSE, APs, and now college. You name it, I've probably been confused by it at some point.
             </p>
