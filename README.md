@@ -86,12 +86,13 @@ This project is pre-configured for deployment to GitHub Pages via GitHub Actions
 
 2.  **Enable GitHub Pages:** In your repository settings, go to the "Pages" tab. Under "Build and deployment", select "GitHub Actions" as the source.
 
-### Deployment to a Subdirectory
+### Deployment Configuration
 
-If you are deploying your portfolio to a subdirectory (e.g., `https://<username>.github.io/<repo-name>/`), you need to configure the `basePath` in your Next.js config.
+This portfolio is configured for deployment to a root domain (e.g., `https://aarushkumar.github.io`). The configuration in `next.config.ts` has been optimized for this setup.
 
-1.  Open `next.config.ts`.
-2.  Uncomment and set the `basePath` and `assetPrefix` to your repository name:
+**For root domain deployment:** No additional configuration is needed. The current setup works out of the box.
+
+**For subdirectory deployment:** If you need to deploy to a subdirectory (e.g., `https://<username>.github.io/<repo-name>/`), you can uncomment and configure the `basePath` and `assetPrefix` in `next.config.ts`:
     ```javascript
     const nextConfig = {
       // ...
@@ -100,5 +101,4 @@ If you are deploying your portfolio to a subdirectory (e.g., `https://<username>
       // ...
     };
     ```
-3.  Commit and push this change. The deployment workflow will use this new path.
 
