@@ -8,12 +8,12 @@ const nextConfig: NextConfig = {
   output: 'export',
 
   /*
-   * If you are deploying to a subdirectory (e.g., https://<user>.github.io/<repo>/),
-   * you need to uncomment and set the `basePath` and `assetPrefix`.
-   * Replace `<repo>` with your repository name.
+   * For deployment to a root domain (e.g., https://aarushkumar.github.io),
+   * we don't need basePath and assetPrefix. They are only needed for subdirectory deployments.
+   * Since this will be hosted at aarushkumar.github.io, these should be removed.
    */
-  basePath: '/portfolio',
-  assetPrefix: '/portfolio/',
+  // basePath: '/portfolio',
+  // assetPrefix: '/portfolio/',
 
   typescript: {
     ignoreBuildErrors: true,
