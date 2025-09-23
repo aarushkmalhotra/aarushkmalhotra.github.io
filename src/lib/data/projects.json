@@ -119,8 +119,8 @@
     "repoUrl": null,
     "demoUrl": "https://www.youtube.com/@sunbeam20/",
     "images": ["yt-thumb-2", "yt-thumb-4", "yt-thumb-1", "yt-thumb-3"],
-    "startDate": "2022-01-01",
-    "endDate": null,
+    "startDate": "2022-08-01",
+    "endDate": "2023-08-01",
     "type": "project",
     "theme": {
       "primary": "hsl(0, 100%, 50%)",
