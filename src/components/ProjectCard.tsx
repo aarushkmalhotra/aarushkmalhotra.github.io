@@ -33,6 +33,9 @@ const formatDateRange = (startDate: string, endDate: string | null) => {
 export function ProjectCard({ project }: ProjectCardProps) {
   const firstImageId = project.images[0];
   const image = PlaceHolderImages.find((img) => img.id === firstImageId);
+  const allSkills = project.techStack.split(",").map(s => s.trim());
+  const skillsToShow = allSkills.slice(0, 4);
+  const remainingSkillsCount = allSkills.length - skillsToShow.length;
 
   const getCallToAction = () => {
     if (project.id === 'simplify-me' || project.id === 'vernato') {
@@ -78,11 +81,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </CardContent>
         <CardFooter className="p-6 pt-0 flex-col items-start gap-4">
             <div className="flex flex-wrap gap-2">
-                {project.techStack.split(", ").slice(0, 4).map((tech) => (
-                <Badge key={tech} variant="secondary">
-                    {tech}
-                </Badge>
+                {skillsToShow.map((tech) => (
+                    <Badge key={tech} variant="secondary">
+                        {tech}
+                    </Badge>
                 ))}
+                {remainingSkillsCount > 0 && (
+                    <Badge variant="secondary">
+                        +{remainingSkillsCount}
+                    </Badge>
+                )}
             </div>
              <span className="text-sm text-accent flex items-center gap-1">
                 {getCallToAction()} <ArrowUpRightIcon className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />

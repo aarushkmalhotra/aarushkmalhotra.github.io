@@ -10,13 +10,18 @@ import { cn } from "@/lib/utils";
 
 const skills = [
   "TypeScript", "JavaScript", "HTML", "Python", "C++", "Swift", "Next.js", "Tailwind CSS",
-  "Git", "Vercel", "Firebase", "Azure", "AWS", "Google Cloud", "Zapier", "WordPress", "PyTorch", "Gradio", "CUDA", "PHP", "React", "ToS;DR API", "Figma", "Canva", "Firestore", "Firebase Realtime Database", "MTA API"
+  "Git", "Vercel", "Firebase", "Azure", "AWS", "Google Cloud", "Zapier", "WordPress", "PyTorch", 
+  "Gradio", "CUDA", "PHP", "React", "Figma", "Canva", "Discord API", "MTA API", "Google Gemini", "CSS", "AWS EC2"
 ];
 
 // Skills that have projects associated with them.
 // This should be kept in sync with projects data.
 const activeSkills = [
-    'React', 'Python', 'Google Cloud', 'Firebase', 'JavaScript', 'PHP', 'WordPress', 'Zapier', 'ToS;DR API', 'AWS', 'PyTorch', 'Gradio', 'CUDA', 'AWS EC2', 'Google Gemini', 'Discord API', 'Figma', 'Canva', 'Firestore', 'Firebase Realtime Database', 'MTA API', 'Next.js'
+  "TypeScript", "React", "Next.js", "Azure", "Google Cloud", "Firebase", "Vercel", "Tailwind CSS",
+  "JavaScript", "PHP", "WordPress", "Zapier", "Google Gemini", "CSS", "HTML",
+  "Figma", "Canva", "MTA API",
+  "Python", "AWS EC2", "Discord API",
+  "PyTorch", "Gradio", "CUDA"
 ];
 
 const experience = [

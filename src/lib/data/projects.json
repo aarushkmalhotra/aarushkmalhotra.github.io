@@ -11,7 +11,7 @@
       "Designed for individuals, educators, and organizations",
       "Engaging and measurable pronunciation training"
     ],
-    "techStack": "React, Python, Google Cloud, Firebase",
+    "techStack": "TypeScript, React, Next.js, Azure, Google Cloud, Firebase, Vercel, Tailwind CSS",
     "outcomes": "Successfully developed and deployed a an AI model for pronunciation scoring. The platform is currently in beta with a select group of users, gathering feedback to refine the learning experience and prepare for a public launch.",
     "repoUrl": null,
     "demoUrl": "https://www.vernato.org",
@@ -35,7 +35,7 @@
       "Highlights how your data is used and shared",
       "Powered by the ToS;DR community-driven infrastructure"
     ],
-    "techStack": "JavaScript, PHP, WordPress, Zapier, ToS;DR API, AWS",
+    "techStack": "JavaScript, PHP, WordPress, Zapier, Google Gemini, CSS, HTML",
     "outcomes": "Empowered thousands of users to make more informed decisions about their digital privacy. The project has been recognized for its user-centric approach to data transparency and has contributed to the broader conversation about online privacy rights.",
     "repoUrl": null,
     "demoUrl": "https://www.simplifyme.org",
@@ -127,7 +127,7 @@
       "User-friendly interface for tracking and filtering routes",
       "Built with a focus on design and data simulation"
     ],
-    "techStack": "Figma, Canva, Firestore, Firebase Realtime Database, MTA API",
+    "techStack": "Figma, Canva, Firebase, MTA API",
     "outcomes": "Successfully created a proof-of-concept that demonstrates the feasibility of a live transit tracking application. The prototype was used to secure stakeholder buy-in for a full-scale development project. The design was praised for its clarity and user-centric approach.",
     "repoUrl": null,
     "demoUrl": "https://linktr.ee/emty7",
