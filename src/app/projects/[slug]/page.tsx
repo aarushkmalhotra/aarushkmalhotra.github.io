@@ -89,6 +89,11 @@ export default async function ProjectDetailPage({ params }: PageProps) {
     </div>
   );
 
+  const createMarkup = (text: string) => {
+    const html = text.split('\n').map(p => `<p>${p}</p>`).join('');
+    return { __html: html };
+  };
+
   return (
     <div className="animate-fade-in" style={{ '--project-primary': project.theme.primary, '--project-secondary': project.theme.secondary, '--project-accent': project.theme.secondary } as React.CSSProperties}>
       <ProjectHeader project={project} />
@@ -96,24 +101,17 @@ export default async function ProjectDetailPage({ params }: PageProps) {
       <div className="max-w-7xl mx-auto px-4 md:px-2 py-8 md:py-12">
         <div className="grid lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2 space-y-12">
-            <div className="prose prose-lg dark:prose-invert max-w-none">
-              <h2 className="font-headline text-3xl">Overview</h2>
-              {project.description.split('\n').map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
+            <div>
+              <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Overview</h2>
+              <div 
+                className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
+                dangerouslySetInnerHTML={createMarkup(project.description)}
+              />
             </div>
             
             {project.keyFeatures && project.keyFeatures.length > 0 && (
               <div className="lg:hidden">
-                <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Key Features</h2>
-                <ul className="space-y-4">
-                  {project.keyFeatures.map((feature, index) => (
-                    <li key={index} className="flex items-start">
-                      <Check className="w-5 h-5 text-accent mr-4 mt-1 flex-shrink-0" style={{ color: 'hsl(var(--project-accent))' }} />
-                      <span className="text-base text-muted-foreground">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                <KeyFeaturesAside />
               </div>
             )}
             
@@ -125,11 +123,12 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               <TechStackAside />
             </div>
             
-            <div className="prose prose-lg dark:prose-invert max-w-none">
-                <h2 className="font-headline text-3xl">Outcomes</h2>
-                {project.outcomes.split('\n').map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
-                ))}
+            <div>
+                <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Outcomes</h2>
+                <div 
+                  className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
+                  dangerouslySetInnerHTML={createMarkup(project.outcomes)}
+                />
             </div>
             
             {project.audioFiles && project.audioFiles.length > 0 && (

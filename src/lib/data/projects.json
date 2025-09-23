@@ -51,7 +51,7 @@
   {
     "id": "simply",
     "name": "Simply",
-    "tagline": "AI Discord Bot for Decoding Privacy Policies & ToS",
+    "tagline": "Discord Bot for Decoding Legalese",
     "description": "Simply is an advanced Discord AI bot designed to decode the complexities of Privacy Policies and Terms of Service. Leveraging the power of Google Gemini, Simply streamlines the interpretation of legal documents by providing precise and easily understandable summaries.\nThis project is a core component of the Simplify Me. ecosystem. Although the bot is no longer active on Discord, its powerful summarization engine can be accessed at simplifyme.org. *Credit for the foundational codebase goes to Echoshard on GitHub (github.com/Echoshard/Gemini_Discordbot).*",
     "keyFeatures": [
       "Multi-Format Support: Processes various file types, including images, PDFs, and text files.",
