@@ -16,7 +16,7 @@ import { Badge } from "./ui/badge";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { ArrowUpRightIcon } from "./icons/ArrowUpRightIcon";
 import { format, parseISO } from "date-fns";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 interface ProjectCardProps {
   project: Project;
@@ -36,11 +36,24 @@ const formatDateRange = (startDate: string, endDate: string | null) => {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const firstImageId = project.images[0];
   const image = PlaceHolderImages.find((img) => img.id === firstImageId);
   const allSkills = project.techStack.split(",").map(s => s.trim());
   const skillsToShow = allSkills.slice(0, 4);
   const remainingSkillsCount = allSkills.length - skillsToShow.length;
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (isHovered) {
+        videoRef.current.play();
+      } else {
+        videoRef.current.pause();
+        videoRef.current.currentTime = 0;
+      }
+    }
+  }, [isHovered]);
+
 
   const getCallToAction = () => {
     if (project.id === 'cifar-10-cnn') {
@@ -76,8 +89,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
                     {/* Desktop: Video on hover */}
                     {project.videoPreview && (
                         <video
+                            ref={videoRef}
                             src={project.videoPreview}
-                            autoPlay
                             loop
                             muted
                             playsInline
@@ -100,6 +113,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             {project.name}
           </CardTitle>
           <p className="text-sm text-muted-foreground">{formatDateRange(project.startDate, project.endDate)}</p>
+
           <CardDescription>{project.tagline}</CardDescription>
         </CardHeader>
         <CardContent className="flex-grow p-6 pt-0">
