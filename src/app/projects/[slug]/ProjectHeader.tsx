@@ -126,16 +126,16 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                         )}
                          <ProjectShare project={project} />
                     </div>
-                    <div className="sm:hidden flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-2 flex-grow">
+                    <div className="sm:hidden flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
+                        <div className="flex items-center gap-2 flex-shrink-0">
                              {(project.id === 'rvc-ui' || project.id === 'album-tracks') && (
-                                <Button onClick={handleScrollToSamples} variant="secondary" className="flex-grow">
+                                <Button onClick={handleScrollToSamples} variant="secondary" size="sm">
                                     <Music />
                                      {project.id === 'rvc-ui' ? 'Song Covers' : 'Original Tracks'}
                                 </Button>
                             )}
                             {project.repoUrl && (
-                                <Button asChild className="flex-grow">
+                                <Button asChild size="sm">
                                     <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
                                         <Github />
                                         GitHub
@@ -143,7 +143,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                                 </Button>
                             )}
                             {project.demoUrl && project.id !== 'album-tracks' && (
-                                <Button asChild variant="secondary" className="flex-grow">
+                                <Button asChild variant="secondary" size="sm">
                                     <Link href={project.demoUrl} target="_blank" rel="noopener noreferrer">
                                         {getDemoCallToAction(project)}
                                         {getDemoIcon(project)}
@@ -151,7 +151,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                                 </Button>
                             )}
                         </div>
-                        <div className="flex-shrink-0">
+                        <div className="flex items-center gap-2 flex-shrink-0 pl-2">
                             <ProjectShare project={project} />
                         </div>
                     </div>
