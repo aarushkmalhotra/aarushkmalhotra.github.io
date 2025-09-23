@@ -75,7 +75,7 @@
   },
   {
     "id": "rvc-ui",
-    "name": "Retrieval Based Voice Conversion UI",
+    "name": "RVC UI & Songs",
     "tagline": "AI-Powered Voice Transformation for Song Covers",
     "description": "Retrieval Based Voice Conversion (RVC) is a technique used in speech processing where a system learns to transform one speaker's voice into another's by retrieving similar-sounding samples from a large database. After seeing AI-generated songs and covers gaining popularity on social media, I embarked on an exciting journey to create samples where the renowned Hindi singer Arijit Singh could sing various songs beyond his originals. To achieve this, I leveraged preexisting datasets trained between 1200–2000 epochs. This entire project was run locally on my Windows machine using Python and its powerful libraries. Additionally, I trained the model with a dataset of my own voice to better understand the challenges of RVC and dataset creation.",
     "keyFeatures": [
