@@ -4,7 +4,7 @@
 import { ProjectShare } from "@/components/ProjectShare";
 import { Button } from "@/components/ui/button";
 import { Project } from "@/lib/projects";
-import { ArrowLeft, ArrowUpRight, Github } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Github, Music } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -19,10 +19,16 @@ const getDemoCallToAction = (project: Project) => {
     if (project.id === 'emty') {
         return 'View Linktree';
     }
-    return 'Live Demo';
 }
 
 export function ProjectHeader({ project }: ProjectHeaderProps) {
+    const handleScrollToSamples = () => {
+        const element = document.getElementById('ai-samples');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+    
     return (
         <header 
             className="sticky top-[64px] z-40"
@@ -56,6 +62,12 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                         </div>
                     </div>
                     <div className="hidden sm:flex flex-shrink-0 items-center gap-2">
+                        {project.id === 'rvc-ui' && (
+                            <Button onClick={handleScrollToSamples} variant="secondary" size="sm">
+                                <Music />
+                                Song Covers
+                            </Button>
+                        )}
                         {project.repoUrl && (
                             <Button asChild size="sm">
                                 <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
@@ -76,6 +88,12 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                     </div>
                     <div className="sm:hidden flex items-center justify-between gap-4">
                         <div className="flex items-center gap-2 flex-grow">
+                             {project.id === 'rvc-ui' && (
+                                <Button onClick={handleScrollToSamples} variant="secondary" className="flex-grow">
+                                    <Music />
+                                    Song Covers
+                                </Button>
+                            )}
                             {project.repoUrl && (
                                 <Button asChild className="flex-grow">
                                     <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
@@ -102,4 +120,3 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
       </header>
     );
 }
-

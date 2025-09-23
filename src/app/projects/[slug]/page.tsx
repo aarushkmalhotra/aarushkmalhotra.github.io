@@ -12,11 +12,11 @@ import { ProjectHeader } from "./ProjectHeader";
 import { AudioPlayer } from "@/components/AudioPlayer";
 
 type Props = {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug } = params;
   const project = await getProjectById(slug);
 
   if (!project) {
@@ -52,8 +52,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default async function ProjectDetailPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   const project = await getProjectById(slug);
 
   if (!project) {
@@ -88,7 +88,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             </div>
 
             {project.audioFiles && project.audioFiles.length > 0 && (
-              <div>
+              <div id="ai-samples">
                 <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">AI Generated Samples</h2>
                 <div className="space-y-4">
                   {project.audioFiles.map((audioFile) => (
