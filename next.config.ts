@@ -12,8 +12,8 @@ const nextConfig: NextConfig = {
    * you need to uncomment and set the `basePath` and `assetPrefix`.
    * Replace `<repo>` with your repository name.
    */
-  // basePath: '/<repo>',
-  // assetPrefix: '/<repo>/',
+  basePath: '/portfolio',
+  assetPrefix: '/portfolio/',
 
   typescript: {
     ignoreBuildErrors: true,
