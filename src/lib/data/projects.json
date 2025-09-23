@@ -28,7 +28,7 @@
     "id": "emty",
     "name": "EMTY",
     "tagline": "Transit Data for NYC Subways",
-    "description": "As part of the Entrepreneurship and App Design course at the STEM Institute at City College of New York, I designed an app named EMTY for NYC’s Department of Transportation. EMTY provides real-time data on individual subway car passenger loads, helping to improve commuter flow and convenience. I plan to pitch EMTY to Rep. Espaillat as part of the 2025 Congressional App Challenge.\nAdditionally, I earned a Gold Award in this course for our research poster, which highlighted how real-time data on passenger loads and waiting times can enhance the commuting experience.",
+    "description": "As part of the Entrepreneurship and App Design course at the STEM Institute at City College of New York, I designed an app named EMTY for NYC’s Department of Transportation. EMTY provides real-time data on individual subway car passenger loads, helping to improve commuter flow and convenience. I plan to pitch EMTY to Rep. Espaillat as part of the 2025 Congressional App Challenge.\nAdditionally, I earned a Gold Award in this course for our research poster, which highlighted how real-time data on passenger loads and waiting times can enhance the commuting experience. For more details, visit linktr.ee/emty7",
     "keyFeatures": [
       "Live visualization of subway car occupancy data",
       "Designed UX in Figma for intuitive data display",
@@ -36,7 +36,7 @@
       "Pitched to the U.S. Capitol and Congressman's office"
     ],
     "techStack": "Figma, Canva, Firebase, MTA API",
-    "outcomes": "Designed a high-fidelity prototype praised for its clarity and user-centric approach. The prototype was used to secure stakeholder buy-in for a full-scale development project. For more details, visit linktr.ee/emty7.",
+    "outcomes": "Designed a high-fidelity prototype praised for its clarity and user-centric approach. The prototype was used to secure stakeholder buy-in for a full-scale development project.",
     "repoUrl": null,
     "demoUrl": "https://linktr.ee/emty7",
     "images": ["emty-1"],
@@ -145,7 +145,7 @@
     "id": "cifar-10-cnn",
     "name": "CIFAR-10 CNN",
     "tagline": "Object Classification Model",
-    "description": "As an AI Scholar at Veritas AI, I led the development of our group's capstone project. We used the CIFAR-10 dataset for object and image detection by building and customizing a convolutional neural network (CNN).\nThis project was completed under the expert mentorship of Jason Jabour, a Computer Science PhD candidate at Harvard University.",
+    "description": "As an AI Scholar at Veritas AI, I led the development of our group's capstone project. We used the CIFAR-10 dataset for object and image detection by building and customizing a convolutional neural network (CNN).\nThis project was completed under the expert mentorship of <a href=\"https://www.linkedin.com/in/jasonjabbourj/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline\">Jason Jabour</a>, a Computer Science PhD candidate at Harvard University.",
     "keyFeatures": [
       "Custom Convolutional Neural Network (CNN) architecture",
       "Trained on the CIFAR-10 dataset for object recognition",

@@ -89,6 +89,10 @@ export default async function ProjectDetailPage({ params }: PageProps) {
     </div>
   );
 
+  const createMarkup = (htmlString: string) => {
+    return { __html: htmlString.replace(/\n/g, '<br />') };
+  };
+
   return (
     <div className="animate-fade-in" style={{ '--project-primary': project.theme.primary, '--project-secondary': project.theme.secondary, '--project-accent': project.theme.secondary } as React.CSSProperties}>
       <ProjectHeader project={project} />
@@ -98,11 +102,10 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           <div className="lg:col-span-2 space-y-12">
             <div>
               <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Overview</h2>
-              <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground">
-                {project.description.split('\n').map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
-                ))}
-              </div>
+              <div 
+                className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
+                dangerouslySetInnerHTML={createMarkup(project.description)}
+              />
             </div>
             
             {project.keyFeatures && project.keyFeatures.length > 0 && (
