@@ -5,6 +5,7 @@ import { Providers } from '@/components/Providers';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
+import { ScrollToTop } from '@/components/ScrollToTop';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://aarushkmalhotra.github.io/'),
@@ -55,6 +56,7 @@ export default function RootLayout({
             <main className="flex-grow">{children}</main>
             <Footer />
             <Toaster />
+            <ScrollToTop />
           </div>
         </Providers>
       </body>
