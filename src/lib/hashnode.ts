@@ -30,10 +30,10 @@ interface HashnodeResponse {
     };
 }
   
-export async function getHashnodePosts(username: string): Promise<Post[]> {
+export async function getHashnodePosts(host: string): Promise<Post[]> {
     const query = `
-      query Publication {
-        publication(host: "${username}.hashnode.dev") {
+      query Publication($host: String!) {
+        publication(host: $host) {
           posts(first: 10) {
             edges {
               node {
@@ -64,7 +64,10 @@ export async function getHashnodePosts(username: string): Promise<Post[]> {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ query }),
+        body: JSON.stringify({ 
+          query,
+          variables: { host }
+        }),
         next: { revalidate: 3600 }, // Revalidate every hour
       });
   
@@ -75,7 +78,12 @@ export async function getHashnodePosts(username: string): Promise<Post[]> {
       
       const jsonResponse: HashnodeResponse = await response.json();
       
-      if (!jsonResponse.data || !jsonResponse.data.publication) {
+      if (jsonResponse.data?.publication === null) {
+          console.error(`No publication found for host: ${host}. Check if the blog is set up correctly on Hashnode.`);
+          return [];
+      }
+
+      if (!jsonResponse.data || !jsonResponse.data.publication.posts) {
           console.error("Invalid response structure from Hashnode:", jsonResponse);
           return [];
       }
