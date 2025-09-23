@@ -16,8 +16,10 @@ export function AudioPlayer({ audioFile, themeColor }: AudioPlayerProps) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
+    const [isScrubbing, setIsScrubbing] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
     const progressBarRef = useRef<HTMLDivElement>(null);
+    const scrubContainerRef = useRef<HTMLDivElement>(null);
 
     const togglePlayPause = () => {
         const prevValue = isPlaying;
@@ -30,7 +32,7 @@ export function AudioPlayer({ audioFile, themeColor }: AudioPlayerProps) {
     };
 
     const formatTime = (time: number) => {
-        if (isNaN(time)) return "0:00";
+        if (isNaN(time) || time === 0) return "0:00";
         const minutes = Math.floor(time / 60);
         const seconds = Math.floor(time % 60);
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
@@ -41,10 +43,13 @@ export function AudioPlayer({ audioFile, themeColor }: AudioPlayerProps) {
         if (audio) {
             const setAudioData = () => {
                 setDuration(audio.duration);
-                setCurrentTime(audio.currentTime);
             }
     
-            const setAudioTime = () => setCurrentTime(audio.currentTime);
+            const setAudioTime = () => {
+                if (!isScrubbing) {
+                    setCurrentTime(audio.currentTime);
+                }
+            };
     
             audio.addEventListener('loadeddata', setAudioData);
             audio.addEventListener('timeupdate', setAudioTime);
@@ -54,29 +59,61 @@ export function AudioPlayer({ audioFile, themeColor }: AudioPlayerProps) {
                 audio.removeEventListener('timeupdate', setAudioTime);
             }
         }
-    }, []);
+    }, [isScrubbing]);
 
     useEffect(() => {
         const progressBar = progressBarRef.current;
-        if(progressBar) {
+        if(progressBar && duration > 0) {
             const progress = (currentTime / duration) * 100;
             progressBar.style.width = `${progress}%`;
         }
     }, [currentTime, duration]);
 
-    const onScrub = (e: React.MouseEvent<HTMLDivElement>) => {
-        const scrubContainer = e.currentTarget;
-        const scrubRect = scrubContainer.getBoundingClientRect();
-        const scrubWidth = scrubRect.width;
+    const handleScrub = (e: MouseEvent) => {
+        if (!scrubContainerRef.current) return;
+
+        const scrubRect = scrubContainerRef.current.getBoundingClientRect();
         const clickPositionX = e.clientX - scrubRect.left;
-        const clickRatio = clickPositionX / scrubWidth;
+        const clickRatio = Math.max(0, Math.min(1, clickPositionX / scrubRect.width));
         const time = duration * clickRatio;
 
-        if(audioRef.current) {
-            audioRef.current.currentTime = time;
-            setCurrentTime(time);
+        setCurrentTime(time);
+        if (progressBarRef.current) {
+            progressBarRef.current.style.width = `${clickRatio * 100}%`;
         }
-    }
+    };
+
+    const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+        setIsScrubbing(true);
+        handleScrub(e.nativeEvent);
+    };
+
+    const handleMouseUp = () => {
+        if (isScrubbing && audioRef.current) {
+            audioRef.current.currentTime = currentTime;
+            if(isPlaying) {
+                audioRef.current.play();
+            }
+        }
+        setIsScrubbing(false);
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+        if (isScrubbing) {
+            handleScrub(e);
+        }
+    };
+    
+    useEffect(() => {
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+
+        return () => {
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+        };
+    }, [isScrubbing, handleMouseMove, handleMouseUp]);
+
 
     const getCreditText = () => {
         if (audioFile.id === 'ajab-si') {
@@ -116,8 +153,12 @@ export function AudioPlayer({ audioFile, themeColor }: AudioPlayerProps) {
                     </div>
 
                     <div className="mt-3">
-                        <div className="w-full bg-muted rounded-full h-2 cursor-pointer" onClick={onScrub}>
-                            <div ref={progressBarRef} className="h-2 rounded-full" style={{ backgroundColor: themeColor }}></div>
+                        <div 
+                            ref={scrubContainerRef}
+                            className="w-full bg-muted rounded-full h-2 cursor-pointer" 
+                            onMouseDown={handleMouseDown}
+                        >
+                            <div ref={progressBarRef} className="h-2 rounded-full pointer-events-none" style={{ backgroundColor: themeColor }}></div>
                         </div>
                         <div className="flex justify-between text-xs text-muted-foreground mt-1.5">
                             <span>{formatTime(currentTime)}</span>
