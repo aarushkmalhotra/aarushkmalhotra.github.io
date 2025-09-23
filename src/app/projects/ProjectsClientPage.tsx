@@ -109,7 +109,7 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
           />
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="flex-grow md:flex-grow-0">
