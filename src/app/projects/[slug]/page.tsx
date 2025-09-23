@@ -79,7 +79,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
     <div className="animate-fade-in" style={{ '--project-primary': project.theme.primary, '--project-secondary': project.theme.secondary, '--project-accent': project.theme.secondary } as React.CSSProperties}>
       <ProjectHeader project={project} />
 
-      <div className="container mx-auto px-4 py-8 md:py-12">
+      <div className="max-w-7xl mx-auto px-4 md:px-2 py-8 md:py-12">
         <div className="grid lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2 space-y-12">
             <div className="prose prose-lg dark:prose-invert max-w-none">
@@ -124,7 +124,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                 </div>
               </div>
             )}
-            
+
             {projectImages.length > 0 && (
               <div>
                 <h2 className="font-headline text-3xl mb-6 prose prose-lg dark:prose-invert max-w-none">Gallery</h2>

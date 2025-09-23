@@ -49,7 +49,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
         >
             <div className="container mx-auto px-4 pt-4">
                 <div 
-                    className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 max-w-5xl mx-auto rounded-lg border bg-background"
+                    className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 max-w-7xl mx-auto rounded-lg border bg-background"
                 >
                     <div className="flex items-center gap-4">
                         <div className="flex-shrink-0">

@@ -32,7 +32,7 @@ export function AudioPlayer({ audioFile, themeColor }: AudioPlayerProps) {
     };
 
     const formatTime = (time: number) => {
-        if (isNaN(time) || time === 0) return "0:00";
+        if (isNaN(time) || time <= 0) return "0:00";
         const minutes = Math.floor(time / 60);
         const seconds = Math.floor(time % 60);
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
@@ -51,11 +51,11 @@ export function AudioPlayer({ audioFile, themeColor }: AudioPlayerProps) {
                 }
             };
     
-            audio.addEventListener('loadeddata', setAudioData);
+            audio.addEventListener('loadedmetadata', setAudioData);
             audio.addEventListener('timeupdate', setAudioTime);
     
             return () => {
-                audio.removeEventListener('loadeddata', setAudioData);
+                audio.removeEventListener('loadedmetadata', setAudioData);
                 audio.removeEventListener('timeupdate', setAudioTime);
             }
         }
@@ -63,14 +63,14 @@ export function AudioPlayer({ audioFile, themeColor }: AudioPlayerProps) {
 
     useEffect(() => {
         const progressBar = progressBarRef.current;
-        if(progressBar && duration > 0) {
-            const progress = (currentTime / duration) * 100;
+        if(progressBar) {
+            const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
             progressBar.style.width = `${progress}%`;
         }
     }, [currentTime, duration]);
 
     const handleScrub = (e: MouseEvent) => {
-        if (!scrubContainerRef.current) return;
+        if (!scrubContainerRef.current || duration === 0) return;
 
         const scrubRect = scrubContainerRef.current.getBoundingClientRect();
         const clickPositionX = e.clientX - scrubRect.left;
@@ -105,14 +105,19 @@ export function AudioPlayer({ audioFile, themeColor }: AudioPlayerProps) {
     };
     
     useEffect(() => {
-        document.addEventListener('mousemove', handleMouseMove);
-        document.addEventListener('mouseup', handleMouseUp);
+        const handleMouseUpGlobal = () => handleMouseUp();
+        const handleMouseMoveGlobal = (e: MouseEvent) => handleMouseMove(e);
+        
+        if (isScrubbing) {
+            document.addEventListener('mousemove', handleMouseMoveGlobal);
+            document.addEventListener('mouseup', handleMouseUpGlobal);
+        }
 
         return () => {
-            document.removeEventListener('mousemove', handleMouseMove);
-            document.removeEventListener('mouseup', handleMouseUp);
+            document.removeEventListener('mousemove', handleMouseMoveGlobal);
+            document.removeEventListener('mouseup', handleMouseUpGlobal);
         };
-    }, [isScrubbing, handleMouseMove, handleMouseUp]);
+    }, [isScrubbing]);
 
 
     const getCreditText = () => {

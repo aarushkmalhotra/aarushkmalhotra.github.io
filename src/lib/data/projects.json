@@ -62,7 +62,7 @@
     ],
     "techStack": "Python, AWS, Google Gemini, Discord API",
     "outcomes": "Successfully developed and deployed a Discord bot capable of simplifying complex legal documents, demonstrating skills in AI integration, API usage, and cloud deployment. The technology now powers the core summarization features of the Simplify Me. web platform.",
-    "repoUrl": "https://github.com/Echoshard/Gemini_Discordbot",
+    "repoUrl": "https://github.com/aarushkmalhotra/Simply",
     "demoUrl": "https://simplifyme.org",
     "images": ["simply-1"],
     "startDate": "2023-08-01",

@@ -90,7 +90,7 @@ export function AboutClientPage() {
   return (
     <div className="animate-fade-in">
       <section className="flex flex-col justify-center min-h-[calc(100dvh-65px)] container mx-auto px-4 py-8 md:py-16">
-        <div className="max-w-5xl mx-auto text-center">
+        <div className="max-w-6xl mx-auto text-center">
           <h1 className="font-headline text-4xl md:text-5xl font-bold tracking-tight mb-4">I build tools to fix what's broken.</h1>
           <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground space-y-4 text-left md:text-center">
             <p>
