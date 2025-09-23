@@ -6,7 +6,7 @@ import { Play, Pause, Volume2, Maximize } from 'lucide-react';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
-import { Slider } from './ui/slider';
+import ReactSlider from 'react-slider';
 
 interface CustomVideoPlayerProps {
     src: string;
@@ -27,6 +27,7 @@ export function CustomVideoPlayer({ src, themeColor }: CustomVideoPlayerProps) {
     const [volume, setVolume] = useState(1);
     const [isScrubbing, setIsScrubbing] = useState(false);
     const [showControls, setShowControls] = useState(true);
+    const [isVolumeOpen, setVolumeOpen] = useState(false);
 
     const videoRef = useRef<HTMLVideoElement>(null);
     const playerContainerRef = useRef<HTMLDivElement>(null);
@@ -65,9 +66,9 @@ export function CustomVideoPlayer({ src, themeColor }: CustomVideoPlayerProps) {
         }
     };
     
-    const handleVolumeChange = (value: number[]) => {
-        const newVolume = value[0];
+    const handleVolumeChange = (value: number) => {
         if (videoRef.current) {
+            const newVolume = value / 100;
             videoRef.current.volume = newVolume;
             setVolume(newVolume);
         }
@@ -215,19 +216,30 @@ export function CustomVideoPlayer({ src, themeColor }: CustomVideoPlayerProps) {
                             <div ref={progressBarRef} className="h-full rounded-full pointer-events-none" style={{ backgroundColor: themeColor }}></div>
                         </div>
                         <span className="text-xs w-10 text-center">{formatTime(duration)}</span>
-                         <Popover>
+                         <Popover open={isVolumeOpen} onOpenChange={setVolumeOpen}>
                             <PopoverTrigger asChild>
                                 <Button size="icon" variant="ghost" className="w-8 h-8 hover:bg-white/20">
                                     <Volume2 className="w-5 h-5" />
                                 </Button>
                             </PopoverTrigger>
-                            <PopoverContent className="w-auto p-2 bg-black/60 border-none">
-                                <Slider
-                                    defaultValue={[1]}
-                                    max={1}
-                                    step={0.05}
-                                    onValueChange={handleVolumeChange}
-                                    className="w-20"
+                            <PopoverContent className="w-auto p-2 bg-black/60 border-none mb-2" side="top">
+                                <ReactSlider
+                                    className="h-24 w-6"
+                                    thumbClassName="h-4 w-4 bg-white rounded-full cursor-pointer -left-1 focus:outline-none focus:ring-2 focus:ring-white/50"
+                                    trackClassName="w-1 bg-white/30 rounded-full mx-auto"
+                                    renderTrack={(props, state) => (
+                                        <div {...props}>
+                                            <div 
+                                                className="absolute bottom-0 w-full rounded-full" 
+                                                style={{ height: `${state.valueNow}%`, backgroundColor: themeColor }}
+                                            />
+                                        </div>
+                                    )}
+                                    orientation="vertical"
+                                    defaultValue={volume * 100}
+                                    onChange={handleVolumeChange}
+                                    onAfterChange={() => setVolumeOpen(false)}
+                                    invert
                                 />
                             </PopoverContent>
                         </Popover>
@@ -241,5 +253,3 @@ export function CustomVideoPlayer({ src, themeColor }: CustomVideoPlayerProps) {
         </div>
     );
 }
-
-    
