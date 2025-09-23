@@ -142,7 +142,7 @@ export function AboutClientPage({ allSkills, activeSkills, skillProjectMap }: Ab
                                                 {badge}
                                             </Link>
                                         </TooltipTrigger>
-                                        <TooltipContent>
+                                        <TooltipContent className="z-50 bg-popover text-popover-foreground">
                                             <div className="text-center p-2">
                                                 <p className="font-bold text-base mb-2">
                                                     {projectCount} {projectCount === 1 ? 'Project' : 'Projects'}
