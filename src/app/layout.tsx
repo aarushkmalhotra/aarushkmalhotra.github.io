@@ -15,6 +15,23 @@ export const metadata: Metadata = {
   },
 };
 
+const ThemeInitializer = () => {
+  const script = `
+    (function() {
+      function getTheme() {
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme) return storedTheme;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      const theme = getTheme();
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  `;
+  return <script dangerouslySetInnerHTML={{ __html: script }} />;
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -23,6 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <ThemeInitializer />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

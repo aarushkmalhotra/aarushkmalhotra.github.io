@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
@@ -11,17 +12,23 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+// Helper function to get the initial theme, avoiding flash
+// This should match the logic in the inline script in RootLayout
+const getInitialTheme = (): Theme => {
+  if (typeof window === 'undefined') {
+    return 'light'; // Default for server-side rendering
+  }
+  const storedTheme = localStorage.getItem("theme") as Theme | null;
+  const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  return storedTheme || preferredTheme;
+};
+
 export function Providers({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme") as Theme | null;
-    const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    const initialTheme = storedTheme || preferredTheme;
-    setTheme(initialTheme);
-  }, []);
-
-  useEffect(() => {
+    // The inline script in RootLayout handles the initial class setting.
+    // This effect only needs to sync changes made via the theme toggle.
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
