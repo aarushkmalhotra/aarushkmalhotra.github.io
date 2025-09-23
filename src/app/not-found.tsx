@@ -1,14 +1,13 @@
 
 import { Button } from "@/components/ui/button"
-import { Compass, Home } from "lucide-react"
+import { Home } from "lucide-react"
 import Link from "next/link"
 
 export default function NotFound() {
   return (
     <div className="container mx-auto flex h-[calc(100dvh-129px)] items-center justify-center px-4 py-16">
       <div className="flex flex-col items-center text-center">
-        <Compass className="h-24 w-24 text-muted-foreground/50" />
-        <h1 className="mt-8 font-headline text-8xl font-bold tracking-tighter text-primary">
+        <h1 className="font-headline text-8xl font-bold tracking-tighter text-primary">
           404
         </h1>
         <h2 className="mt-2 text-3xl font-semibold tracking-tight">
