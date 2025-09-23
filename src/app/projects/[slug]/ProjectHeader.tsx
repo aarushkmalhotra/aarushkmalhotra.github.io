@@ -16,11 +16,15 @@ const getDemoCallToAction = (project: Project) => {
     if (project.id === 'cifar-10-cnn') {
       return 'View Slides';
     }
-    if (project.id === 'simplify-me' || project.id === 'vernato') {
-        return 'Use for Free';
+    if (project.id === 'simplify-me' || project.id === 'vernato' || project.id === 'imdb-top-1000') {
+        return 'View Demo';
     }
     if (project.id === 'emty') {
         return 'View Linktree';
+    }
+    // A sensible fallback
+    if (project.demoUrl) {
+        return 'View Project';
     }
 }
 
