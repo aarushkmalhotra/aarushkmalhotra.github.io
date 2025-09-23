@@ -20,7 +20,7 @@ export function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/80">
+    <header className="sticky top-0 z-50 w-full border-b bg-background">
       <div className="container mx-auto px-4 flex h-16 items-center">
         <Link href="/" className="flex items-center gap-2 font-headline text-lg font-bold mr-auto">
           <Image
