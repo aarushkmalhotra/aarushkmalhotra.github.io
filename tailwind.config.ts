@@ -96,10 +96,6 @@ export default {
           '0%': { opacity: '0', transform: 'translateY(20px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        'letter-fade-in': {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
         'gradient-pan': {
           '0%': { 'background-position': '0% 50%' },
           '50%': { 'background-position': '100% 50%' },
@@ -116,7 +112,6 @@ export default {
         'fade-in': 'fade-in 0.6s ease-in-out forwards',
         'fade-in-up': 'fade-in-up 0.6s ease-in-out both',
         'gradient-pan': 'gradient-pan 5s ease infinite',
-        'letter-fade-in': 'letter-fade-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
         'shine': 'shine 4s linear infinite'
       },
     },
