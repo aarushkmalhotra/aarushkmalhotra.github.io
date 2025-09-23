@@ -47,7 +47,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
             ref={headerRef}
             className="sticky top-[64px] z-40"
         >
-            <div className="container mx-auto px-4 pt-4">
+            <div className="max-w-7xl mx-auto px-4 xl:px-0 pt-4">
                 <div 
                     className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 max-w-7xl mx-auto rounded-lg border bg-background"
                 >
