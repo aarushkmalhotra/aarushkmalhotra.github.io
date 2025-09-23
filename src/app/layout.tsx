@@ -3,6 +3,7 @@ import './globals.css';
 import { Providers } from '@/components/Providers';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: "Aarush's Portfolio | Developer Portfolio",
@@ -30,6 +31,7 @@ export default function RootLayout({
             <Header />
             <main className="flex-grow">{children}</main>
             <Footer />
+            <Toaster />
           </div>
         </Providers>
       </body>

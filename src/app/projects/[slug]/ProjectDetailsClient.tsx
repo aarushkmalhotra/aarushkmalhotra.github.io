@@ -43,7 +43,7 @@ export function ProjectDetailsClient({ project }: Props) {
         <div className="flex-grow">
           <h2 className="font-headline text-2xl mb-2">AI-Powered Highlights</h2>
           {(project.id === 'simplify-me' || project.id === 'simply') && (
-            <Link href="https://simplifyme.org/meet-simply" target="_blank" rel="noopener noreferrer" className="inline-flex">
+            <Link href="https://simplifyme.org/simply" target="_blank" rel="noopener noreferrer" className="inline-flex">
               <div className="inline-flex items-center gap-2 rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground hover:bg-secondary">
                 <Image src="/simplylogo.png" alt="Simply Logo" width={16} height={16} className="rounded-full" />
                 Powered by Simply
