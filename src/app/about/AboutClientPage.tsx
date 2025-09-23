@@ -10,7 +10,13 @@ import { cn } from "@/lib/utils";
 
 const skills = [
   "TypeScript", "JavaScript", "HTML", "Python", "C++", "Swift", "Next.js", "Tailwind CSS",
-  "Git", "Vercel", "Firebase", "Azure", "AWS", "Google Cloud", "Zapier", "WordPress", "PyTorch", "Gradio", "CUDA", "PHP"
+  "Git", "Vercel", "Firebase", "Azure", "AWS", "Google Cloud", "Zapier", "WordPress", "PyTorch", "Gradio", "CUDA", "PHP", "React", "ToS;DR API", "Figma", "Canva", "Firestore", "Firebase Realtime Database", "MTA API"
+];
+
+// Skills that have projects associated with them.
+// This should be kept in sync with projects data.
+const activeSkills = [
+    'React', 'Python', 'Google Cloud', 'Firebase', 'JavaScript', 'PHP', 'WordPress', 'Zapier', 'ToS;DR API', 'AWS', 'PyTorch', 'Gradio', 'CUDA', 'AWS EC2', 'Google Gemini', 'Discord API', 'Figma', 'Canva', 'Firestore', 'Firebase Realtime Database', 'MTA API', 'Next.js'
 ];
 
 const experience = [
@@ -69,7 +75,6 @@ const ExperienceItem = ({ item, index }: { item: typeof experience[0], index: nu
   );
 };
 
-
 export function AboutClientPage() {
     const journeyRef = useRef(null);
     const { scrollYProgress } = useScroll({
@@ -103,20 +108,39 @@ export function AboutClientPage() {
         <h2 className="font-headline text-3xl md:text-4xl font-bold text-center mb-12">My Skillset</h2>
         <div className="relative w-full overflow-hidden group [mask-image:linear-gradient(to-right,transparent,black_10%,black_90%,transparent)]">
             <div className="flex animate-marquee group-hover:[animation-play-state:paused]">
-                {[...skills, ...skills].map((skill, index) => (
-                    <Link
-                        href={`/skill/${encodeURIComponent(skill.toLowerCase().replace(/\s/g, '-').replace(/\./g, ''))}`}
-                        key={index}
-                        className="mx-4 flex-shrink-0"
-                    >
+                {[...skills, ...skills].map((skill, index) => {
+                    const isClickable = activeSkills.some(s => s.toLowerCase() === skill.toLowerCase());
+                    const skillSlug = encodeURIComponent(skill.toLowerCase().replace(/\s/g, '-').replace(/\./g, ''));
+                    
+                    const badge = (
                         <Badge 
-                            className="text-lg px-6 py-3 transition-all duration-300 ease-in-out hover:bg-primary hover:text-primary-foreground hover:scale-110 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" 
+                            className={cn(
+                                "text-lg px-6 py-3 transition-colors duration-300 ease-in-out relative overflow-hidden",
+                                isClickable ? "hover:bg-primary hover:text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" : "opacity-50 cursor-not-allowed",
+                            )}
                             variant="default"
                         >
-                            {skill}
+                           <span className={cn(isClickable && "group-hover:opacity-0 transition-opacity")}>{skill}</span>
+                           {isClickable && (
+                                <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-sm font-semibold">
+                                    View Projects
+                                </span>
+                           )}
                         </Badge>
-                    </Link>
-                ))}
+                    );
+
+                    return (
+                        <div key={index} className="mx-4 flex-shrink-0 group">
+                           {isClickable ? (
+                                <Link href={`/skill/${skillSlug}`} aria-label={`View projects for ${skill}`}>
+                                    {badge}
+                                </Link>
+                            ) : (
+                                <div>{badge}</div>
+                            )}
+                        </div>
+                    );
+                })}
             </div>
         </div>
       </section>
