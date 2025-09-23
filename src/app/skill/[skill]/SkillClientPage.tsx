@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -110,8 +111,8 @@ export function SkillClientPage({ skill, projects }: SkillClientPageProps) {
             </CardContent>
         )}
         <CardFooter className="p-4" style={{ backgroundColor: 'var(--simply-bg)', borderTop: '1px solid var(--simply-border)'}}>
-            <Link href="https://simplifyme.org/simply/" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
-                Powered by Simply <ExternalLink className="w-3 h-3" />
+            <Link href="/projects/simply" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+                Powered by Simply
             </Link>
         </CardFooter>
       </Card>
