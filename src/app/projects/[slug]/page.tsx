@@ -88,7 +88,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   );
 
   const createMarkup = (htmlString: string) => {
-    return { __html: htmlString.replace(/\n/g, '<br />') };
+    // Split by one or more newlines, filter out empty strings, and wrap in <p> tags
+    const paragraphs = htmlString.split(/\n+/).filter(p => p.trim() !== '').map(p => `<p>${p}</p>`).join('');
+    return { __html: paragraphs };
   };
 
   return (
@@ -118,11 +120,10 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             
             <div>
                 <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Outcomes</h2>
-                <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground">
-                    {project.outcomes.split('\n').map((paragraph, index) => (
-                      <p key={index}>{paragraph}</p>
-                    ))}
-                </div>
+                <div 
+                    className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
+                    dangerouslySetInnerHTML={createMarkup(project.outcomes)}
+                />
             </div>
             
             {project.audioFiles && project.audioFiles.length > 0 && (
