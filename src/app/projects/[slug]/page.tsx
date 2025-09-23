@@ -14,11 +14,11 @@ import { ProjectGallery } from "./ProjectGallery";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug } = params;
   const project = await getProjectById(slug);
 
   if (!project) {
@@ -55,7 +55,7 @@ export async function generateStaticParams() {
 }
 
 export default async function ProjectDetailPage({ params }: PageProps) {
-  const { slug } = await params;
+  const { slug } = params;
   const project = await getProjectById(slug);
 
   if (!project) {

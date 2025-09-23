@@ -1,13 +1,28 @@
+
 import { ProjectCard } from "@/components/ProjectCard";
 import { getProjects } from "@/lib/projects";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { SkillClientPage } from "./SkillClientPage";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
+import dynamic from 'next/dynamic';
+import { Skeleton } from "@/components/ui/skeleton";
+
+// Dynamically import the component that uses server actions
+const SkillClientPage = dynamic(
+  () => import('./SkillClientPage').then(mod => mod.SkillClientPage),
+  { 
+    ssr: false,
+    loading: () => (
+        <div className="mb-12">
+            <Skeleton className="h-48 w-full" />
+        </div>
+    )
+  }
+);
 
 type Props = {
-  params: Promise<{ skill: string }>;
+  params: { skill: string };
 };
 
 // Function to get all unique skills from projects for static generation
@@ -32,7 +47,7 @@ export async function generateStaticParams() {
 
 // Generate metadata for the page
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { skill } = await params;
+  const { skill } = params;
   const decodedSkill = decodeURIComponent(skill.replace(/-/g, ' '));
   const capitalizedSkill = decodedSkill.charAt(0).toUpperCase() + decodedSkill.slice(1);
 
@@ -44,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // The page component
 export default async function ProjectsBySkillPage({ params }: Props) {
-  const { skill } = await params;
+  const { skill } = params;
   const allProjects = await getProjects();
   
   // This logic needs to be robust enough to handle the slug transformation.
