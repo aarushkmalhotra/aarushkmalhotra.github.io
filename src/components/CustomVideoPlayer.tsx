@@ -19,9 +19,6 @@ const formatTime = (time: number) => {
 };
 
 export function CustomVideoPlayer({ src, themeColor }: CustomVideoPlayerProps) {
-    // iOS Safari blocks programmatic volume changes and has specific fullscreen behaviors.
-    // On iOS, render the native player with default controls for best UX.
-    const [isIOS, setIsIOS] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
@@ -34,25 +31,6 @@ export function CustomVideoPlayer({ src, themeColor }: CustomVideoPlayerProps) {
     const playerContainerRef = useRef<HTMLDivElement>(null);
     const timelineContainerRef = useRef<HTMLDivElement>(null);
     let controlsTimeout: NodeJS.Timeout;
-
-    useEffect(() => {
-        try {
-            const ua = navigator.userAgent || "";
-            // Covers Safari-based browsers on iPhone/iPad (including Chrome on iOS)
-            const iOS = /iPad|iPhone|iPod/.test(ua);
-            setIsIOS(iOS);
-        } catch {
-            setIsIOS(false);
-        }
-    }, []);
-
-    // Ensure iOS inline playback attribute is set using a top-level effect
-    useEffect(() => {
-        if (!isIOS) return;
-        if (videoRef.current) {
-            try { videoRef.current.setAttribute('webkit-playsinline', 'true'); } catch {}
-        }
-    }, [isIOS]);
 
     const togglePlayPause = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -127,7 +105,6 @@ export function CustomVideoPlayer({ src, themeColor }: CustomVideoPlayerProps) {
 
 
     useEffect(() => {
-        if (isIOS) return; // skip custom listeners on iOS native player
         const video = videoRef.current;
         if (!video) return;
 
@@ -151,10 +128,9 @@ export function CustomVideoPlayer({ src, themeColor }: CustomVideoPlayerProps) {
             video.removeEventListener('ended', handleEnded);
             clearTimeout(controlsTimeout);
         };
-    }, [isScrubbing, isIOS]);
+    }, [isScrubbing]);
     
     useEffect(() => {
-        if (isIOS) return; // skip custom scrubbing listeners on iOS
         const handleTimelineUpdate = (e: MouseEvent) => {
             if (!timelineContainerRef.current || !videoRef.current) return;
             const rect = timelineContainerRef.current.getBoundingClientRect();
@@ -182,24 +158,8 @@ export function CustomVideoPlayer({ src, themeColor }: CustomVideoPlayerProps) {
             document.removeEventListener('mouseup', handleMouseUp);
             document.removeEventListener('mousemove', handleMouseMoveScrub);
         };
-    }, [isScrubbing, duration, isIOS]);
+    }, [isScrubbing, duration]);
 
-
-    if (isIOS) {
-        // Native iOS player with default controls
-        return (
-            <div ref={playerContainerRef} className="relative w-full h-full bg-black">
-                <video
-                    ref={videoRef}
-                    src={src}
-                    className="w-full h-full object-contain"
-                    controls
-                    playsInline
-                    preload="metadata"
-                />
-            </div>
-        );
-    }
 
     return (
         <div 

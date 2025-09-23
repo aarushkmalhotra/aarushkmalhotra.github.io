@@ -183,7 +183,7 @@
       "Led a group capstone project as a Veritas AI Scholar",
       "Mentored by a Harvard PhD candidate in Computer Science"
     ],
-    "techStack": "Python, PyTorch, CNN, Deep Learning",
+    "techStack": "Python, TensorFlow, CNN, Deep Learning, Google Colab",
     "keywords": ["AI & Machine Learning"],
     "outcomes": "Developed a high-accuracy object classification model and presented the findings, methodology, and results in a comprehensive presentation.",
     "repoUrl": null,

@@ -48,35 +48,57 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
   });
   const [sortOrder, setSortOrder] = useState<SortOption>((searchParams.get('sort') as SortOption) || "newest");
   const [isMounted, setIsMounted] = useState(false);
+  const [showFavorites, setShowFavorites] = useState<boolean>(() => (searchParams.get('favorites') || '').toLowerCase() === 'true');
+  const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
+  // Hydrate favorites from localStorage on mount
+  useEffect(() => {
+    if (!isMounted) return;
+    try {
+      const raw = localStorage.getItem('portfolio:favorites');
+      setFavoriteIds(raw ? (JSON.parse(raw) as string[]) : []);
+    } catch {
+      setFavoriteIds([]);
+    }
+  }, [isMounted]);
+
+  // Listen for favorites updates from any component
+  useEffect(() => {
+    const handler = (e: Event) => {
+      // Prefer detail if present; otherwise re-read from localStorage
+      const custom = e as CustomEvent<string[]>;
+      if (custom.detail && Array.isArray(custom.detail)) {
+        setFavoriteIds(custom.detail);
+      } else {
+        try {
+          const raw = localStorage.getItem('portfolio:favorites');
+          setFavoriteIds(raw ? (JSON.parse(raw) as string[]) : []);
+        } catch {
+          setFavoriteIds([]);
+        }
+      }
+    };
+    window.addEventListener('portfolio:favorites-updated', handler as EventListener);
+    return () => window.removeEventListener('portfolio:favorites-updated', handler as EventListener);
+  }, []);
+
   // Update URL when filters change
   useEffect(() => {
     if (!isMounted) return;
-    
     const params = new URLSearchParams();
-
-    if (searchTerm) {
-      params.set('search', searchTerm);
-    }
+    if (searchTerm) params.set('search', searchTerm);
     const activeKeywords = Object.keys(selectedKeywords).filter(key => selectedKeywords[key]);
-    if (activeKeywords.length > 0) {
-      params.set('keywords', activeKeywords.join(','));
-    }
-    if (sortOrder !== 'newest') {
-      params.set('sort', sortOrder);
-    }
-
+    if (activeKeywords.length > 0) params.set('keywords', activeKeywords.join(','));
+    if (sortOrder !== 'newest') params.set('sort', sortOrder);
+    if (showFavorites) params.set('favorites', 'true');
     const queryString = params.toString();
     const newUrl = queryString ? `${pathname}?${queryString}` : pathname;
-    
-    // Use push to avoid adding to browser history for every filter change
     router.push(newUrl, { scroll: false });
-
-  }, [searchTerm, selectedKeywords, sortOrder, pathname, router, isMounted]);
+  }, [searchTerm, selectedKeywords, sortOrder, showFavorites, pathname, router, isMounted]);
 
   const handleKeywordChange = (keyword: string) => {
     setSelectedKeywords(prev => ({
@@ -118,6 +140,11 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
         return filtered;
     }
   }, [allProjects, searchTerm, selectedKeywords, sortOrder]);
+
+  const finalProjects = useMemo(() => {
+    if (!showFavorites) return filteredAndSortedProjects;
+    return filteredAndSortedProjects.filter(p => favoriteIds.includes(p.id));
+  }, [filteredAndSortedProjects, favoriteIds, showFavorites]);
   
   if (!isMounted) {
     // Prevent hydration mismatch by rendering a skeleton or nothing on the server.
@@ -150,7 +177,7 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
     );
   }
 
-  const activeFilterCount = Object.values(selectedKeywords).filter(Boolean).length;
+  const activeFilterCount = Object.values(selectedKeywords).filter(Boolean).length + (showFavorites ? 1 : 0);
 
   return (
     <div>
@@ -183,6 +210,14 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="start">
+                <DropdownMenuLabel>Quick Filters</DropdownMenuLabel>
+                <DropdownMenuCheckboxItem
+                  checked={showFavorites}
+                  onCheckedChange={() => setShowFavorites(v => !v)}
+                >
+                  Favorites only
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuSeparator />
                 <DropdownMenuLabel>Filter by Keyword</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {allKeywords.map(keyword => (
@@ -212,9 +247,9 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
         </div>
       </div>
 
-      {filteredAndSortedProjects.length > 0 ? (
+      {finalProjects.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredAndSortedProjects.map((project, index) => (
+          {finalProjects.map((project, index) => (
             <div key={project.id} style={{ animationDelay: `${index * 100}ms` }} className="animate-fade-in-up">
               <ProjectCard project={project} />
             </div>

@@ -1,12 +1,13 @@
-
 "use client";
 
 import { ProjectShare } from "@/components/ProjectShare";
 import { Button } from "@/components/ui/button";
 import { Project } from "@/lib/projects";
 import { YoutubeIcon } from "@/components/icons/YoutubeIcon";
+import { ArrowLeft, ArrowUpRight, Github, Music } from "lucide-react";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 
 interface ProjectHeaderProps {
     project: Project;
@@ -34,42 +35,63 @@ const getDemoCallToAction = (project: Project) => {
     }
 }
 
-// Inline SVG icons to avoid external icon packs
-const Icon = {
-    Back: (props: React.SVGProps<SVGSVGElement>) => (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
-            <path d="M15 18l-6-6 6-6" />
-        </svg>
-    ),
-    Arrow: (props: React.SVGProps<SVGSVGElement>) => (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
-            <path d="M7 17L17 7" />
-            <path d="M7 7h10v10" />
-        </svg>
-    ),
-    Github: (props: React.SVGProps<SVGSVGElement>) => (
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
-            <path d="M12 .5a12 12 0 00-3.79 23.39c.6.11.82-.26.82-.58 0-.29-.01-1.06-.02-2.07-3.34.73-4.04-1.61-4.04-1.61-.54-1.39-1.32-1.76-1.32-1.76-1.08-.74.08-.73.08-.73 1.2.09 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.77-1.6-2.67-.3-5.47-1.34-5.47-5.97 0-1.32.47-2.39 1.23-3.23-.12-.3-.53-1.52.12-3.17 0 0 1.01-.32 3.31 1.23a11.5 11.5 0 016.02 0c2.3-1.55 3.31-1.23 3.31-1.23.65 1.65.24 2.87.12 3.17.76.84 1.23 1.91 1.23 3.23 0 4.64-2.8 5.66-5.48 5.96.43.37.82 1.1.82 2.22 0 1.6-.02 2.89-.02 3.29 0 .32.21.69.83.57A12 12 0 0012 .5z" />
-        </svg>
-    ),
-    Music: (props: React.SVGProps<SVGSVGElement>) => (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
-            <path d="M9 18V5l12-2v13" />
-            <circle cx="6" cy="18" r="3" />
-            <circle cx="18" cy="16" r="3" />
-        </svg>
-    )
-};
-
 const getDemoIcon = (project: Project) => {
     if (project.id === 'youtube-thumbnails') {
         return <YoutubeIcon />;
     }
-    return <Icon.Arrow />;
+    return <ArrowUpRight />;
 }
 
 export function ProjectHeader({ project }: ProjectHeaderProps) {
     const headerRef = useRef<HTMLElement>(null);
+    const searchParams = useSearchParams();
+    const [backHref, setBackHref] = useState("/projects");
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    useEffect(() => {
+        const params = new URLSearchParams(searchParams.toString());
+        const queryString = params.toString();
+        setBackHref(queryString ? `/projects?${queryString}` : "/projects");
+    }, [searchParams]);
+
+    // Hydrate favorite state for this project
+    useEffect(() => {
+        try {
+            const raw = localStorage.getItem('portfolio:favorites');
+            const ids = raw ? (JSON.parse(raw) as string[]) : [];
+            setIsFavorite(ids.includes(project.id));
+        } catch {}
+    }, [project.id]);
+
+    // React to favorites updates elsewhere
+    useEffect(() => {
+        const handler = (e: Event) => {
+            try {
+                const custom = e as CustomEvent<string[]>;
+                const list = custom.detail ?? JSON.parse(localStorage.getItem('portfolio:favorites') || '[]');
+                setIsFavorite(Array.isArray(list) && list.includes(project.id));
+            } catch {}
+        };
+        window.addEventListener('portfolio:favorites-updated', handler as EventListener);
+        return () => window.removeEventListener('portfolio:favorites-updated', handler as EventListener);
+    }, [project.id]);
+
+    const toggleFavorite = () => {
+        try {
+            const raw = localStorage.getItem('portfolio:favorites');
+            const ids = raw ? (JSON.parse(raw) as string[]) : [];
+            let next: string[];
+            if (ids.includes(project.id)) {
+                next = ids.filter(id => id !== project.id);
+                setIsFavorite(false);
+            } else {
+                next = [...ids, project.id];
+                setIsFavorite(true);
+            }
+            localStorage.setItem('portfolio:favorites', JSON.stringify(next));
+            try { window.dispatchEvent(new CustomEvent('portfolio:favorites-updated', { detail: next })); } catch {}
+        } catch {}
+    };
     
     const handleScrollToSamples = () => {
         let elementId = 'ai-samples';
@@ -81,9 +103,8 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
         if (element && headerRef.current) {
             // Main site header is 64px (h-16)
             const siteHeaderHeight = 64; 
-            // This project header's height
-            const projectHeaderHeight = headerRef.current.offsetHeight;
-            const offset = siteHeaderHeight + projectHeaderHeight + 20;
+            // Use same offset calculation as quick dock for consistency
+            const offset = siteHeaderHeight + 12;
 
             const elementPosition = element.getBoundingClientRect().top;
             const offsetPosition = elementPosition + window.pageYOffset - offset;
@@ -98,21 +119,28 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
     return (
         <header 
             ref={headerRef}
-            className="z-30"
+            className="relative z-40"
         >
             <div className="max-w-7xl mx-auto px-4 xl:px-0 pt-4">
                 <div 
                     className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 rounded-lg border bg-background"
                 >
                     <div className="flex items-center gap-4">
+                        <div className="flex-shrink-0">
+                            <Button asChild variant="outline" size="icon" className="h-9 w-9 sm:h-10 sm:w-10">
+                                <Link href={backHref} aria-label="Back to projects">
+                                    <ArrowLeft className="h-4 w-4" />
+                                </Link>
+                            </Button>
+                        </div>
                         <div className="flex-grow">
-                            <h1 
-                                className="font-headline font-bold tracking-tight text-xl sm:text-2xl"
+                                                        <h1 
+                                                                className="font-headline font-bold tracking-tight text-xl sm:text-2xl flex items-center gap-2"
                                 style={{ 
                                     color: 'hsl(var(--project-primary))'
                                 }}
                             >
-                                {project.name}
+                                                                {project.name}
                             </h1>
                             <p 
                                 className="text-muted-foreground text-sm max-w-3xl mt-1"
@@ -121,17 +149,33 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                             </p>
                         </div>
                     </div>
-                    <div className="hidden sm:flex flex-shrink-0 items-center gap-2">
+                                        <div className="hidden sm:flex flex-shrink-0 items-center gap-2">
+                                                <Button onClick={toggleFavorite} variant="outline" size="sm" aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}>
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 24 24"
+                                                            fill={isFavorite ? "currentColor" : "none"}
+                                                            stroke="currentColor"
+                                                            className={`h-4 w-4 ${isFavorite ? 'text-yellow-400' : ''}`}
+                                                        >
+                                                            <path
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth={1.5}
+                                                                d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.062 4.178a.563.563 0 0 0 .424.308l4.61.67c.513.074.718.706.346 1.067l-3.334 3.25a.563.563 0 0 0-.162.498l.786 4.587a.562.562 0 0 1-.815.592l-4.121-2.167a.563.563 0 0 0-.523 0l-4.12 2.167a.562.562 0 0 1-.816-.592l.787-4.587a.563.563 0 0 0-.163-.498L3.04 9.722a.562.562 0 0 1 .346-1.067l4.61-.67a.563.563 0 0 0 .424-.308l2.06-4.178Z"
+                                                            />
+                                                        </svg>
+                                                </Button>
                         {(project.id === 'rvc-ui' || project.id === 'album-tracks') && (
                             <Button onClick={handleScrollToSamples} variant="secondary" size="sm">
-                                <Icon.Music className="w-4 h-4" />
+                                <Music />
                                 {project.id === 'rvc-ui' ? 'Song Covers' : 'Original Tracks'}
                             </Button>
                         )}
                         {project.repoUrl && (
                             <Button asChild size="sm">
                                 <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
-                                    <Icon.Github className="w-4 h-4" />
+                                    <Github />
                                     GitHub
                                 </Link>
                             </Button>
@@ -146,18 +190,34 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                         )}
                          <ProjectShare project={project} />
                     </div>
-                    <div className="sm:hidden flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
+                                        <div className="sm:hidden flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
                         <div className="flex items-center gap-2 flex-shrink-0">
+                                                        <Button onClick={toggleFavorite} variant="outline" size="sm" aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}>
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    viewBox="0 0 24 24"
+                                                                    fill={isFavorite ? "currentColor" : "none"}
+                                                                    stroke="currentColor"
+                                                                    className={`h-4 w-4 ${isFavorite ? 'text-yellow-400' : ''}`}
+                                                                >
+                                                                    <path
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        strokeWidth={1.5}
+                                                                        d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.062 4.178a.563.563 0 0 0 .424.308l4.61.67c.513.074.718.706.346 1.067l-3.334 3.25a.563.563 0 0 0-.162.498l.786 4.587a.562.562 0 0 1-.815.592l-4.121-2.167a.563.563 0 0 0-.523 0l-4.12 2.167a.562.562 0 0 1-.816-.592l.787-4.587a.563.563 0 0 0-.163-.498L3.04 9.722a.562.562 0 0 1 .346-1.067l4.61-.67a.563.563 0 0 0 .424-.308l2.06-4.178Z"
+                                                                    />
+                                                                </svg>
+                                                        </Button>
                              {(project.id === 'rvc-ui' || project.id === 'album-tracks') && (
                                 <Button onClick={handleScrollToSamples} variant="secondary" size="sm">
-                                    <Icon.Music className="w-4 h-4" />
+                                    <Music />
                                      {project.id === 'rvc-ui' ? 'Song Covers' : 'Original Tracks'}
                                 </Button>
                             )}
                             {project.repoUrl && (
                                 <Button asChild size="sm">
                                     <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
-                                        <Icon.Github className="w-4 h-4" />
+                                        <Github />
                                         GitHub
                                     </Link>
                                 </Button>

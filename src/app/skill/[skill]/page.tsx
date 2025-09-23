@@ -63,7 +63,7 @@ export default async function ProjectsBySkillPage({ params }: Props) {
   const relatedSkills = getRelatedSkills(capitalizedSkill, allProjects);
 
   return (
-    <div className="container mx-auto px-4 py-8 md:py-16 animate-fade-in">
+    <div className="container mx-auto px-4 py-8 md:py-16 animate-fade-in overflow-x-hidden">
       <div className="text-center mb-12">
         <h1 className="font-headline text-4xl md:text-5xl font-bold tracking-tight">
           Projects using <span className="text-primary">{capitalizedSkill}</span>
@@ -88,9 +88,9 @@ export default async function ProjectsBySkillPage({ params }: Props) {
       */}
 
       {filteredProjects.length > 0 ? (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full max-w-full overflow-x-hidden">
           {filteredProjects.map((project, index) => (
-            <div key={project.id} style={{ animationDelay: `${index * 100}ms` }} className="animate-fade-in-up">
+            <div key={project.id} style={{ animationDelay: `${index * 100}ms` }} className="min-w-0 overflow-hidden animate-fade-in-up">
               <ProjectCard project={project} />
             </div>
           ))}

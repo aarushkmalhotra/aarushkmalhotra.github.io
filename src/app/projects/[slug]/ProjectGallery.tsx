@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useCallback } from 'react';
@@ -120,7 +119,7 @@ export function ProjectGallery({ project }: ProjectGalleryProps) {
     };
 
     return (
-        <div>
+        <div id="gallery">
             <h2 className="font-headline text-3xl mb-6 prose prose-lg dark:prose-invert max-w-none">Gallery</h2>
             <div className="space-y-8">
                 {videoItem && (

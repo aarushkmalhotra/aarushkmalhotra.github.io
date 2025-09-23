@@ -38,6 +38,7 @@ const formatDateRange = (startDate: string, endDate: string | null) => {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const firstImageId = project.images[0];
   const image = PlaceHolderImages.find((img) => img.id === firstImageId);
@@ -55,6 +56,37 @@ export function ProjectCard({ project }: ProjectCardProps) {
       }
     }
   }, [isHovered]);
+
+  // Favorites localStorage hydration
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('portfolio:favorites');
+      if (raw) {
+        const ids = JSON.parse(raw) as string[];
+        setIsFavorite(ids.includes(project.id));
+      }
+    } catch {}
+  }, [project.id]);
+
+  const toggleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      const raw = localStorage.getItem('portfolio:favorites');
+      const ids = raw ? (JSON.parse(raw) as string[]) : [];
+      let next: string[];
+      if (ids.includes(project.id)) {
+        next = ids.filter(id => id !== project.id);
+        setIsFavorite(false);
+      } else {
+        next = [...ids, project.id];
+        setIsFavorite(true);
+      }
+      localStorage.setItem('portfolio:favorites', JSON.stringify(next));
+      // Notify listeners (projects list, header, etc.)
+      window.dispatchEvent(new CustomEvent('portfolio:favorites-updated', { detail: next }));
+    } catch {}
+  };
 
 
   const getCallToAction = () => {
@@ -120,9 +152,33 @@ export function ProjectCard({ project }: ProjectCardProps) {
                   </>
               )}
             </div>
-            <CardTitle className="font-headline text-2xl group-hover:text-primary transition-colors">
-              {project.name}
-            </CardTitle>
+            <div className="flex items-start justify-between gap-3">
+              <CardTitle className="font-headline text-2xl group-hover:text-primary transition-colors">
+                {project.name}
+              </CardTitle>
+              <button
+                type="button"
+                onClick={toggleFavorite}
+                aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                className="shrink-0 inline-flex items-center justify-center h-8 w-8 rounded-full border border-border hover:bg-muted/60 transition-colors"
+              >
+                {/* Star icon inline SVG */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill={isFavorite ? "currentColor" : "none"}
+                  stroke="currentColor"
+                  className={`h-4 w-4 ${isFavorite ? 'text-yellow-400' : 'text-muted-foreground'}`}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.062 4.178a.563.563 0 0 0 .424.308l4.61.67c.513.074.718.706.346 1.067l-3.334 3.25a.563.563 0 0 0-.162.498l.786 4.587a.562.562 0 0 1-.815.592l-4.121-2.167a.563.563 0 0 0-.523 0l-4.12 2.167a.562.562 0 0 1-.816-.592l.787-4.587a.563.563 0 0 0-.163-.498L3.04 9.722a.562.562 0 0 1 .346-1.067l4.61-.67a.563.563 0 0 0 .424-.308l2.06-4.178Z"
+                  />
+                </svg>
+              </button>
+            </div>
             <p className="text-sm text-muted-foreground">{formatDateRange(project.startDate, project.endDate)}</p>
 
             <CardDescription>{project.tagline}</CardDescription>

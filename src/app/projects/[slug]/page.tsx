@@ -3,8 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { getProjectById, getProjects } from "@/lib/projects";
 import { notFound } from "next/navigation";
 import { Metadata } from 'next';
-// Replaced lucide icons in new components; keep ExternalLink here for link affordance
-import { ExternalLink } from "lucide-react";
+import { Check, ExternalLink } from "lucide-react";
 import { ProjectHeader } from "./ProjectHeader";
 import { AudioPlayer } from "@/components/AudioPlayer";
 import { DownloadableAudioPlayer } from "@/components/DownloadableAudioPlayer";
@@ -88,11 +87,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         <ul className="space-y-4">
           {project.keyFeatures?.map((feature, index) => (
             <li key={index} className="flex items-start">
-              <span className="w-5 h-5 mr-4 mt-1 flex items-center justify-center flex-shrink-0 rounded-full" style={{ backgroundColor: 'hsl(var(--project-accent))' }} aria-hidden>
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M20 6L9 17l-5-5" />
-                </svg>
-              </span>
+              <Check className="w-5 h-5 text-accent mr-4 mt-1 flex-shrink-0" style={{ color: 'hsl(var(--project-accent))' }} />
               <span className="text-base text-muted-foreground">{feature}</span>
             </li>
           ))}
@@ -109,11 +104,10 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   return (
     <div className="animate-fade-in" style={{ '--project-primary': project.theme.primary, '--project-secondary': project.theme.secondary, '--project-accent': project.theme.secondary } as React.CSSProperties}>
       <ProjectHeader project={project} />
+      {/* Floating quick dock (desktop right rail + mobile bottom bar) */}
+      <ProjectQuickDock project={project} backHref="/projects" />
 
       <div className="max-w-7xl mx-auto px-4 xl:px-0 py-8 md:py-12">
-        {/* Floating quick dock */}
-        {/* Back href is computed inside header; we recompute here to avoid prop drilling complexity by deriving from current URL in the dock. We'll pass projects listing with same params by reading location in dock. For simplicity, pass "/projects"; the dock doesn't strictly need backHref fidelity. */}
-        <ProjectQuickDock project={project} backHref="/projects" />
         <div className="grid lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2 space-y-12">
             <div id="overview">
@@ -170,9 +164,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               </div>
             )}
 
-            <div id="gallery">
-              <ProjectGallery project={project} />
-            </div>
+            <ProjectGallery project={project} />
 
           </div>
           <aside className="hidden lg:block lg:col-span-1 space-y-4 sticky top-[80px] self-start">

@@ -3,6 +3,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { ThemeProvider } from "next-themes";
+import { CommandPalette } from "./CommandPalette";
 
 type Theme = "light" | "dark";
 
@@ -47,6 +48,7 @@ export function Providers({ children }: { children: ReactNode }) {
     >
       <ThemeContext.Provider value={{ theme, setTheme }}>
         {children}
+        <CommandPalette />
       </ThemeContext.Provider>
     </ThemeProvider>
   );

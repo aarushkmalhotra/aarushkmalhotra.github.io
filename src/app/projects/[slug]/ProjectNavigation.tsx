@@ -21,7 +21,6 @@ const NavCard = ({ project, direction, searchParams }: { project: Project; direc
     if (searchParams) {
         const spAny = searchParams as any;
         if (typeof spAny?.forEach === 'function' && typeof spAny?.get === 'function') {
-            // ReadonlyURLSearchParams-like
             spAny.forEach((value: string, key: string) => {
                 if (value != null) params.set(key, value);
             });

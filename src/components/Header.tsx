@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -8,6 +7,7 @@ import Image from "next/image";
 import { MobileNav } from "./MobileNav";
 import { cn } from "@/lib/utils";
 import { FileText } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -20,6 +20,12 @@ const navLinks = [
 
 export function Header() {
   const pathname = usePathname();
+  const [isMac, setIsMac] = useState(false);
+
+  useEffect(() => {
+    const platform = navigator.platform.toUpperCase();
+    setIsMac(platform.includes('MAC'));
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">
@@ -54,6 +60,11 @@ export function Header() {
                 ))}
             </nav>
             <div className="flex items-center gap-2">
+                <div className="hidden lg:flex items-center text-[11px] text-muted-foreground mr-2">
+                  <span className="px-1.5 py-0.5 border rounded-md bg-muted/50">{isMac ? '⌘' : 'Ctrl'}</span>
+                  <span className="mx-0.5">+</span>
+                  <span className="px-1.5 py-0.5 border rounded-md bg-muted/50">K</span>
+                </div>
                 <ThemeToggle />
                 <MobileNav navLinks={navLinks} />
             </div>
@@ -63,4 +74,3 @@ export function Header() {
   );
 }
 
-    
