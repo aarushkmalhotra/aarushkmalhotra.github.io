@@ -18,6 +18,7 @@ import { ArrowUpRightIcon } from "./icons/ArrowUpRightIcon";
 import { format, parseISO } from "date-fns";
 import { useState, useRef, useEffect } from "react";
 import { YoutubeIcon } from "./icons/YoutubeIcon";
+import { cn } from "@/lib/utils";
 
 interface ProjectCardProps {
   project: Project;
@@ -141,7 +142,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
                     </Badge>
                 )}
             </div>
-             <span className="text-sm text-accent flex items-center gap-1">
+             <span className={cn(
+                "text-sm text-accent flex items-center gap-1",
+                project.id === 'simply' && 'hidden md:flex'
+              )}>
                 {getCallToAction()} {getCallToActionIcon()}
             </span>
         </CardFooter>
