@@ -28,7 +28,7 @@
     "id": "emty",
     "name": "EMTY Commuting App",
     "tagline": "Real-Time Subway Occupancy Data",
-    "description": "Designed UX in Figma to display real-time subway car occupancy; built secure real-time backend with Firebase Auth and Realtime Database. Presented EMTY at the U.S. Capitol and to Congressman Adriano Espaillat’s office.",
+    "description": "As part of the Entrepreneurship and App Design course at the STEM Institute at City College of New York, I designed an app named EMTY for NYC’s Department of Transportation. EMTY provides real-time data on individual subway car passenger loads, helping to improve commuter flow and convenience. I plan to pitch EMTY to Rep. Espaillat as part of the 2025 Congressional App Challenge.",
     "keyFeatures": [
       "Live visualization of subway car occupancy data",
       "Designed UX in Figma for intuitive data display",
@@ -36,7 +36,7 @@
       "Pitched to the U.S. Capitol and Congressman's office"
     ],
     "techStack": "Figma, Canva, Firebase, MTA API",
-    "outcomes": "Designed a high-fidelity prototype praised for its clarity and user-centric approach. The prototype was used to secure stakeholder buy-in for a full-scale development project. I earned a Gold Award for our research poster, which highlighted how real-time data can enhance the commuting experience. For more details, visit linktr.ee/emty7.",
+    "outcomes": "I earned a Gold Award in this course for our research poster, which highlighted how real-time data on passenger loads and waiting times can enhance the commuting experience. For more details on EMTY, visit linktr.ee/emty7.",
     "repoUrl": null,
     "demoUrl": "https://linktr.ee/emty7",
     "images": ["emty-1"],
@@ -64,8 +64,8 @@
     "repoUrl": null,
     "demoUrl": "https://simplifyme.org",
     "images": ["simplify-me-1"],
-    "startDate": "2023-01-01",
-    "endDate": "2025-05-01",
+    "startDate": "2023-09-01",
+    "endDate": "2024-05-01",
     "type": "project",
     "theme": {
       "primary": "hsl(267, 95%, 48%)",
