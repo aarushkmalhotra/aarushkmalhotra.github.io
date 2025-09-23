@@ -8,9 +8,9 @@ const nextConfig: NextConfig = {
   output: 'export',
 
   /*
-   * For deployment to a root domain (e.g., https://aarushkumar.github.io),
-   * we don't need basePath and assetPrefix. They are only needed for subdirectory deployments.
-   * Since this will be hosted at aarushkumar.github.io, these should be removed.
+   * The basePath and assetPrefix are configured automatically by the `actions/configure-pages`
+   * in the GitHub Actions workflow. Do not set them here.
+   * They are only needed for subdirectory deployments.
    */
   // basePath: '/portfolio',
   // assetPrefix: '/portfolio/',

@@ -3,6 +3,8 @@ import { getProjects } from "@/lib/projects";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { SkillClientPage } from "./SkillClientPage";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Terminal } from "lucide-react";
 
 type Props = {
   params: Promise<{ skill: string }>;
@@ -67,6 +69,8 @@ export default async function ProjectsBySkillPage({ params }: Props) {
 
   const capitalizedSkill = displaySkill.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
+  const isStaticExport = process.env.NEXT_PUBLIC_IS_STATIC_EXPORT === 'true';
+
   return (
     <div className="container mx-auto px-4 py-8 md:py-16 animate-fade-in">
       <div className="text-center mb-12">
@@ -77,8 +81,18 @@ export default async function ProjectsBySkillPage({ params }: Props) {
           A deep dive into my work with {capitalizedSkill}. Use the AI assistant below to get a summary of my experience.
         </p>
       </div>
-
-      <SkillClientPage skill={capitalizedSkill} projects={filteredProjects} />
+      
+      {isStaticExport ? (
+        <Alert className="mb-12">
+          <Terminal className="h-4 w-4" />
+          <AlertTitle>AI Feature Disabled</AlertTitle>
+          <AlertDescription>
+            The AI-powered skill analysis is unavailable in this statically-exported version of the site. Please run the project locally to use this feature.
+          </AlertDescription>
+        </Alert>
+      ) : (
+        <SkillClientPage skill={capitalizedSkill} projects={filteredProjects} />
+      )}
       
       {filteredProjects.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
