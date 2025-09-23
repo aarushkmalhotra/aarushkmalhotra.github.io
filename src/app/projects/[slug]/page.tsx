@@ -66,9 +66,14 @@ export default async function ProjectDetailPage({ params }: PageProps) {
     <div className="p-6 rounded-lg bg-card border">
         <h3 className="font-headline text-xl mb-4">Tech Stack</h3>
         <div className="flex flex-wrap gap-2">
-            {project.techStack.split(',').map(tech => (
-                <Badge key={tech.trim()} variant="secondary">{tech.trim()}</Badge>
-            ))}
+            {project.techStack.split(',').map(tech => {
+                const skillSlug = encodeURIComponent(tech.trim().toLowerCase().replace(/\s/g, '-').replace(/\./g, ''));
+                return (
+                    <Link key={tech.trim()} href={`/skill/${skillSlug}`}>
+                        <Badge variant="secondary" className="transition-colors hover:bg-primary/20 hover:text-primary">{tech.trim()}</Badge>
+                    </Link>
+                )
+            })}
         </div>
     </div>
   );

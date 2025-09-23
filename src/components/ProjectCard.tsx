@@ -131,11 +131,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </CardContent>
         <CardFooter className="p-6 pt-0 flex-col items-start gap-4">
             <div className="flex flex-wrap gap-2">
-                {skillsToShow.map((tech) => (
-                    <Badge key={tech} variant="secondary">
-                        {tech}
-                    </Badge>
-                ))}
+                {skillsToShow.map((tech) => {
+                  const skillSlug = encodeURIComponent(tech.toLowerCase().replace(/\s/g, '-').replace(/\./g, ''));
+                  return (
+                    <Link key={tech} href={`/skill/${skillSlug}`} onClick={(e) => e.stopPropagation()} className="z-10">
+                        <Badge variant="secondary" className="transition-colors hover:bg-primary/20 hover:text-primary">
+                            {tech}
+                        </Badge>
+                    </Link>
+                  )
+                })}
                 {remainingSkillsCount > 0 && (
                     <Badge variant="secondary">
                         +{remainingSkillsCount}
