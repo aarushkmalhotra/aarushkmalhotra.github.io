@@ -52,7 +52,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function ProjectDetailPage({ params }: { params: { slug: string } }) {
+export default async function ProjectDetailPage({ params }: Props) {
   const { slug } = params;
   const project = await getProjectById(slug);
 
