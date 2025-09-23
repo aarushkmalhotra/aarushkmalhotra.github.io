@@ -170,10 +170,6 @@ export function AudioPlayer({ audioFile, themeColor }: AudioPlayerProps) {
                 <div className="flex-grow w-full">
                     <div className="flex items-center justify-between">
                         <h4 className="font-headline text-lg sm:text-xl font-semibold" style={{ color: themeColor }}>{audioFile.title}</h4>
-                        <Badge variant="destructive" className="flex-shrink-0 items-center gap-1">
-                            <Sparkles className="w-3.5 h-3.5" />
-                            AI Generated
-                        </Badge>
                     </div>
 
                     <div className="mt-3">
