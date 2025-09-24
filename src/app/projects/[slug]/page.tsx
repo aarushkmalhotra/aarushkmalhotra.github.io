@@ -129,7 +129,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
       {/* Floating quick dock (desktop right rail + mobile bottom bar) */}
       <ProjectQuickDock project={project} backHref="/projects" />
 
-      <div className="max-w-7xl mx-auto px-4 xl:px-0 py-8 md:py-12">
+      <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
         <div className="grid lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2 space-y-12">
             <div id="overview">

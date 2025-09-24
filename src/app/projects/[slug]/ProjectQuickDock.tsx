@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import type { Project } from "@/lib/projects";
 import { Button } from "@/components/ui/button";
@@ -91,6 +92,20 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
   const [progress, setProgress] = useState(0);
   const activeRef = useRef<string | null>(null);
   const dockBackHref = backHref || "/projects";
+  const sp = useSearchParams();
+  const dockBackHrefWithParams = useMemo(() => {
+    try {
+      if (!sp) return dockBackHref;
+      const params = new URLSearchParams();
+      (sp as any).forEach?.((value: string, key: string) => {
+        if (value != null) params.set(key, value);
+      });
+      const qs = params.toString();
+      return qs ? `${dockBackHref}?${qs}` : dockBackHref;
+    } catch {
+      return dockBackHref;
+    }
+  }, [sp, dockBackHref]);
 
   // Build sections synchronously from project data (no DOM scan) to avoid late render
   const sections: SectionDef[] = useMemo(() => {
@@ -155,9 +170,10 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
   };
 
   const copyLink = (sectionId?: string) => {
-    const url = new URL(window.location.href);
-    if (sectionId) url.hash = sectionId;
-    navigator.clipboard.writeText(url.toString());
+    // Copy a clean URL without any query params; keep optional section hash
+    const base = new URL(window.location.origin + window.location.pathname);
+    if (sectionId) base.hash = sectionId;
+    navigator.clipboard.writeText(base.toString());
     // Prefer friendly label for the toast description
     const sectionLabel = sectionId ? sections.find((s) => s.id === sectionId)?.label : undefined;
     const pretty = (id: string) => id.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
@@ -190,7 +206,7 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
             <circle cx={progressCircle.size / 2} cy={progressCircle.size / 2} r={progressCircle.radius} stroke="hsl(var(--project-primary))" strokeWidth={progressCircle.stroke} fill="none" strokeDasharray={progressCircle.circumference} strokeDashoffset={progressCircle.offset} strokeLinecap="round" />
           </svg>
           <Button asChild variant="outline" size="icon" className="absolute inset-0 m-auto w-10 h-10 rounded-full">
-            <Link href={dockBackHref} aria-label="Back to projects">
+            <Link href={dockBackHrefWithParams} aria-label="Back to projects">
               <Icon.Back className="w-4 h-4" />
             </Link>
           </Button>
@@ -256,7 +272,7 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
   <div className="xl:hidden fixed bottom-[max(env(safe-area-inset-bottom),16px)] left-1/2 -translate-x-1/2 z-40 w-[96%]">
         <div className="bg-background border rounded-2xl shadow-lg p-2 flex items-center justify-between gap-2">
           <Button asChild size="icon" variant="outline" className="shrink-0">
-            <Link href={dockBackHref} aria-label="Back to projects">
+            <Link href={dockBackHrefWithParams} aria-label="Back to projects">
               <Icon.Back className="w-4 h-4" />
             </Link>
           </Button>

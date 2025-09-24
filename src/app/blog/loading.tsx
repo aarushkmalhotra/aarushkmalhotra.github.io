@@ -1,31 +1,19 @@
-import { Skeleton } from "@/components/ui/skeleton";
+"use client";
+import { Loader2 } from "lucide-react";
 
 export default function BlogLoading() {
   return (
     <div className="container mx-auto px-4 py-8 md:py-16">
       <div className="text-center mb-12">
-        <Skeleton className="h-10 w-1/3 mx-auto" />
-        <Skeleton className="h-4 w-1/2 mx-auto mt-4" />
+        <h1 className="font-headline text-4xl md:text-5xl font-bold tracking-tight">Blog</h1>
+        <p className="text-lg text-muted-foreground mt-3 max-w-2xl mx-auto">
+          My thoughts on technology, development, and everything in between, pulled directly from my Hashnode blog.
+        </p>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {Array.from({ length: 3 }).map((_, index) => (
-          <div key={index} className="flex flex-col gap-4 rounded-lg border bg-card text-card-foreground shadow-sm">
-             <Skeleton className="aspect-video w-full rounded-t-lg" />
-             <div className="p-6 space-y-4">
-                <Skeleton className="h-6 w-full" />
-                <Skeleton className="h-4 w-1/3" />
-                <Skeleton className="h-12 w-full" />
-                <div className="flex items-center justify-between pt-4">
-                    <div className="flex items-center gap-2">
-                        <Skeleton className="h-8 w-8 rounded-full" />
-                        <Skeleton className="h-4 w-20" />
-                    </div>
-                    <Skeleton className="h-4 w-24" />
-                </div>
-             </div>
-          </div>
-        ))}
+      {/* Fallback: centered spinner under the header while posts load */}
+      <div className="py-12 flex items-center justify-center">
+        <Loader2 className="h-10 w-10 animate-spin text-muted-foreground" aria-label="Loading posts" />
       </div>
     </div>
   );
