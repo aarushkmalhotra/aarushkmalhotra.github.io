@@ -4,7 +4,7 @@ import { ProjectShare } from "@/components/ProjectShare";
 import { Button } from "@/components/ui/button";
 import { Project } from "@/lib/projects";
 import { YoutubeIcon } from "@/components/icons/YoutubeIcon";
-import { ArrowLeft, ArrowUpRight, Github, Music } from "lucide-react";
+import { ArrowUpRight, Github, Music } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
@@ -45,14 +45,7 @@ const getDemoIcon = (project: Project) => {
 export function ProjectHeader({ project }: ProjectHeaderProps) {
     const headerRef = useRef<HTMLElement>(null);
     const searchParams = useSearchParams();
-    const [backHref, setBackHref] = useState("/projects");
     const [isFavorite, setIsFavorite] = useState(false);
-
-    useEffect(() => {
-        const params = new URLSearchParams(searchParams.toString());
-        const queryString = params.toString();
-        setBackHref(queryString ? `/projects?${queryString}` : "/projects");
-    }, [searchParams]);
 
     // Hydrate favorite state for this project
     useEffect(() => {
@@ -126,13 +119,6 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                     className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 rounded-lg border bg-background"
                 >
                     <div className="flex items-center gap-4">
-                        <div className="flex-shrink-0">
-                            <Button asChild variant="outline" size="icon" className="h-9 w-9 sm:h-10 sm:w-10">
-                                <Link href={backHref} aria-label="Back to projects">
-                                    <ArrowLeft className="h-4 w-4" />
-                                </Link>
-                            </Button>
-                        </div>
                         <div className="flex-grow">
                                                         <h1 
                                                                 className="font-headline font-bold tracking-tight text-xl sm:text-2xl flex items-center gap-2"
@@ -181,7 +167,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                             </Button>
                         )}
                         {project.demoUrl && (
-                            <Button asChild variant="secondary" size="sm">
+                            <Button asChild variant="secondary" size="sm" className="w-full">
                                 <Link href={project.demoUrl} target="_blank" rel="noopener noreferrer">
                                     {getDemoCallToAction(project)}
                                     {getDemoIcon(project)}
@@ -191,7 +177,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                          <ProjectShare project={project} />
                     </div>
                                         <div className="sm:hidden flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
-                        <div className="flex items-center gap-2 flex-shrink-0">
+                        <div className="flex items-center gap-2 w-full">
                                                         <Button onClick={toggleFavorite} variant="outline" size="sm" aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}>
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg"
@@ -209,13 +195,13 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                                                                 </svg>
                                                         </Button>
                              {(project.id === 'rvc-ui' || project.id === 'album-tracks') && (
-                                <Button onClick={handleScrollToSamples} variant="secondary" size="sm">
+                                <Button onClick={handleScrollToSamples} variant="secondary" size="sm" className="flex-1">
                                     <Music />
                                      {project.id === 'rvc-ui' ? 'Song Covers' : 'Original Tracks'}
                                 </Button>
                             )}
                             {project.repoUrl && (
-                                <Button asChild size="sm">
+                                <Button asChild size="sm" className="flex-1">
                                     <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
                                         <Github />
                                         GitHub
@@ -223,7 +209,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                                 </Button>
                             )}
                             {project.demoUrl && project.id !== 'album-tracks' && (
-                                <Button asChild variant="secondary" size="sm">
+                                <Button asChild variant="secondary" size="sm" className="flex-1">
                                     <Link href={project.demoUrl} target="_blank" rel="noopener noreferrer">
                                         {getDemoCallToAction(project)}
                                         {getDemoIcon(project)}
@@ -231,7 +217,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                                 </Button>
                             )}
                         </div>
-                        <div className="flex items-center gap-2 flex-shrink-0 pl-2">
+                        <div className="flex items-center gap-2 flex-shrink-0">
                             <ProjectShare project={project} />
                         </div>
                     </div>

@@ -1,4 +1,3 @@
-
 import { ProjectCard } from "@/components/ProjectCard";
 import { Button } from "@/components/ui/button";
 import { getProjects } from "@/lib/projects";
@@ -10,6 +9,7 @@ import { ArrowUpRightIcon } from "@/components/icons/ArrowUpRightIcon";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { Suspense } from "react";
 
 const skills = [
   "TypeScript", "Next.js", "Tailwind CSS", "Firebase", "Azure", "AWS"
@@ -152,7 +152,9 @@ export default async function Home() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredProjects.map((project, index) => (
                 <div key={project.id} style={{ animationDelay: `${index * 150}ms` }} className="animate-fade-in-up">
+                <Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-lg"></div>}>
                 <ProjectCard project={project} />
+                </Suspense>
                 </div>
             ))}
             </div>

@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Project } from "@/lib/projects";
@@ -78,23 +77,25 @@ export function ProjectNavigation({ prevProject, nextProject, searchParams }: Pr
     
     return (
         <div className={cn(
-            "grid grid-cols-1 gap-8",
-            (prevProject && nextProject) ? 'md:grid-cols-2' : 'md:grid-cols-1'
+            "grid grid-cols-1 gap-8 md:grid-cols-2"
         )}>
-            {prevProject ? (
-                <div className="md:min-h-[200px]">
-                    <NavCard project={prevProject} direction="prev" searchParams={searchParams} />
-                </div>
-            ) : <div />}
-
-            {nextProject ? (
+            {prevProject && (
                 <div className={cn(
                     "md:min-h-[200px]",
-                    !prevProject && "md:col-start-2"
+                    !nextProject && "md:col-span-2"
+                )}>
+                    <NavCard project={prevProject} direction="prev" searchParams={searchParams} />
+                </div>
+            )}
+
+            {nextProject && (
+                <div className={cn(
+                    "md:min-h-[200px]",
+                    !prevProject && "md:col-span-2"
                 )}>
                     <NavCard project={nextProject} direction="next" searchParams={searchParams} />
                 </div>
-            ) : <div />}
+            )}
         </div>
     )
 }

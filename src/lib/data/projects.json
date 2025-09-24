@@ -252,14 +252,14 @@
     },
     "downloadableAudioFiles": [
       {
-        "id": "edm-beats",
-        "title": "EDM Beats",
+        "id": "edm-piano-beats",
+        "title": "EDM Piano Beats",
         "file": "/edm-beats-voice.wav"
       },
       {
-        "id": "piano-beats",
-        "title": "Piano Beats",
-        "file": "/piano-beats.wav"
+        "id": "edm-synth-beats",
+        "title": "EDM Synth Beats",
+        "file": "/edm-synth-beats.mp3"
       }
     ]
   }

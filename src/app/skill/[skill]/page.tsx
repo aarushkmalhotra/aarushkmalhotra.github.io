@@ -1,4 +1,3 @@
-
 import { ProjectCard } from "@/components/ProjectCard";
 import { getProjects, getAllSkills, getRelatedSkills } from "@/lib/projects";
 import { notFound } from "next/navigation";
@@ -7,6 +6,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
 // import { SkillClientPage } from "./SkillClientPage";
 import { RelatedSkills } from "./RelatedSkills";
+import { Suspense } from "react";
 
 
 type Props = {
@@ -91,7 +91,9 @@ export default async function ProjectsBySkillPage({ params }: Props) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full max-w-full overflow-hidden">
           {filteredProjects.map((project, index) => (
             <div key={project.id} style={{ animationDelay: `${index * 100}ms` }} className="min-w-0 overflow-hidden animate-fade-in-up">
+              <Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-lg"></div>}>
               <ProjectCard project={project} />
+              </Suspense>
             </div>
           ))}
         </div>

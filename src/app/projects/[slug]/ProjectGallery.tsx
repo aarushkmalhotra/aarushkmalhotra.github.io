@@ -42,7 +42,7 @@ function Lightbox({ open, onOpenChange, items, startIndex }: { open: boolean, on
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="bg-black/80 border-0 w-screen h-screen max-w-none max-h-none rounded-none p-4 md:p-8 flex flex-col focus:outline-none">
+            <DialogContent className="bg-black/80 border-0 w-screen h-[100dvh] max-w-none max-h-none rounded-none p-4 md:p-8 flex flex-col focus:outline-none">
                 <div className="absolute top-4 right-4 z-50 flex items-center gap-2">
                     {isImage(currentItem) && (
                         <>

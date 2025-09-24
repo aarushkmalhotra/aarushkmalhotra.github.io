@@ -18,6 +18,7 @@ import { format, parseISO } from "date-fns";
 import { useState, useRef, useEffect } from "react";
 import { YoutubeIcon } from "./icons/YoutubeIcon";
 import { cn } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
 
 interface ProjectCardProps {
   project: Project;
@@ -36,6 +37,7 @@ const formatDateRange = (startDate: string, endDate: string | null) => {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
+  const searchParams = useSearchParams();
   const [isHovered, setIsHovered] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -117,7 +119,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
     return <ArrowUpRightIcon className="w-4 h-4 transition-transform duration-300 group-hover/button:translate-x-1 group-hover/button:-translate-y-1" />;
   }
 
-  const ctaUrl = `/projects/${project.id}`;
+  // Preserve current filters/sort in the project detail link
+  const sp = searchParams;
+  const params = new URLSearchParams();
+  if (sp && typeof (sp as any)?.forEach === 'function') {
+    sp.forEach((value, key) => {
+      if (value != null) params.set(key, value);
+    });
+  }
+  const qs = params.toString();
+  const ctaUrl = `/projects/${project.id}${qs ? `?${qs}` : ''}`;
 
   return (
     <Card 

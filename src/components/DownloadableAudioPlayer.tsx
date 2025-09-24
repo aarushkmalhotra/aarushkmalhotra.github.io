@@ -1,4 +1,3 @@
-
 "use client";
 
 import { DownloadableAudioFile } from "@/lib/projects";
@@ -180,7 +179,7 @@ export function DownloadableAudioPlayer({ audioFile, themeColor }: AudioPlayerPr
                 </div>
             </div>
             
-            <Music2 className="absolute -right-4 -bottom-8 w-32 h-32 text-foreground/5 opacity-50 -rotate-12" style={{ color: themeColor, opacity: 0.05 }} />
+            <Music2 className="absolute -right-4 -bottom-8 w-32 h-32 text-foreground/5 opacity-50 -rotate-12 pointer-events-none" style={{ color: themeColor, opacity: 0.05 }} />
 
             <audio ref={audioRef} src={audioFile.file} preload="metadata" onEnded={() => setIsPlaying(false)} />
             
