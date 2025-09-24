@@ -4,7 +4,7 @@ import { ProjectShare } from "@/components/ProjectShare";
 import { Button } from "@/components/ui/button";
 import { Project } from "@/lib/projects";
 import { YoutubeIcon } from "@/components/icons/YoutubeIcon";
-import { ArrowUpRight, Github, Music } from "lucide-react";
+import { ArrowUpRight, Github, Music, CalendarDays } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
@@ -21,7 +21,7 @@ const getDemoCallToAction = (project: Project) => {
         return 'View Channel';
     }
     if (project.id === 'simplify-me' || project.id === 'vernato' || project.id === 'imdb-top-1000') {
-        return 'View Demo';
+        return 'Try Now';
     }
     if (project.id === 'emty') {
         return 'View Linktree';
@@ -46,6 +46,18 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
     const headerRef = useRef<HTMLElement>(null);
     const searchParams = useSearchParams();
     const [isFavorite, setIsFavorite] = useState(false);
+
+    const formatRange = (start: string, end: string | null) => {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const format = (s: string) => {
+            const [y, m] = s.split('-');
+            const mi = Math.max(1, Math.min(12, parseInt(m, 10))) - 1;
+            return `${months[mi]} ${y}`;
+        };
+        const startStr = format(start);
+        const endStr = end ? format(end) : 'Present';
+        return `${startStr} — ${endStr}`;
+    };
 
     // Hydrate favorite state for this project
     useEffect(() => {
@@ -97,7 +109,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
             // Main site header is 64px (h-16)
             const siteHeaderHeight = 64; 
             // Use same offset calculation as quick dock for consistency
-            const offset = siteHeaderHeight + 12;
+            const offset = siteHeaderHeight + 20;
 
             const elementPosition = element.getBoundingClientRect().top;
             const offsetPosition = elementPosition + window.pageYOffset - offset;
@@ -133,6 +145,10 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                             >
                                 {project.tagline}
                             </p>
+                            <div className="mt-1 text-xs text-muted-foreground inline-flex items-center gap-1 lg:hidden">
+                                <CalendarDays className="h-3.5 w-3.5" />
+                                <span>{formatRange(project.startDate, project.endDate)}</span>
+                            </div>
                         </div>
                     </div>
                                         <div className="hidden sm:flex flex-shrink-0 items-center gap-2">
@@ -174,7 +190,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                                 </Link>
                             </Button>
                         )}
-                         <ProjectShare project={project} />
+                        {/* Share buttons moved to the floating quick dock on desktop */}
                     </div>
                                         <div className="sm:hidden flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
                         <div className="flex items-center gap-2 w-full">

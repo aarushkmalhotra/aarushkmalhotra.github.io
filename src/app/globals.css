@@ -4,6 +4,8 @@
 
 @layer base {
   :root {
+    /* Global layout variables */
+    --site-header-h: 64px; /* matches Header h-16 */
     --background: 210 20% 98%;
     --foreground: 215 25% 27%;
 
@@ -210,6 +212,11 @@
 /* Ensure proper scrolling behavior */
 html {
   scroll-behavior: smooth;
+}
+
+/* Account for sticky site header when jumping to in-page anchors */
+main [id] {
+  scroll-margin-top: calc(var(--site-header-h) + 20px);
 }
 
 /* Modern overlay scrollbar for webkit browsers */

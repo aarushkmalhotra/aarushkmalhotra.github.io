@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { Link as LinkIcon } from "lucide-react";
+import { XIcon } from "@/components/icons/XIcon";
+import { LinkedinIcon } from "@/components/icons/LinkedinIcon";
 
 interface ProjectQuickDockProps {
   project: Project;
@@ -91,26 +93,22 @@ const getSectionIcon = (id: string) => {
 export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
   const { toast } = useToast();
   const [progress, setProgress] = useState(0);
-  const [sections, setSections] = useState<SectionDef[]>([]);
   const activeRef = useRef<string | null>(null);
-  const [dockBackHref, setDockBackHref] = useState(backHref);
+  const dockBackHref = backHref || "/projects";
 
-  // Discover available sections from the DOM so it works with/without certain blocks
-  useEffect(() => {
+  // Build sections synchronously from project data (no DOM scan) to avoid late render
+  const sections: SectionDef[] = useMemo(() => {
     const defs: SectionDef[] = [
       { id: "overview", label: "Overview" },
       { id: "outcomes", label: "Outcomes" },
-      { id: "ai-samples", label: "Samples" },
-      { id: "original-tracks", label: "Tracks" },
-      { id: "gallery", label: "Gallery" },
-    ].filter((s) => document.getElementById(s.id));
-    setSections(defs);
-    // Derive back link with current query params
-    try {
-      const q = typeof window !== 'undefined' ? window.location.search : '';
-      setDockBackHref(`/projects${q || ''}`);
-    } catch {}
-  }, []);
+    ];
+    if (project.audioFiles && project.audioFiles.length > 0) defs.push({ id: "ai-samples", label: "Samples" });
+    if (project.downloadableAudioFiles && project.downloadableAudioFiles.length > 0) defs.push({ id: "original-tracks", label: "Tracks" });
+    if ((project.images && project.images.length > 0) || project.videoPreview) defs.push({ id: "gallery", label: "Gallery" });
+    return defs;
+  }, [project]);
+
+  // No DOM scanning for sections; only listen for scroll to update active and progress
 
   useEffect(() => {
     const onScroll = () => {
@@ -153,8 +151,10 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
-    const siteHeaderHeight = 64; // matches h-16 in layout
-    const y = el.getBoundingClientRect().top + window.pageYOffset - siteHeaderHeight - 12;
+    // Try to derive header height dynamically; fallback to 64 (h-16)
+    const header = document.querySelector('header') as HTMLElement | null;
+    const siteHeaderHeight = header?.offsetHeight ?? 64;
+    const y = el.getBoundingClientRect().top + window.pageYOffset - siteHeaderHeight - 20;
     window.scrollTo({ top: y, behavior: "smooth" });
   };
 
@@ -162,18 +162,32 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
     const url = new URL(window.location.href);
     if (sectionId) url.hash = sectionId;
     navigator.clipboard.writeText(url.toString());
-    toast({ title: "Link copied", description: sectionId ? `Jump to ${sectionId}` : "Page URL copied" });
+    // Prefer friendly label for the toast description
+    const sectionLabel = sectionId ? sections.find((s) => s.id === sectionId)?.label : undefined;
+    const pretty = (id: string) => id.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    toast({
+      title: "Link copied",
+      description: sectionId ? `Jump to ${sectionLabel ?? pretty(sectionId)}` : "Page URL copied",
+    });
   };
 
   const hasRepo = Boolean(project.repoUrl);
   const hasDemo = Boolean(project.demoUrl);
+  const SITE_ORIGIN = "https://aarushkmalhotra.github.io";
+  const defaultProjectUrl = `${SITE_ORIGIN}/projects/${project.id}`;
+  const shareUrl = (project.id === 'album-tracks' && project.demoUrl) ? project.demoUrl : defaultProjectUrl;
+  const shareText = (project.id === 'album-tracks')
+    ? `Check out these original tracks by Aarush Kumar:`
+    : `Check out this project: ${project.name} - ${project.tagline}`;
+  const twitterShareUrl = shareUrl ? `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}` : "";
+  const linkedinShareUrl = shareUrl ? `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}` : "";
 
   return (
     <>
       {/* Marker so global UI (like ScrollToTop) can adapt positioning on this page */}
       <div id="project-quick-dock-marker" data-dock-present="true" className="hidden" aria-hidden />
       {/* Desktop/right rail */}
-      <div className="hidden md:flex fixed right-4 top-[calc(64px+16px)] z-40 flex-col items-center gap-3">
+  <div className="hidden xl:flex fixed right-4 top-[calc(64px+16px)] z-40 flex-col items-center gap-3">
         <div className="relative">
           <svg width={progressCircle.size} height={progressCircle.size} className="rotate-[-90deg]">
             <circle cx={progressCircle.size / 2} cy={progressCircle.size / 2} r={progressCircle.radius} stroke="hsl(var(--muted-foreground))" strokeWidth={progressCircle.stroke} fill="none" opacity={0.25} />
@@ -222,32 +236,55 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
               </Link>
             </Button>
           )}
+          {shareUrl && (
+            <Button asChild variant="ghost" size="icon" className="w-8 h-8 rounded-full" aria-label="Share on X">
+              <a href={twitterShareUrl} target="_blank" rel="noopener noreferrer">
+                <XIcon className="w-4 h-4" />
+              </a>
+            </Button>
+          )}
+          {shareUrl && (
+            <Button asChild variant="ghost" size="icon" className="w-8 h-8 rounded-full" aria-label="Share on LinkedIn">
+              <a href={linkedinShareUrl} target="_blank" rel="noopener noreferrer">
+                <LinkedinIcon className="w-4 h-4" />
+              </a>
+            </Button>
+          )}
           <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full" onClick={() => copyLink(activeRef.current ?? undefined)} aria-label="Copy link to section">
             <LinkIcon className="w-4 h-4" />
           </Button>
         </div>
       </div>
 
-      {/* Mobile bottom bar */}
-      <div className="md:hidden fixed bottom-[max(env(safe-area-inset-bottom),16px)] left-1/2 -translate-x-1/2 z-40 w-[92%]">
-        <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border rounded-2xl shadow-lg p-2 flex items-center justify-between gap-2">
+  {/* Mobile bottom bar */}
+  <div className="xl:hidden fixed bottom-[max(env(safe-area-inset-bottom),16px)] left-1/2 -translate-x-1/2 z-40 w-[96%]">
+        <div className="bg-background border rounded-2xl shadow-lg p-2 flex items-center justify-between gap-2">
           <Button asChild size="icon" variant="outline" className="shrink-0">
             <Link href={dockBackHref} aria-label="Back to projects">
               <Icon.Back className="w-4 h-4" />
             </Link>
           </Button>
-          <div className="flex-1 overflow-x-auto no-scrollbar">
-            <div className="flex items-center gap-2 px-1">
+          <div className="flex-1 overflow-hidden">
+            <div
+              className="grid gap-1 px-1"
+              style={{ gridTemplateColumns: `repeat(${Math.max(1, sections.length)}, minmax(0, 1fr))` }}
+            >
               {sections.map((s) => {
+                const isActive = activeRef.current === s.id;
                 const IconComp = getSectionIcon(s.id);
                 return (
                   <button
                     key={s.id}
                     onClick={() => scrollTo(s.id)}
-                    className="px-3 py-1.5 rounded-full text-sm bg-muted md:hover:bg-accent md:hover:text-accent-foreground whitespace-nowrap inline-flex items-center gap-2"
+                    aria-label={`Go to ${s.label}`}
+                    className={cn(
+                      "h-10 w-full rounded-full text-sm inline-flex items-center justify-center gap-2 transition-colors",
+                      isActive ? "bg-primary text-primary-foreground" : "bg-muted text-foreground md:hover:bg-accent md:hover:text-accent-foreground"
+                    )}
+                    title={s.label}
                   >
                     <IconComp className="w-4 h-4" />
-                    {s.label}
+                    <span className="hidden sm:inline">{s.label}</span>
                   </button>
                 );
               })}

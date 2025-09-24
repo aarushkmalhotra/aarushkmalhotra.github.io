@@ -5,7 +5,7 @@ import type { Project } from "@/lib/projects";
 import { getProjects } from "@/lib/projects";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Input } from "@/components/ui/input";
-import { Skeleton } from "@/components/ui/skeleton";
+// removed Skeleton; controls should be ready instantly
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +19,6 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { ListFilter, Search } from "lucide-react";
@@ -43,10 +42,9 @@ export function ProjectsClientPage() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [allProjects, setAllProjects] = useState<Project[]>([]);
-  const [allKeywords, setAllKeywords] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [filterLoading, setFilterLoading] = useState(false);
+  // Load projects synchronously so controls render immediately on first paint
+  const allProjects = useMemo(() => getProjects(), []);
+  const allKeywords = useMemo(() => getAllKeywords(allProjects), [allProjects]);
 
   // Initialize state from URL params
   const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || "");
@@ -59,36 +57,19 @@ export function ProjectsClientPage() {
     }, {} as Record<string, boolean>);
   });
   const [sortOrder, setSortOrder] = useState<SortOption>((searchParams.get('sort') as SortOption) || "newest");
-  const [isMounted, setIsMounted] = useState(false);
   const [showFavorites, setShowFavorites] = useState<boolean>(() => (searchParams.get('favorites') || '').toLowerCase() === 'true');
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
 
-  useEffect(() => {
-    setLoading(true);
-    // Simulate loading delay
-    setTimeout(() => {
-      const projects = getProjects();
-      const keywords = getAllKeywords(projects);
-      setAllProjects(projects);
-      setAllKeywords(keywords);
-      setLoading(false);
-    }, 500);
-  }, []);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   // Hydrate favorites from localStorage on mount
   useEffect(() => {
-    if (!isMounted) return;
     try {
       const raw = localStorage.getItem('portfolio:favorites');
       setFavoriteIds(raw ? (JSON.parse(raw) as string[]) : []);
     } catch {
       setFavoriteIds([]);
     }
-  }, [isMounted]);
+  }, []);
 
   // Listen for favorites updates from any component
   useEffect(() => {
@@ -112,7 +93,6 @@ export function ProjectsClientPage() {
 
   // Update URL when filters change
   useEffect(() => {
-    if (!isMounted) return;
     const params = new URLSearchParams();
     if (searchTerm) params.set('search', searchTerm);
     const activeKeywords = Object.keys(selectedKeywords).filter(key => selectedKeywords[key]);
@@ -121,14 +101,12 @@ export function ProjectsClientPage() {
     if (showFavorites) params.set('favorites', 'true');
     const queryString = params.toString();
     const newUrl = queryString ? `${pathname}?${queryString}` : pathname;
-    router.push(newUrl, { scroll: false });
-  }, [searchTerm, selectedKeywords, sortOrder, showFavorites, pathname, router, isMounted]);
-
-  useEffect(() => {
-    setFilterLoading(true);
-    const timer = setTimeout(() => setFilterLoading(false), 300);
-    return () => clearTimeout(timer);
-  }, [searchTerm, selectedKeywords, sortOrder, showFavorites]);
+    const currentUrl = searchParams?.toString() ? `${pathname}?${searchParams.toString()}` : pathname;
+    if (newUrl !== currentUrl) {
+      router.push(newUrl, { scroll: false });
+    }
+  }, [searchTerm, selectedKeywords, sortOrder, showFavorites, pathname, router, searchParams]);
+  // No filter-loading shimmer; update results instantly
 
   const handleKeywordChange = (keyword: string) => {
     setSelectedKeywords(prev => ({
@@ -232,10 +210,14 @@ export function ProjectsClientPage() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <div className="w-1/2 md:w-[180px]">
-            <Select onValueChange={(value: SortOption) => setSortOrder(value)} value={sortOrder}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Sort by" />
+          <div className="w-1/2 md:w-[200px]">
+            <label className="sr-only" htmlFor="sort">Sort</label>
+            <Select value={sortOrder} onValueChange={(v: SortOption) => setSortOrder(v)}>
+              <SelectTrigger id="sort" aria-label="Sort" className="w-full">
+                {/* SSR-stable label to avoid late rendering */}
+                <span>
+                  {sortOrder === 'newest' ? 'Newest' : sortOrder === 'oldest' ? 'Oldest' : 'Alphabetical'}
+                </span>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="newest">Newest</SelectItem>
@@ -247,39 +229,7 @@ export function ProjectsClientPage() {
         </div>
       </div>
 
-      {loading || filterLoading || !isMounted ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {Array.from({ length: finalProjects.length || 3 }).map((_, index) => (
-            <div key={`loading-${index}`} className="h-full flex flex-col transition-all duration-300 ease-in-out border bg-card text-card-foreground shadow-sm rounded-lg">
-              <div className="p-6">
-                <div className="aspect-video relative overflow-hidden rounded-lg mb-4 bg-muted" />
-                <div className="flex items-start justify-between gap-3 mb-2">
-                  <Skeleton className="h-8 w-3/4" />
-                  <div className="shrink-0 h-8 w-8 rounded-full bg-muted" />
-                </div>
-                <Skeleton className="h-4 w-1/2 mb-2" />
-                <Skeleton className="h-5 w-full mb-4" />
-                <div className="space-y-2">
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-4/5" />
-                  <Skeleton className="h-4 w-3/5" />
-                </div>
-              </div>
-              <div className="p-6 pt-0 flex-col items-start gap-4 mt-auto">
-                <div className="flex flex-wrap gap-2">
-                  <Skeleton className="h-6 w-16" />
-                  <Skeleton className="h-6 w-20" />
-                  <Skeleton className="h-6 w-14" />
-                  <Skeleton className="h-6 w-18" />
-                  <Skeleton className="h-6 w-20" />
-                  <Skeleton className="h-6 w-18" />
-                </div>
-                <Skeleton className="h-5 w-24 mt-4" />
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : finalProjects.length > 0 ? (
+      {finalProjects.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {finalProjects.map((project, index) => (
             <div key={project.id} style={{ animationDelay: `${index * 100}ms` }} className="animate-fade-in-up">

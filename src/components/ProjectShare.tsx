@@ -3,9 +3,8 @@
 
 import { Project } from "@/lib/projects";
 import { Button } from "./ui/button";
-import { Linkedin } from "lucide-react";
+import { LinkedinIcon } from "./icons/LinkedinIcon";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 import { XIcon } from "./icons/XIcon";
 
 interface ProjectShareProps {
@@ -14,13 +13,8 @@ interface ProjectShareProps {
 
 export function ProjectShare({ project }: ProjectShareProps) {
     const pathname = usePathname();
-    const [pageUrl, setPageUrl] = useState("");
-
-    useEffect(() => {
-        setPageUrl(window.location.origin + pathname);
-    }, [pathname]);
-
-    if(!pageUrl) return null;
+    const SITE_ORIGIN = "https://aarushkmalhotra.github.io";
+    const pageUrl = `${SITE_ORIGIN}${pathname}`;
 
     let shareUrl: string;
     let shareText: string;
@@ -45,7 +39,7 @@ export function ProjectShare({ project }: ProjectShareProps) {
             </Button>
             <Button asChild variant="outline" size="icon">
                 <a href={linkedinShareUrl} target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">
-                    <Linkedin className="w-4 h-4" />
+                    <LinkedinIcon className="w-4 h-4" />
                 </a>
             </Button>
         </div>

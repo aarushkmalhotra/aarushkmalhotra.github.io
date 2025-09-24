@@ -12,19 +12,7 @@ export default function ProjectsLoading() {
           a unique challenge and a story of creative problem-solving.
         </p>
       </div>
-      <div className="flex flex-col md:flex-row gap-4 mb-8">
-        <div className="relative flex-grow">
-          <div className="h-10 w-full bg-muted rounded-md" />
-        </div>
-        <div className="flex flex-row gap-4">
-          <div className="w-1/2 md:w-auto">
-            <div className="h-10 w-full md:w-32 bg-muted rounded-md" />
-          </div>
-          <div className="w-1/2 md:w-[180px]">
-            <div className="h-10 w-full bg-muted rounded-md" />
-          </div>
-        </div>
-      </div>
+      {/* No skeleton for controls; they render instantly in the client component */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {Array.from({ length: 3 }).map((_, index) => (
           <div

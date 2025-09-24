@@ -98,10 +98,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
         return 'View Channel';
     }
     if (project.id === 'simplify-me' || project.id === 'vernato' || project.id === 'imdb-top-1000') {
-      return 'View Demo';
+      return 'Try Now';
     }
     if (project.id === 'emty') {
       return 'View Linktree';
+    }
+    if (project.id === 'album-tracks') {
+      return 'View Tracks';
     }
     if(project.demoUrl) {
       return 'View Project';

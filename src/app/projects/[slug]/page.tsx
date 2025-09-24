@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { getProjectById, getProjects } from "@/lib/projects";
 import { notFound } from "next/navigation";
 import { Metadata } from 'next';
-import { Check, ExternalLink } from "lucide-react";
+import { Check, ExternalLink, CalendarDays } from "lucide-react";
 import { ProjectHeader } from "./ProjectHeader";
 import { AudioPlayer } from "@/components/AudioPlayer";
 import { DownloadableAudioPlayer } from "@/components/DownloadableAudioPlayer";
@@ -64,6 +64,18 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   }
   
   const allProjects = getProjects();
+  
+  const formatRange = (start: string, end: string | null) => {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const format = (s: string) => {
+      const [y, m] = s.split('-');
+      const mi = Math.max(1, Math.min(12, parseInt(m, 10))) - 1;
+      return `${months[mi]} ${y}`;
+    };
+    const startStr = format(start);
+    const endStr = end ? format(end) : 'Present';
+    return `${startStr} — ${endStr}`;
+  };
     
   const TechStackAside = () => (
     <div className="p-6 rounded-lg bg-card border">
@@ -92,6 +104,16 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             </li>
           ))}
         </ul>
+    </div>
+  );
+
+  const DatesAside = () => (
+    <div className="p-6 rounded-lg bg-card border">
+      <h3 className="font-headline text-xl mb-4">Timeline</h3>
+      <div className="text-sm text-muted-foreground inline-flex items-center gap-2">
+        <CalendarDays className="w-4 h-4" />
+        <span>{formatRange(project.startDate, project.endDate)}</span>
+      </div>
     </div>
   );
 
@@ -168,6 +190,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
           </div>
           <aside className="hidden lg:block lg:col-span-1 space-y-4 sticky top-[80px] self-start">
+            <DatesAside />
             <TechStackAside />
             {project.keyFeatures && project.keyFeatures.length > 0 && (
               <KeyFeaturesAside />

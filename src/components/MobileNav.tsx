@@ -41,7 +41,7 @@ export function MobileNav({ navLinks }: MobileNavProps) {
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="flex flex-col p-0">
-          <div className="border-b p-4 flex items-center justify-between">
+          <div className="border-b p-4 py-3 flex items-center justify-between">
               <div className="flex items-center gap-2 font-headline text-lg font-bold">
                   <Image
                       src="/portrait.jpg"
