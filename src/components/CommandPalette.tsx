@@ -90,6 +90,8 @@ export function CommandPalette() {
       .map((r) => r.it);
   }, [items, query]);
 
+  const skeletonCount = query.trim() ? (filtered.length || 10) : 10;
+
   const onSelect = (item: Item) => {
     setOpen(false);
     if (item.type === "action" && item.href === "#action:terminal") {
@@ -114,7 +116,7 @@ export function CommandPalette() {
         </div>
         <ul className="max-h-[50vh] overflow-y-auto p-1">
           {showSkeletons ? (
-            Array.from({ length: 4 }, (_, i) => ({ label: 'placeholder' })).map((item, index) => (
+            Array.from({ length: skeletonCount }, (_, i) => ({ label: 'placeholder' })).map((item, index) => (
               <li key={`skeleton-${index}`}>
                 <div className="w-full px-3 py-2 flex items-center gap-2">
                   <div className="h-3 w-8 bg-muted rounded animate-pulse" />

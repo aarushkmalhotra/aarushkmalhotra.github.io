@@ -1,4 +1,3 @@
-
 "use client";
 
 import {
@@ -115,7 +114,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
     if (project.id === 'youtube-thumbnails') {
         return <YoutubeIcon className="w-4 h-4" />;
     }
-    return <ArrowUpRightIcon className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />;
+    return <ArrowUpRightIcon className="w-4 h-4 transition-transform duration-300 group-hover/button:translate-x-1 group-hover/button:-translate-y-1" />;
   }
 
   const ctaUrl = `/projects/${project.id}`;
@@ -131,10 +130,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
             <div className="aspect-video relative overflow-hidden rounded-lg mb-4 bg-muted">
               {image && (
                   <>
-                      {project.videoPreview && project.videoPreview.endsWith('.mp4') && (
+                      {project.hoverVideo && project.hoverVideo.endsWith('.mp4') && (
                           <video
                               ref={videoRef}
-                              src={project.videoPreview}
+                              src={project.hoverVideo}
                               loop
                               muted
                               playsInline
@@ -146,7 +145,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                           src={image.imageUrl}
                           alt={project.name}
                           fill
-                          className={`object-cover transition-transform duration-300 ${!project.videoPreview ? 'group-hover:scale-105' : ''} ${project.videoPreview && project.videoPreview.endsWith('.mp4') && isHovered ? 'md:opacity-0' : 'opacity-100'}`}
+                          className={`object-cover transition-transform duration-300 ${!project.hoverVideo ? 'group-hover:scale-105' : ''} ${project.hoverVideo && project.hoverVideo.endsWith('.mp4') && isHovered ? 'md:opacity-0' : 'opacity-100'}`}
                           data-ai-hint={image.imageHint}
                       />
                   </>
@@ -205,8 +204,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
                   </Badge>
               )}
           </div>
-           <Link href={ctaUrl} className={cn(
-              "text-sm text-accent flex items-center gap-1",
+           <Link 
+             href={project.demoUrl || ctaUrl} 
+             target="_blank" 
+             rel="noopener noreferrer"
+             onMouseEnter={(e) => { e.stopPropagation(); setIsHovered(false); }}
+             onMouseLeave={(e) => e.stopPropagation()}
+             className={cn(
+              "text-sm text-accent flex items-center gap-1 group/button",
               project.id === 'simply' && 'hidden md:flex'
             )}>
               {getCallToAction()} {getCallToActionIcon()}

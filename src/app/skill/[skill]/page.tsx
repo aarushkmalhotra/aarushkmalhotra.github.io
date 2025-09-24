@@ -88,7 +88,7 @@ export default async function ProjectsBySkillPage({ params }: Props) {
       */}
 
       {filteredProjects.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full max-w-full overflow-x-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full max-w-full overflow-hidden">
           {filteredProjects.map((project, index) => (
             <div key={project.id} style={{ animationDelay: `${index * 100}ms` }} className="min-w-0 overflow-hidden animate-fade-in-up">
               <ProjectCard project={project} />

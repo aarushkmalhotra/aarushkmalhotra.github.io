@@ -1,4 +1,3 @@
-
 [
   {
     "id": "vernato",
@@ -91,9 +90,9 @@
     "keywords": ["AI & Machine Learning", "Creative Tech"],
     "outcomes": "Successfully developed and deployed a Discord bot capable of simplifying complex legal documents, demonstrating skills in AI integration, API usage, and cloud deployment.\nThe technology now powers the core summarization features of the Simplify Me. web platform.",
     "repoUrl": "https://github.com/aarushkmalhotra/Simply",
-    "demoUrl": "https://simplifyme.org",
+    "demoUrl": "https://simplifyme.org/Simply",
     "images": ["simply-1"],
-    "startDate": "2023-08-01",
+    "startDate": "2024-01-01",
     "endDate": "2024-07-01",
     "type": "project",
     "theme": {
@@ -216,6 +215,7 @@
     "demoUrl": "https://studio.code.org/projects/applab/w8PJdUtl1-DUKphmZ3zI9p0ZFzbPeqC5T_C0WHmYhVU",
     "images": ["imdb-top-1000-1"],
     "videoPreview": "/imdbtop1000demo.mp4",
+    "hoverVideo": "/imdbtop1000demo.mp4",
     "startDate": "2023-09-01",
     "endDate": "2024-05-01",
     "type": "project",
@@ -242,6 +242,7 @@
     "demoUrl": "https://drive.google.com/drive/folders/1DrceaX2DRv2ve6mYF7210ikESgcIUKOd",
     "images": ["album-tracks-1"],
     "videoPreview": "https://youtu.be/SWiwfNcLjWg",
+    "hoverVideo": "/sunbeam-the-album-full.mp4",
     "startDate": "2022-03-01",
     "endDate": "2022-09-01",
     "type": "project",

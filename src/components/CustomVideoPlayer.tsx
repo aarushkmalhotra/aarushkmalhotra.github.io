@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
@@ -19,6 +18,20 @@ const formatTime = (time: number) => {
 };
 
 export function CustomVideoPlayer({ src, themeColor }: CustomVideoPlayerProps) {
+    const isIOS = typeof window !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+    if (isIOS) {
+        return (
+            <video
+                src={src}
+                controls
+                className="w-full h-full object-contain"
+                playsInline
+                preload="metadata"
+            />
+        );
+    }
+
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);

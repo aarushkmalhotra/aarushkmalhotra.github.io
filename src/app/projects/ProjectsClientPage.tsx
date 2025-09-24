@@ -1,10 +1,11 @@
-
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
 import type { Project } from "@/lib/projects";
+import { getProjects } from "@/lib/projects";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,17 +25,28 @@ import { Button } from "@/components/ui/button";
 import { ListFilter, Search } from "lucide-react";
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
-interface ProjectsClientPageProps {
-  allProjects: Project[];
-  allKeywords: string[];
-}
+// Helper function to extract all unique keywords
+const getAllKeywords = (projects: Project[]): string[] => {
+  const keywordSet = new Set<string>();
+  projects.forEach(project => {
+    if (project.keywords) {
+      project.keywords.forEach((keyword: string) => keywordSet.add(keyword));
+    }
+  });
+  return Array.from(keywordSet).sort();
+};
 
 type SortOption = "newest" | "oldest" | "alphabetical";
 
-export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientPageProps) {
+export function ProjectsClientPage() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const [allProjects, setAllProjects] = useState<Project[]>([]);
+  const [allKeywords, setAllKeywords] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [filterLoading, setFilterLoading] = useState(false);
 
   // Initialize state from URL params
   const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || "");
@@ -50,6 +62,18 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
   const [isMounted, setIsMounted] = useState(false);
   const [showFavorites, setShowFavorites] = useState<boolean>(() => (searchParams.get('favorites') || '').toLowerCase() === 'true');
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    setLoading(true);
+    // Simulate loading delay
+    setTimeout(() => {
+      const projects = getProjects();
+      const keywords = getAllKeywords(projects);
+      setAllProjects(projects);
+      setAllKeywords(keywords);
+      setLoading(false);
+    }, 500);
+  }, []);
 
   useEffect(() => {
     setIsMounted(true);
@@ -100,6 +124,12 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
     router.push(newUrl, { scroll: false });
   }, [searchTerm, selectedKeywords, sortOrder, showFavorites, pathname, router, isMounted]);
 
+  useEffect(() => {
+    setFilterLoading(true);
+    const timer = setTimeout(() => setFilterLoading(false), 300);
+    return () => clearTimeout(timer);
+  }, [searchTerm, selectedKeywords, sortOrder, showFavorites]);
+
   const handleKeywordChange = (keyword: string) => {
     setSelectedKeywords(prev => ({
       ...prev,
@@ -146,37 +176,7 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
     return filteredAndSortedProjects.filter(p => favoriteIds.includes(p.id));
   }, [filteredAndSortedProjects, favoriteIds, showFavorites]);
   
-  if (!isMounted) {
-    // Prevent hydration mismatch by rendering a skeleton or nothing on the server.
-    return (
-       <div>
-        <div className="flex flex-col md:flex-row gap-4 mb-8">
-            <div className="relative flex-grow">
-                <div className="h-10 w-full bg-muted rounded-md" />
-            </div>
-            <div className="flex flex-row gap-4">
-                <div className="w-1/2 md:w-auto">
-                    <div className="h-10 w-full md:w-32 bg-muted rounded-md" />
-                </div>
-                <div className="w-1/2 md:w-[180px]">
-                    <div className="h-10 w-full bg-muted rounded-md" />
-                </div>
-            </div>
-        </div>
-         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="border bg-card rounded-lg p-6 space-y-4">
-                    <div className="aspect-video bg-muted rounded-lg" />
-                    <div className="h-5 w-3/4 bg-muted rounded" />
-                    <div className="h-4 w-1/2 bg-muted rounded" />
-                    <div className="h-8 w-full bg-muted rounded" />
-                </div>
-            ))}
-        </div>
-      </div>
-    );
-  }
-
+  
   const activeFilterCount = Object.values(selectedKeywords).filter(Boolean).length + (showFavorites ? 1 : 0);
 
   return (
@@ -247,7 +247,39 @@ export function ProjectsClientPage({ allProjects, allKeywords }: ProjectsClientP
         </div>
       </div>
 
-      {finalProjects.length > 0 ? (
+      {loading || filterLoading || !isMounted ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {Array.from({ length: finalProjects.length || 3 }).map((_, index) => (
+            <div key={`loading-${index}`} className="h-full flex flex-col transition-all duration-300 ease-in-out border bg-card text-card-foreground shadow-sm rounded-lg">
+              <div className="p-6">
+                <div className="aspect-video relative overflow-hidden rounded-lg mb-4 bg-muted" />
+                <div className="flex items-start justify-between gap-3 mb-2">
+                  <Skeleton className="h-8 w-3/4" />
+                  <div className="shrink-0 h-8 w-8 rounded-full bg-muted" />
+                </div>
+                <Skeleton className="h-4 w-1/2 mb-2" />
+                <Skeleton className="h-5 w-full mb-4" />
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-4/5" />
+                  <Skeleton className="h-4 w-3/5" />
+                </div>
+              </div>
+              <div className="p-6 pt-0 flex-col items-start gap-4 mt-auto">
+                <div className="flex flex-wrap gap-2">
+                  <Skeleton className="h-6 w-16" />
+                  <Skeleton className="h-6 w-20" />
+                  <Skeleton className="h-6 w-14" />
+                  <Skeleton className="h-6 w-18" />
+                  <Skeleton className="h-6 w-20" />
+                  <Skeleton className="h-6 w-18" />
+                </div>
+                <Skeleton className="h-5 w-24 mt-4" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : finalProjects.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {finalProjects.map((project, index) => (
             <div key={project.id} style={{ animationDelay: `${index * 100}ms` }} className="animate-fade-in-up">

@@ -1,4 +1,3 @@
-
 import projectsData from './data/projects.json';
 import { compareDesc, parseISO } from 'date-fns';
 
@@ -31,6 +30,7 @@ export interface Project {
   demoUrl: string | null;
   images: string[];
   videoPreview?: string;
+  hoverVideo?: string;
   theme: {
     primary: string;
     secondary: string;
