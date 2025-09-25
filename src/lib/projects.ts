@@ -88,7 +88,7 @@ export function getSkills() {
     
     const allSkills = [
         ...activeSkills,
-        "Swift", "C++" // Add skills without projects here
+        // "Swift", "C++" // Add skills without projects here
     ].sort((a, b) => a.localeCompare(b));
 
     // Deduplicate allSkills

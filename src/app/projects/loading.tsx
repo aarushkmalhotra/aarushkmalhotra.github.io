@@ -43,7 +43,7 @@ export default function ProjectsLoading() {
         </div>
       </div>
 
-      <div className="py-12 flex items-center justify-center">
+      <div className="flex items-center justify-center py-24">
         <Loader2 className="h-10 w-10 animate-spin text-muted-foreground" aria-label="Loading projects" />
       </div>
     </div>

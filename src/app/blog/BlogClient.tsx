@@ -150,8 +150,8 @@ export function BlogClient() {
 
   if (loading) {
     return (
-      <div className="py-12 flex items-center justify-center">
-        <Loader2 className="h-10 w-10 animate-spin text-muted-foreground" aria-label="Loading posts" />
+      <div className="flex items-center justify-center py-24">
+        <Loader2 className="h-10 w-10 animate-spin text-muted-foreground" aria-label="Loading projects" />
       </div>
     );
   }

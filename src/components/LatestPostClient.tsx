@@ -111,8 +111,8 @@ export function LatestPostClient() {
 
   if (loading) {
     return (
-      <div className="py-12 flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+      <div className="flex items-center justify-center py-24">
+        <Loader2 className="h-10 w-10 animate-spin text-muted-foreground" aria-label="Loading projects" />
       </div>
     );
   }
