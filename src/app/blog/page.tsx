@@ -13,7 +13,8 @@ import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Metadata } from 'next';
 import { Button } from "@/components/ui/button";
-import { getHashnodePosts } from "@/lib/hashnode";
+// Client-side fetching is handled in BlogClient to avoid rebuilds for updates
+import { BlogClient } from "./BlogClient";
 
 export const metadata: Metadata = {
   title: "Blog – Aarush's Portfolio",
@@ -48,7 +49,6 @@ function EmptyState() {
 
 
 export default async function BlogPage() {
-  const posts = await getHashnodePosts("aarushkumar.hashnode.dev");
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-16 animate-fade-in">
@@ -59,51 +59,8 @@ export default async function BlogPage() {
         </p>
       </div>
 
-      {posts.length === 0 ? (
-        <EmptyState />
-      ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post, index) => (
-            <Link href={post.url} target="_blank" rel="noopener noreferrer" key={post.id} className="group block" style={{ animationDelay: `${index * 100}ms` }}>
-              <Card className="h-full flex flex-col transition-all duration-300 ease-in-out group-hover:shadow-xl group-hover:-translate-y-1 animate-fade-in-up">
-                {post.coverImage && (
-                  <CardHeader className="p-0">
-                    <div className="aspect-video relative overflow-hidden rounded-t-lg">
-                      <Image
-                        src={post.coverImage.url}
-                        alt={post.title}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    </div>
-                  </CardHeader>
-                )}
-                <div className={`p-6 flex flex-col flex-grow`}>
-                    <CardTitle className="font-headline text-2xl group-hover:text-primary transition-colors">{post.title}</CardTitle>
-                    <CardDescription className="mt-2 text-xs">
-                      {new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} · {post.readTimeInMinutes} min read
-                    </CardDescription>
-                  <CardContent className="p-0 flex-grow pt-4">
-                    <p className="text-muted-foreground line-clamp-3">{post.brief}</p>
-                  </CardContent>
-                  <CardFooter className="p-0 pt-6 flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                          <Avatar className="h-8 w-8">
-                              {post.author.profilePicture && <AvatarImage src={post.author.profilePicture} alt={post.author.name} />}
-                              <AvatarFallback>{post.author.name.charAt(0)}</AvatarFallback>
-                          </Avatar>
-                          <span className="text-sm font-medium">{post.author.name}</span>
-                      </div>
-                      <span className="text-sm text-accent flex items-center gap-1">
-                        Read on Hashnode <ArrowUpRightIcon className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-                    </span>
-                  </CardFooter>
-                </div>
-              </Card>
-            </Link>
-          ))}
-        </div>
-      )}
+      {/* Client-side fetched list to keep GitHub Pages static but fresh */}
+      <BlogClient />
     </div>
   );
 }

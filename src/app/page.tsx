@@ -4,12 +4,13 @@ import { getProjects } from "@/lib/projects";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { getHashnodePosts, type Post } from "@/lib/hashnode";
+import type { Post } from "@/lib/hashnode";
 import { ArrowUpRightIcon } from "@/components/icons/ArrowUpRightIcon";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { Suspense } from "react";
+import { LatestPostClient } from "@/components/LatestPostClient";
 
 const skills = [
   "TypeScript", "Next.js", "Tailwind CSS", "Firebase", "Azure", "AWS"
@@ -60,8 +61,8 @@ function LatestPostCard({ post }: { post: Post }) {
 export default async function Home() {
   const allProjects = getProjects();
   const featuredProjects = allProjects.slice(0, 3);
-  const allPosts = await getHashnodePosts("aarushkumar.hashnode.dev");
-  const latestPost = allPosts.length > 0 ? allPosts[0] : null;
+  // Latest post is fetched client-side to keep static export fresh on GitHub Pages
+  const latestPost = true; // sentinel to render the section; content will load client-side
   const name = "Aarush Kumar";
 
   return (
@@ -175,9 +176,7 @@ export default async function Home() {
                 Check out my latest thoughts on development and technology.
               </p>
             </div>
-            <div className="max-w-4xl mx-auto">
-                <LatestPostCard post={latestPost} />
-            </div>
+            <LatestPostClient />
             <div className="text-center mt-12">
               <Button asChild variant="link" className="text-accent text-base">
                 <Link href="/blog">Read more posts →</Link>
