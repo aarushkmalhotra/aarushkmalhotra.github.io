@@ -105,7 +105,7 @@ export function CommandPalette() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92vw] max-w-xl p-0 overflow-hidden" aria-describedby={undefined}>
+      <DialogContent className="fixed gap-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92vw] max-w-xl p-0 overflow-hidden" aria-describedby={undefined}>
         <div className="border-b p-2">
           <Input
             autoFocus
@@ -114,36 +114,34 @@ export function CommandPalette() {
             placeholder="Search pages, projects, skills..."
           />
         </div>
-        <ul className="max-h-[50vh] overflow-y-auto p-1">
+        <ul className="h-[39dvh] overflow-y-auto p-1">
           {showSkeletons ? (
             Array.from({ length: skeletonCount }, (_, i) => ({ label: 'placeholder' })).map((item, index) => (
-              <li key={`skeleton-${index}`}>
-                <div className="w-full px-3 py-2 flex items-center gap-2">
-                  <div className="h-3 w-8 bg-muted rounded animate-pulse" />
-                  <div className={`h-3 bg-muted rounded animate-pulse ${
-                    item.label.length > 20 ? 'w-3/4' : item.label.length > 10 ? 'w-1/2' : 'w-1/3'
-                  }`} />
-                </div>
+              <li key={`skeleton-${index}`} className={index !== skeletonCount + 1 ? "mt-2" : ""}>
+            <div className="w-full px-3 py-2 flex items-center gap-2">
+            <div className="h-3 w-8 bg-muted rounded animate-pulse" />
+            <div className="h-3 w-full bg-muted rounded animate-pulse" />
+            </div>
               </li>
             ))
           ) : filtered.length === 0 ? (
-            <li className="flex flex-col items-center justify-center py-16 text-sm text-muted-foreground">
+            <li className="flex flex-col items-center justify-center text-sm text-muted-foreground">
               <div className="mb-2 font-medium">No results found</div>
               <div className="text-xs text-center max-w-sm">
-                We can’t look up the internet for you. Maybe try fewer letters or, you know, real words.
+          Unfortunately, I can’t look up the internet for you. Maybe try fewer letters or, you know, real words.
               </div>
             </li>
           ) : (
             filtered.map((item) => (
               <li key={item.href}>
-                <button
-                  type="button"
-                  onClick={() => onSelect(item)}
-                  className="w-full text-left px-3 py-2 hover:bg-muted rounded-md flex items-center gap-2"
-                >
-                  <span className="text-xs uppercase text-muted-foreground">{item.type}</span>
-                  <span className="text-sm">{item.label}</span>
-                </button>
+          <button
+            type="button"
+            onClick={() => onSelect(item)}
+            className="w-full text-left px-3 py-2 hover:bg-muted rounded-md flex items-center gap-2"
+          >
+            <span className="text-xs uppercase text-muted-foreground">{item.type}</span>
+            <span className="text-sm">{item.label}</span>
+          </button>
               </li>
             ))
           )}

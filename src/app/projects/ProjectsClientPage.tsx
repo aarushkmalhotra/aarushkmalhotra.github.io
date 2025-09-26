@@ -238,7 +238,7 @@ export function ProjectsClientPage() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-16 px-6 bg-card border rounded-lg shadow-sm">
+        <div className="text-center py-28 px-6 bg-card border rounded-lg shadow-sm">
             <h2 className="text-2xl font-semibold mb-4">No Projects Found</h2>
             <p className="text-muted-foreground max-w-md mx-auto">
                 No projects matched your search criteria. Try adjusting your search or filters.

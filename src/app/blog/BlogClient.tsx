@@ -158,7 +158,7 @@ export function BlogClient() {
 
   if (!posts || posts.length === 0) {
     return (
-      <div className="text-center py-16 px-6 bg-card border rounded-lg shadow-sm">
+      <div className="text-center py-28 px-6 bg-card border rounded-lg shadow-sm">
         <h2 className="text-2xl font-semibold mb-4">No Posts Found</h2>
         <p className="text-muted-foreground mb-6 max-w-md mx-auto">
           It seems there are no blog posts available at the moment. Please check back later or try refreshing.

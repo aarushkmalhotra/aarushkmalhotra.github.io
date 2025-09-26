@@ -61,7 +61,7 @@
     "id": "simplify-me",
     "name": "Simplify Me.",
     "tagline": "Terms of Service in plain English",
-    "description": "Most people skip long legal pages because they are hard to read and slow to search. Simplify Me turns those pages into short notes that you can scan in seconds. You get what data is collected, how it is used, and who gets to see it.\nThe site runs on a trusted open community source and adds a simple view and clear language. It helps you make a choice without fear that you missed a key detail.",
+    "description": "Most people skip long legal pages because they are hard to read and slow to search. Simplify Me. turns those pages into short notes that you can scan in seconds. You get what data is collected, how it is used, and who gets to see it.\nThe site runs on a trusted open community source and adds a simple view and clear language. It helps you make a choice without fear that you missed a key detail.",
     "role": "I built the site, wrote the prompts that guide the summaries, and set up the content flow with WordPress and Zapier. I handled the layout and the copy so the tone is friendly and honest.",
     "problem": "Privacy policies are long and full of legal terms. People need quick facts in normal words. They also want to know if a service is safe enough for them.",
     "approach": "Use a mix of community grades and light AI to draft a short view. Keep the claims tied to the source text. Show the main points first. Offer a link to the policy for people who want the full detail.",
