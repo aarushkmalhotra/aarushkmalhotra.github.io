@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import type { Project } from "@/lib/projects";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { Link as LinkIcon, Music } from "lucide-react";
@@ -52,6 +53,26 @@ const SectionIcons = {
       <path d="M8 16h5" />
     </svg>
   ),
+  role: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </svg>
+  ),
+  problem: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z" />
+      <path d="M12 6v6" />
+      <circle cx="12" cy="17" r="1" />
+    </svg>
+  ),
+  approach: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <circle cx="6" cy="18" r="2" />
+      <circle cx="18" cy="6" r="2" />
+      <path d="M8 18c6 0 6-6 10-6" />
+    </svg>
+  ),
   outcomes: (props: React.SVGProps<SVGSVGElement>) => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
       <circle cx="12" cy="12" r="9" />
@@ -69,12 +90,25 @@ const SectionIcons = {
       <rect x="13" y="13" width="8" height="8" rx="1.5" />
     </svg>
   ),
+  challenges: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <path d="M12 2l9 4-9 4-9-4 9-4z" />
+      <path d="M3 10l9 4 9-4" />
+      <path d="M3 16l9 4 9-4" />
+    </svg>
+  ),
 } as const;
 
 const getSectionIcon = (id: string) => {
   switch (id) {
     case "overview":
       return SectionIcons.overview;
+    case "role":
+      return SectionIcons.role;
+    case "problem":
+      return SectionIcons.problem;
+    case "approach":
+      return SectionIcons.approach;
     case "outcomes":
       return SectionIcons.outcomes;
     case "ai-samples":
@@ -82,6 +116,8 @@ const getSectionIcon = (id: string) => {
       return SectionIcons.audio;
     case "gallery":
       return SectionIcons.gallery;
+    case "challenges":
+      return SectionIcons.challenges;
     default:
       return SectionIcons.overview;
   }
@@ -111,7 +147,11 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
   const sections: SectionDef[] = useMemo(() => {
     const defs: SectionDef[] = [
       { id: "overview", label: "Overview" },
+      ...(project.role ? [{ id: "role", label: "Role" }] : []),
+      ...(project.problem ? [{ id: "problem", label: "Problem" }] : []),
+      ...(project.approach ? [{ id: "approach", label: "Approach" }] : []),
       { id: "outcomes", label: "Outcomes" },
+      ...(project.challenges ? [{ id: "challenges", label: "Challenges" }] : []),
     ];
     if (project.audioFiles && project.audioFiles.length > 0) defs.push({ id: "ai-samples", label: "Samples" });
     if (project.downloadableAudioFiles && project.downloadableAudioFiles.length > 0) defs.push({ id: "original-tracks", label: "Tracks" });
@@ -212,26 +252,35 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
           </Button>
         </div>
 
-        <div className="bg-background border rounded-full p-1 flex flex-col items-center gap-1 shadow-sm">
-          {sections.map((s) => {
-            const isActive = activeRef.current === s.id;
-            const IconComp = getSectionIcon(s.id);
-            return (
-              <button
-                key={s.id}
-                onClick={() => scrollTo(s.id)}
-                aria-label={`Go to ${s.label}`}
-                className={cn(
-                  "relative w-8 h-8 rounded-full transition-colors grid place-items-center",
-                  isActive ? "bg-primary text-primary-foreground" : "bg-muted text-foreground md:hover:bg-accent md:hover:text-accent-foreground"
-                )}
-                title={s.label}
-              >
-                <IconComp className="w-4 h-4" />
-              </button>
-            );
-          })}
-        </div>
+        <TooltipProvider>
+          <div
+            className="bg-background border rounded-full p-1 flex flex-col items-center gap-1 shadow-sm overflow-y-auto no-scrollbar"
+            style={{ maxHeight: "calc(100vh - 320px)" }}
+            aria-label="Project sections navigation"
+          >
+            {sections.map((s) => {
+              const isActive = activeRef.current === s.id;
+              const IconComp = getSectionIcon(s.id);
+              return (
+                <Tooltip key={s.id}>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => scrollTo(s.id)}
+                      aria-label={`Go to ${s.label}`}
+                      className={cn(
+                        "relative w-8 h-8 rounded-full transition-colors grid place-items-center shrink-0",
+                        isActive ? "bg-primary text-primary-foreground" : "bg-muted text-foreground md:hover:bg-accent md:hover:text-accent-foreground"
+                      )}
+                    >
+                      <IconComp className="w-4 h-4" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="left">{s.label}</TooltipContent>
+                </Tooltip>
+              );
+            })}
+          </div>
+        </TooltipProvider>
 
         <div className="bg-background border rounded-full p-1 flex flex-col items-center gap-1 shadow-sm">
           {hasRepo && (
@@ -269,35 +318,33 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
       </div>
 
   {/* Mobile bottom bar */}
-  <div className="xl:hidden fixed bottom-[max(env(safe-area-inset-bottom),16px)] left-1/2 -translate-x-1/2 z-40 w-[96%]">
-        <div className="bg-background border rounded-2xl shadow-lg p-2 flex items-center justify-between gap-2">
+  <div className="xl:hidden fixed bottom-[max(env(safe-area-inset-bottom),16px)] left-0 right-0 z-40 px-2">
+        <div className="bg-background border rounded-2xl shadow-lg p-2 flex items-center justify-between gap-2 w-full">
           <Button asChild size="icon" variant="outline" className="shrink-0">
             <Link href={dockBackHrefWithParams} aria-label="Back to projects">
               <Icon.Back className="w-4 h-4" />
             </Link>
           </Button>
-          <div className="flex-1 overflow-hidden">
-            <div
-              className="grid gap-1 px-1"
-              style={{ gridTemplateColumns: `repeat(${Math.max(1, sections.length)}, minmax(0, 1fr))` }}
-            >
+          <div className="flex-1 overflow-x-auto sm:overflow-x-hidden overflow-y-hidden px-1 no-scrollbar w-full">
+            <div className="flex items-center sm:gap-3 whitespace-nowrap sm:flex-wrap sm:whitespace-normal">
               {sections.map((s) => {
                 const isActive = activeRef.current === s.id;
                 const IconComp = getSectionIcon(s.id);
                 return (
-                  <button
-                    key={s.id}
-                    onClick={() => scrollTo(s.id)}
-                    aria-label={`Go to ${s.label}`}
-                    className={cn(
-                      "h-10 w-full rounded-full text-sm inline-flex items-center justify-center gap-2 transition-colors",
-                      isActive ? "bg-primary text-primary-foreground" : "bg-muted text-foreground md:hover:bg-accent md:hover:text-accent-foreground"
-                    )}
-                    title={s.label}
-                  >
-                    <IconComp className="w-4 h-4" />
-                    <span className="hidden sm:inline">{s.label}</span>
-                  </button>
+                  <div key={s.id} className="shrink-0 w-12 sm:w-auto sm:flex-1 sm:min-w-0">
+                    <button
+                      onClick={() => scrollTo(s.id)}
+                      aria-label={`Go to ${s.label}`}
+                      className={cn(
+                        "h-10 w-10 sm:w-full rounded-full sm:rounded-md inline-flex items-center justify-center sm:justify-center sm:px-3 gap-0 sm:gap-2 transition-colors",
+                        isActive ? "bg-primary text-primary-foreground" : "bg-muted text-foreground md:hover:bg-accent md:hover:text-accent-foreground"
+                      )}
+                      title={s.label}
+                    >
+                      <IconComp className="w-4 h-4" />
+                      <span className="hidden sm:inline text-xs leading-none">{s.label}</span>
+                    </button>
+                  </div>
                 );
               })}
             </div>

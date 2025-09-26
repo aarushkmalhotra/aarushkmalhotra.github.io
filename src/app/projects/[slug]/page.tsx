@@ -93,8 +93,8 @@ export default async function ProjectDetailPage({ params }: PageProps) {
     </div>
   );
 
-  const KeyFeaturesAside = () => (
-    <div className="p-6 rounded-lg bg-card border">
+  const KeyFeaturesAside = ({ className = "" }: { className?: string }) => (
+    <div className={`p-6 rounded-lg bg-card border ${className}`}>
         <h3 className="font-headline text-xl mb-4">Key Features</h3>
         <ul className="space-y-4">
           {project.keyFeatures?.map((feature, index) => (
@@ -130,6 +130,16 @@ export default async function ProjectDetailPage({ params }: PageProps) {
       <ProjectQuickDock project={project} backHref="/projects" />
 
       <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
+        {/* Mobile: show Key Features then Skills right under header */}
+        <div className="lg:hidden space-y-4 mb-8">
+          {project.keyFeatures && project.keyFeatures.length > 0 && (
+            <div>
+              <KeyFeaturesAside />
+            </div>
+          )}
+          <TechStackAside />
+        </div>
+
         <div className="grid lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2 space-y-12">
             <div id="overview">
@@ -139,16 +149,38 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                 dangerouslySetInnerHTML={createMarkup(project.description)}
               />
             </div>
-            
-            {project.keyFeatures && project.keyFeatures.length > 0 && (
-              <div className="lg:hidden">
-                <KeyFeaturesAside />
+
+            {project.role && (
+              <div id="role">
+                <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Role</h2>
+                <div
+                  className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
+                  dangerouslySetInnerHTML={createMarkup(project.role)}
+                />
               </div>
             )}
 
-            <div className="lg:hidden">
-              <TechStackAside />
-            </div>
+            {project.problem && (
+              <div id="problem">
+                <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Problem</h2>
+                <div
+                  className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
+                  dangerouslySetInnerHTML={createMarkup(project.problem)}
+                />
+              </div>
+            )}
+
+            {project.approach && (
+              <div id="approach">
+                <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Approach</h2>
+                <div
+                  className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
+                  dangerouslySetInnerHTML={createMarkup(project.approach)}
+                />
+              </div>
+            )}
+            
+            {/* Mobile Key Features and Skills are shown above under the header */}
             
       <div id="outcomes">
                 <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Outcomes</h2>
@@ -157,6 +189,18 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                     dangerouslySetInnerHTML={createMarkup(project.outcomes)}
                 />
             </div>
+
+            {project.challenges && (
+              <div id="challenges">
+                <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Challenges</h2>
+                <div
+                  className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
+                  dangerouslySetInnerHTML={createMarkup(project.challenges)}
+                />
+              </div>
+            )}
+
+            
             
             {project.audioFiles && project.audioFiles.length > 0 && (
               <div id="ai-samples">
@@ -189,12 +233,14 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             <ProjectGallery project={project} />
 
           </div>
-          <aside className="hidden lg:block lg:col-span-1 space-y-4 sticky top-[80px] self-start">
-            <DatesAside />
-            <TechStackAside />
-            {project.keyFeatures && project.keyFeatures.length > 0 && (
-              <KeyFeaturesAside />
-            )}
+          <aside className="hidden lg:block lg:col-span-1 sticky top-[80px] self-start">
+            <div className="flex flex-col gap-4 max-h-[calc(100vh-100px)]">
+              <DatesAside />
+              <TechStackAside />
+              {project.keyFeatures && project.keyFeatures.length > 0 && (
+                <KeyFeaturesAside className="overflow-y-auto no-scrollbar max-h-[50vh]" />
+              )}
+            </div>
           </aside>
         </div>
         

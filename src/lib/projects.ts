@@ -22,6 +22,12 @@ export interface Project {
   name: string;
   tagline: string;
   description: string;
+  // New rich sections for the detail page
+  role?: string;
+  problem?: string;
+  approach?: string;
+  challenges?: string;
+  // nextSteps removed per design update
   keyFeatures?: string[];
   techStack: string;
   keywords: string[];
