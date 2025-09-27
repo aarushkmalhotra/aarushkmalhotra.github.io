@@ -159,13 +159,13 @@ export function ProjectsClientPage() {
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row gap-4 mb-8">
+      <div className="sticky top-16 z-10 flex flex-col md:flex-row gap-4 mb-8 p-4">
         <div className="relative flex-grow">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             type="search"
             placeholder="Search projects..."
-            className="pl-10 w-full"
+            className="pl-10 w-full bg-card"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

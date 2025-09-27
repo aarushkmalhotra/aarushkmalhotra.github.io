@@ -190,7 +190,8 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                                 </Link>
                             </Button>
                         )}
-                        {/* Share buttons moved to the floating quick dock on desktop */}
+                        {/* Share in desktop header */}
+                        <ProjectShare project={project} />
                     </div>
                                         <div className="sm:hidden flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
                         <div className="flex items-center gap-2 w-full">

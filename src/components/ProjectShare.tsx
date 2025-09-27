@@ -3,44 +3,46 @@
 
 import { Project } from "@/lib/projects";
 import { Button } from "./ui/button";
-import { LinkedinIcon } from "./icons/LinkedinIcon";
-import { usePathname } from "next/navigation";
-import { XIcon } from "./icons/XIcon";
+import { Share2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface ProjectShareProps {
     project: Project;
 }
 
 export function ProjectShare({ project }: ProjectShareProps) {
-    const pathname = usePathname();
-    const SITE_ORIGIN = "https://aarushkmalhotra.github.io";
-    const pageUrl = `${SITE_ORIGIN}${pathname}`;
+    const { toast } = useToast();
 
-    let shareUrl: string;
-    let shareText: string;
+    const shareProject = async () => {
+        const shareUrl = window.location.href;
+        const shareText = `Check out this project: ${project.name} - ${project.tagline}`;
 
-    if (project.id === 'album-tracks' && project.demoUrl) {
-        shareUrl = project.demoUrl;
-        shareText = `Check out these original tracks by Aarush Kumar:`;
-    } else {
-        shareUrl = pageUrl;
-        shareText = `Check out this project: ${project.name} - ${project.tagline}`;
-    }
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: project.name,
+                    text: shareText,
+                    url: shareUrl,
+                });
+                return;
+            } catch (err) {
+                // Fall back to copy to clipboard
+            }
+        }
 
-    const twitterShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
-    const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
+        // Fallback: copy to clipboard
+        try {
+            await navigator.clipboard.writeText(`${shareText}\n\n${shareUrl}`);
+            toast({ title: "Link copied", description: "Share link copied to clipboard" });
+        } catch {
+            toast({ title: "Copy failed", description: "Couldn't access clipboard. Please copy manually.", variant: "destructive" });
+        }
+    };
 
     return (
         <div className="flex items-center gap-2">
-            <Button asChild variant="outline" size="icon">
-                <a href={twitterShareUrl} target="_blank" rel="noopener noreferrer" aria-label="Share on X">
-                    <XIcon className="w-4 h-4" />
-                </a>
-            </Button>
-            <Button asChild variant="outline" size="icon">
-                <a href={linkedinShareUrl} target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">
-                    <LinkedinIcon className="w-4 h-4" />
-                </a>
+            <Button variant="outline" size="icon" onClick={shareProject} aria-label="Share project">
+                <Share2 className="w-4 h-4" />
             </Button>
         </div>
     );
