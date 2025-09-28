@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
-import { Link as LinkIcon, Music, Share2, Menu, ArrowUp, Check } from "lucide-react";
+import { Link as LinkIcon, Music, Share2, Menu, ArrowUp, Check, Star } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 
 interface ProjectQuickDockProps {
@@ -139,8 +139,12 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
   const { toast } = useToast();
   const [isVisible, setIsVisible] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  // Responsive breakpoint: is small (sm) and up
+  const [isSmUp, setIsSmUp] = useState(false);
   const [copiedBySection, setCopiedBySection] = useState<Record<string, boolean>>({});
+  const [activeSection, setActiveSection] = useState<string | null>(null);
   const activeRef = useRef<string | null>(null);
+  const [favorite, setFavorite] = useState<boolean>(false);
   const dockBackHref = backHref || "/projects";
   const sp = useSearchParams();
   const dockBackHrefWithParams = useMemo(() => {
@@ -157,6 +161,23 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
     }
   }, [sp, dockBackHref]);
 
+  // Track sm breakpoint to switch sheet side responsively
+  useEffect(() => {
+    try {
+      const mq = window.matchMedia('(min-width: 640px)');
+      const onChange = (e: MediaQueryListEvent) => setIsSmUp(e.matches);
+      setIsSmUp(mq.matches);
+      // Support older browsers
+      if (mq.addEventListener) {
+        mq.addEventListener('change', onChange);
+        return () => mq.removeEventListener('change', onChange);
+      } else if ((mq as any).addListener) {
+        (mq as any).addListener(onChange);
+        return () => (mq as any).removeListener('change', onChange);
+      }
+    } catch {}
+  }, []);
+
   // Lock background scroll when sheet is open (mobile)
   useEffect(() => {
     try {
@@ -169,6 +190,43 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
       }
     } catch {}
   }, [isSheetOpen]);
+
+  // Favorite persistence per project using shared header key
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('portfolio:favorites');
+      const ids = raw ? (JSON.parse(raw) as string[]) : [];
+      setFavorite(ids.includes(project.id));
+    } catch {}
+  }, [project.id]);
+
+  // React to favorites updates dispatched by header or elsewhere
+  useEffect(() => {
+    const handler = (e: Event) => {
+      try {
+        const custom = e as CustomEvent<string[]>;
+        const list = custom.detail ?? JSON.parse(localStorage.getItem('portfolio:favorites') || '[]');
+        setFavorite(Array.isArray(list) && list.includes(project.id));
+      } catch {}
+    };
+    window.addEventListener('portfolio:favorites-updated', handler as EventListener);
+    return () => window.removeEventListener('portfolio:favorites-updated', handler as EventListener);
+  }, [project.id]);
+
+  const toggleFavorite = () => {
+    try {
+      const raw = localStorage.getItem('portfolio:favorites');
+      const ids = raw ? (JSON.parse(raw) as string[]) : [];
+      let next: string[];
+      if (ids.includes(project.id)) {
+        next = ids.filter(id => id !== project.id);
+      } else {
+        next = [...ids, project.id];
+      }
+      localStorage.setItem('portfolio:favorites', JSON.stringify(next));
+      try { window.dispatchEvent(new CustomEvent('portfolio:favorites-updated', { detail: next })); } catch {}
+    } catch {}
+  };
 
   // Build sections synchronously from project data (no DOM scan) to avoid late render
   const sections: SectionDef[] = useMemo(() => {
@@ -244,6 +302,7 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
         }
       }
       activeRef.current = current;
+      setActiveSection(current);
     };
     const onScroll = () => {
       if (!ticking) {
@@ -277,19 +336,7 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
     window.scrollTo({ top: y, behavior: "smooth" });
   };
 
-  const copyLink = (sectionId?: string) => {
-    // Copy a clean URL without any query params; keep optional section hash
-    const base = new URL(window.location.origin + window.location.pathname);
-    if (sectionId) base.hash = sectionId;
-    navigator.clipboard.writeText(base.toString());
-    // Prefer friendly label for the toast description
-    const sectionLabel = sectionId ? sections.find((s) => s.id === sectionId)?.label : undefined;
-    const pretty = (id: string) => id.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-    toast({
-      title: "Link copied",
-      description: sectionId ? `Jump to ${sectionLabel ?? pretty(sectionId)}` : "Page URL copied",
-    });
-  };
+  // Removed global copyLink trigger (now handled inline in headings)
 
   const hasRepo = Boolean(project.repoUrl);
   const hasDemo = Boolean(project.demoUrl);
@@ -305,43 +352,87 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
     return 'View Project';
   };
 
+  // Compute a single project link action to mirror header behavior
+  const getProjectLinkAction = () => {
+    if (project.id === 'rvc-ui' || project.id === 'album-tracks') {
+      return { type: 'scroll' as const, targetId: project.id === 'album-tracks' ? 'original-tracks' : 'ai-samples', aria: project.id === 'album-tracks' ? 'Go to tracks' : 'Go to song covers' };
+    }
+    if (hasRepo) return { type: 'link' as const, href: project.repoUrl!, aria: 'Open GitHub', icon: 'github' as const };
+    if (hasDemo) return { type: 'link' as const, href: project.demoUrl!, aria: 'Open demo', icon: 'external' as const };
+    return { type: 'none' as const };
+  };
+
+  const projectLinkAction = getProjectLinkAction();
+
   return (
     <>
       {/* Marker so global UI (like ScrollToTop) can adapt positioning on this page */}
       <div id="project-quick-dock-marker" data-dock-present="true" className="hidden" aria-hidden />
 
-      {/* Progress bar removed per request */}
-  {/* Desktop left rail: back + links (xl+: hug viewport left slightly inset). */}
-  <div className="hidden xl:flex fixed left-[max(calc((100vw-80rem)/4+8px),8px)] top-[calc(64px+16px)] z-40 flex-col items-center gap-3">
+      {/* Desktop left rail: back + favorite/project-link/share */}
+      <div className="hidden min-[1536px]:flex fixed left-[max(calc((100vw-80rem)/3.25),8px)] top-[calc(64px+16px)] z-40 flex-col items-center gap-3">
         <Button asChild variant="outline" size="icon" className="w-10 h-10 rounded-full">
           <Link href={dockBackHrefWithParams} aria-label="Back to projects">
             <Icon.Back className="w-4 h-4" />
           </Link>
         </Button>
 
-        <div className="bg-background border rounded-full p-1 flex flex-col items-center gap-1 shadow-sm">
-          <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full" onClick={() => copyLink(activeRef.current ?? undefined)} aria-label="Copy link to section">
-            <LinkIcon className="w-4 h-4" />
+        <div
+          className={cn(
+            "bg-background border rounded-full p-1 flex flex-col items-center gap-1 shadow-sm overflow-hidden transform transition-all duration-500 ease-out",
+            isVisible
+              ? "opacity-100 translate-y-0 max-h-[200px]"
+              : "opacity-0 -translate-y-3 max-h-0 pointer-events-none"
+          )}
+          aria-hidden={!isVisible}
+        >
+          {/* Favorite */}
+          <Button
+            variant={favorite ? "default" : "ghost"}
+            size="icon"
+            className={cn("w-8 h-8 rounded-full", favorite ? "bg-yellow-500 text-white" : "")}
+            onClick={toggleFavorite}
+            aria-label={favorite ? "Unfavorite" : "Favorite"}
+          >
+            <Star className={cn("w-4 h-4", favorite ? "fill-white" : "")} />
           </Button>
-          {hasRepo && (
-            <Button asChild variant="ghost" size="icon" className="w-8 h-8 rounded-full" aria-label="Open GitHub">
-              <Link href={project.repoUrl!} target="_blank" rel="noopener noreferrer">
+
+          {/* Project link (repo/demo/scroll to samples) */}
+          {projectLinkAction.type === 'scroll' && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="w-8 h-8 rounded-full"
+              onClick={() => scrollTo(projectLinkAction.targetId)}
+              aria-label={projectLinkAction.aria}
+            >
+              <Music className="w-4 h-4" />
+            </Button>
+          )}
+          {projectLinkAction.type === 'link' && projectLinkAction.icon === 'github' && (
+            <Button asChild variant="ghost" size="icon" className="w-8 h-8 rounded-full" aria-label={projectLinkAction.aria}>
+              <Link href={projectLinkAction.href!} target="_blank" rel="noopener noreferrer">
                 <Icon.Github className="w-4 h-4" />
               </Link>
             </Button>
           )}
-          {hasDemo && (
-            <Button asChild variant="ghost" size="icon" className="w-8 h-8 rounded-full" aria-label="Open demo">
-              <Link href={project.demoUrl!} target="_blank" rel="noopener noreferrer">
+          {projectLinkAction.type === 'link' && projectLinkAction.icon === 'external' && (
+            <Button asChild variant="ghost" size="icon" className="w-8 h-8 rounded-full" aria-label={projectLinkAction.aria}>
+              <Link href={projectLinkAction.href!} target="_blank" rel="noopener noreferrer">
                 <Icon.External className="w-4 h-4" />
               </Link>
             </Button>
           )}
+
+          {/* Share */}
+          <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full" onClick={shareProject} aria-label="Share project">
+            <Share2 className="w-4 h-4" />
+          </Button>
         </div>
       </div>
 
-  {/* Desktop right rail: sections navigation (xl+: hug viewport right slightly inset) */}
-  <div className="hidden xl:flex fixed right-[max(calc((100vw-80rem)/4+8px),8px)] top-[calc(64px+16px)] z-40 flex-col items-center gap-3">
+      {/* Desktop right rail: sections navigation (xl+: hug viewport right slightly inset) */}
+      <div className="hidden min-[1536px]:flex fixed right-[max(calc((100vw-80rem)/3.1),8px)] top-[calc(64px+16px)] z-40 flex-col items-center gap-3">
         <TooltipProvider>
           <div
             className="bg-background border rounded-full p-1 flex flex-col items-center gap-1 shadow-sm overflow-y-auto no-scrollbar"
@@ -349,7 +440,7 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
             aria-label="Project sections navigation"
           >
             {sections.map((s) => {
-              const isActive = activeRef.current === s.id;
+              const isActive = activeSection === s.id;
               const IconComp = getSectionIcon(s.id);
               return (
                 <Tooltip key={s.id}>
@@ -377,36 +468,41 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
           </div>
         </TooltipProvider>
       </div>
-
-  {/* Mobile bottom bar with table of contents sheet */}
-  <div className="xl:hidden fixed bottom-[max(env(safe-area-inset-bottom),16px)] left-0 right-0 z-40 px-4">
-    <div className="grid grid-cols-5 items-center justify-items-center gap-3 text-center sm:auto-cols-max sm:grid-cols-none sm:grid-flow-col sm:justify-center sm:gap-4 sm:w-auto sm:mx-auto">
-          {/* Col 1: Back (same visibility behavior as scroll-to-top) */}
+      {/* Mobile bottom bar with table of contents sheet */}
+      <div className="min-[1536px]:hidden fixed bottom-[max(env(safe-area-inset-bottom),16px)] left-0 right-0 z-40 px-4">
+        <div className="grid grid-cols-5 items-center justify-items-center gap-3 text-center sm:auto-cols-max sm:grid-cols-none sm:grid-flow-col sm:justify-center sm:gap-4 sm:w-auto sm:mx-auto">
+          {/* Col 1: Share (appears after scroll) */}
           <div className="flex flex-col items-center">
-          <Button
-            asChild
-            size="icon"
-            variant="default"
-            className={cn(
-              "rounded-full w-12 h-12 bg-primary text-primary-foreground shadow-lg transition-opacity duration-300",
-              isVisible ? 'opacity-100' : 'opacity-0',
-              !isVisible && 'pointer-events-none'
-            )}
-            aria-label="Back to projects"
-          >
-            <Link href={dockBackHrefWithParams}>
-              <Icon.Back className="w-5 h-5" />
-            </Link>
-          </Button>
-          <span className={cn("mt-1 text-[10px] font-medium text-foreground/90 hidden sm:inline", isVisible ? 'opacity-100' : 'opacity-0')}>Back</span>
+            <Button
+              size="icon"
+              variant="default"
+              className={cn(
+                "rounded-full w-12 h-12 bg-primary text-primary-foreground shadow-lg transition-opacity duration-300",
+                isVisible ? 'opacity-100' : 'opacity-0',
+                !isVisible && 'pointer-events-none'
+              )}
+              onClick={shareProject}
+              aria-label="Share project"
+            >
+              <Share2 className="w-5 h-5" />
+            </Button>
+            <span className={cn("mt-1 text-[10px] font-medium text-foreground/90 hidden sm:inline", isVisible ? 'opacity-100' : 'opacity-0')}>Share</span>
           </div>
 
-          {/* Col 2: Copy section link */}
+          {/* Col 2: Back */}
           <div className="flex flex-col items-center">
-            <Button size="icon" variant="default" className="rounded-full w-12 h-12 bg-primary text-primary-foreground shadow-lg" aria-label="Copy section link" onClick={() => copyLink(activeRef.current ?? undefined)}>
-              <LinkIcon className="w-5 h-5" />
+            <Button
+              asChild
+              size="icon"
+              variant="default"
+              className="rounded-full w-12 h-12 bg-primary text-primary-foreground shadow-lg"
+              aria-label="Back to projects"
+            >
+              <Link href={dockBackHrefWithParams}>
+                <Icon.Back className="w-5 h-5" />
+              </Link>
             </Button>
-            <span className="mt-1 text-[10px] font-medium text-foreground/90 hidden sm:inline">Copy</span>
+            <span className="mt-1 text-[10px] font-medium text-foreground/90 hidden sm:inline">Back</span>
           </div>
 
           {/* Col 3: Table of Contents Sheet (menu) - Center */}
@@ -419,7 +515,14 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
                 <span className="mt-1 text-[10px] font-medium text-foreground/90 hidden sm:inline">Menu</span>
               </div>
             </SheetTrigger>
-            <SheetContent side="bottom" className="max-h-[85dvh] gap-0 rounded-t-2xl p-4 flex flex-col">
+            <SheetContent
+              side={isSmUp ? "right" : "bottom"}
+              className={cn(
+                "gap-0 p-4 flex flex-col",
+                // Keep bottom sheet comfortable height and rounded corners on xs
+                !isSmUp && "max-h-[85dvh] rounded-t-2xl"
+              )}
+            >
               <SheetHeader className="pb-2">
                 <SheetTitle>Table of Contents</SheetTitle>
               </SheetHeader>
@@ -427,7 +530,7 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
               <div className="flex-1 overflow-y-auto pb-2 no-scrollbar">
                 <div className="flex flex-col gap-2">
                   {sections.map((s) => {
-                    const isActive = activeRef.current === s.id;
+                    const isActive = activeSection === s.id;
                     const IconComp = getSectionIcon(s.id);
                     const copied = copiedBySection[s.id] === true;
                     return (
@@ -438,8 +541,10 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
                           setIsSheetOpen(false);
                         }}
                         className={cn(
-                          "flex items-center gap-3 p-3 rounded-lg",
-                          isActive ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
+                          "flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-colors group",
+                          isActive
+                            ? "bg-primary text-primary-foreground sm:hover:bg-primary/90"
+                            : "bg-muted text-foreground sm:hover:bg-accent sm:hover:text-accent-foreground"
                         )}
                       >
                         <div className="flex items-start gap-3 grow">
@@ -448,7 +553,7 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
                             <div className="font-medium leading-tight">{s.label}</div>
                             <div className={cn(
                               "text-xs leading-tight",
-                              isActive ? "text-primary-foreground/80" : "text-muted-foreground"
+                              isActive ? "text-primary-foreground/80" : "text-muted-foreground sm:group-hover:text-accent-foreground"
                             )}>
                               {sectionDescriptions[s.id] ?? ''}
                             </div>
@@ -461,7 +566,7 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
                             "ml-2 w-8 h-8 grid place-items-center rounded-full transition-colors",
                             copied
                               ? (isActive ? "bg-emerald-600/90 text-white" : "bg-emerald-100 text-emerald-700")
-                              : (isActive ? "bg-primary/40 text-primary-foreground" : "bg-background text-foreground/80")
+                              : (isActive ? "bg-primary/40 text-primary-foreground sm:hover:bg-primary/60" : "bg-background text-foreground/80 sm:hover:bg-accent sm:hover:text-accent-foreground")
                           )}
                           onClick={(e) => {
                             e.stopPropagation();
@@ -516,30 +621,38 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
             </SheetContent>
           </Sheet>
 
-          {/* Col 4: Share */}
+          {/* Col 4: Favorite */}
           <div className="flex flex-col items-center">
-            <Button size="icon" variant="default" className="rounded-full w-12 h-12 bg-primary text-primary-foreground shadow-lg" onClick={shareProject} aria-label="Share project">
-              <Share2 className="w-5 h-5" />
+            <Button
+              size="icon"
+              variant={favorite ? "default" : "default"}
+              className={cn(
+                "rounded-full w-12 h-12 bg-primary text-primary-foreground shadow-lg",
+              )}
+              aria-label={favorite ? "Unfavorite" : "Favorite"}
+              onClick={toggleFavorite}
+            >
+              <Star className={cn("w-5 h-5", favorite ? "fill-white" : "")} />
             </Button>
-            <span className="mt-1 text-[10px] font-medium text-foreground/90 hidden sm:inline">Share</span>
+            <span className="mt-1 text-[10px] font-medium text-foreground/90 hidden sm:inline">Favorite</span>
           </div>
 
           {/* Col 5: Scroll to top */}
           <div className="flex flex-col items-center">
-          <Button
-            size="icon"
-            variant="default"
-            className={cn(
-              "rounded-full w-12 h-12 bg-primary text-primary-foreground shadow-lg transition-opacity duration-300",
-              isVisible ? 'opacity-100' : 'opacity-0',
-              !isVisible && 'pointer-events-none'
-            )}
-            onClick={scrollToTop}
-            aria-label="Scroll to top"
-          >
-            <ArrowUp className="w-5 h-5" />
-          </Button>
-          <span className={cn("mt-1 text-[10px] font-medium text-foreground/90 hidden sm:inline", isVisible ? 'opacity-100' : 'opacity-0')}>Top</span>
+            <Button
+              size="icon"
+              variant="default"
+              className={cn(
+                "rounded-full w-12 h-12 bg-primary text-primary-foreground shadow-lg transition-opacity duration-300",
+                isVisible ? 'opacity-100' : 'opacity-0',
+                !isVisible && 'pointer-events-none'
+              )}
+              onClick={scrollToTop}
+              aria-label="Scroll to top"
+            >
+              <ArrowUp className="w-5 h-5" />
+            </Button>
+            <span className={cn("mt-1 text-[10px] font-medium text-foreground/90 hidden sm:inline", isVisible ? 'opacity-100' : 'opacity-0')}>Top</span>
           </div>
         </div>
       </div>

@@ -293,3 +293,7 @@ main [id] {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+.command-palette-terminal {
+  height: 100%;
+}

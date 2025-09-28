@@ -9,6 +9,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
   const pathname = usePathname();
   const isMobile = useIsMobile();
 
@@ -21,9 +22,20 @@ export function ScrollToTop() {
       }
     };
 
-    window.addEventListener('scroll', toggleVisibility);
+    const checkScreenSize = () => {
+      setIsLargeScreen(window.innerWidth >= 1536);
+    };
 
-    return () => window.removeEventListener('scroll', toggleVisibility);
+    window.addEventListener('scroll', toggleVisibility);
+    window.addEventListener('resize', checkScreenSize);
+
+    // Initial check
+    checkScreenSize();
+
+    return () => {
+      window.removeEventListener('scroll', toggleVisibility);
+      window.removeEventListener('resize', checkScreenSize);
+    };
   }, []);
 
   const scrollToTop = () => {
@@ -33,8 +45,8 @@ export function ScrollToTop() {
     });
   };
 
-  // Hide on mobile for projects/[slug] pages
-  if (isMobile && pathname.startsWith('/projects/')) {
+  // Hide on mobile for projects/[slug] pages, and only show on large screens (>=1536px) for project pages
+  if (pathname.startsWith('/projects/') && (!isLargeScreen || isMobile)) {
     return null;
   }
 

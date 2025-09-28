@@ -7,6 +7,7 @@ import { Footer } from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { ParticleBackground } from '@/components/ParticleBackground';
+import { HotkeyHint } from '@/components/HotkeyHint';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://aarushkmalhotra.github.io/'),
@@ -59,6 +60,7 @@ export default function RootLayout({
             <Footer />
             <Toaster />
             <ScrollToTop />
+            <HotkeyHint />
           </div>
         </Providers>
       </body>

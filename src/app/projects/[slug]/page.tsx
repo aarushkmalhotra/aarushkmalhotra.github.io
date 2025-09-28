@@ -13,6 +13,7 @@ import { ProjectGallery } from "./ProjectGallery";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { ProjectDetailClientPage } from "./ProjectDetailClientPage";
 import ProjectQuickDock from "./ProjectQuickDock";
+import SectionHeading from "./SectionHeading";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -95,7 +96,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
   const KeyFeaturesAside = ({ className = "" }: { className?: string }) => (
     <div className={`p-6 rounded-lg bg-card border ${className}`}>
-        <h3 className="font-headline text-xl mb-4">Key Features</h3>
+        <h3 className="font-headline text-xl mb-4">Key Details</h3>
         <ul className="space-y-4">
           {project.keyFeatures?.map((feature, index) => (
             <li key={index} className="flex items-start">
@@ -129,7 +130,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
       {/* Floating quick dock (desktop right rail + mobile bottom bar) */}
       <ProjectQuickDock project={project} backHref="/projects" />
 
-      <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
+      <div className="max-w-7xl mx-auto px-4 py-4 lg:py-12">
         {/* Mobile: show Key Features then Skills right under header */}
         <div className="lg:hidden space-y-4 mb-8">
           {project.keyFeatures && project.keyFeatures.length > 0 && (
@@ -143,7 +144,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         <div className="grid lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2 space-y-12">
             <div id="overview">
-              <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Overview</h2>
+              <SectionHeading sectionId="overview" title="Overview" />
               <div 
                 className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
                 dangerouslySetInnerHTML={createMarkup(project.description)}
@@ -152,7 +153,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
             {project.role && (
               <div id="role">
-                <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Role</h2>
+                <SectionHeading sectionId="role" title="Role" />
                 <div
                   className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
                   dangerouslySetInnerHTML={createMarkup(project.role)}
@@ -162,7 +163,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
             {project.problem && (
               <div id="problem">
-                <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Problem</h2>
+                <SectionHeading sectionId="problem" title="Problem" />
                 <div
                   className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
                   dangerouslySetInnerHTML={createMarkup(project.problem)}
@@ -172,7 +173,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
             {project.approach && (
               <div id="approach">
-                <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Approach</h2>
+                <SectionHeading sectionId="approach" title="Approach" />
                 <div
                   className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
                   dangerouslySetInnerHTML={createMarkup(project.approach)}
@@ -182,8 +183,8 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             
             {/* Mobile Key Features and Skills are shown above under the header */}
             
-      <div id="outcomes">
-                <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Outcomes</h2>
+    <div id="outcomes">
+        <SectionHeading sectionId="outcomes" title="Outcomes" />
                 <div 
                     className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
                     dangerouslySetInnerHTML={createMarkup(project.outcomes)}
@@ -192,7 +193,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
             {project.challenges && (
               <div id="challenges">
-                <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Challenges</h2>
+                <SectionHeading sectionId="challenges" title="Challenges" />
                 <div
                   className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
                   dangerouslySetInnerHTML={createMarkup(project.challenges)}
@@ -204,7 +205,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             
             {project.audioFiles && project.audioFiles.length > 0 && (
               <div id="ai-samples">
-                <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">AI Generated Samples</h2>
+                <SectionHeading sectionId="ai-samples" title="AI Generated Samples" />
                 <div className="space-y-4">
                   {project.audioFiles.map((audioFile) => (
                     <AudioPlayer key={audioFile.id} audioFile={audioFile} themeColor={project.theme.primary}/>
@@ -215,7 +216,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             
             {project.downloadableAudioFiles && project.downloadableAudioFiles.length > 0 && (
               <div id="original-tracks">
-                 <h2 className="font-headline text-3xl prose prose-lg dark:prose-invert max-w-none mb-6">Original Tracks</h2>
+                 <SectionHeading sectionId="original-tracks" title="Original Tracks" />
                  <div className="space-y-4">
                   {project.downloadableAudioFiles.map((audioFile) => (
                     <DownloadableAudioPlayer key={audioFile.id} audioFile={audioFile} themeColor={project.theme.primary} />

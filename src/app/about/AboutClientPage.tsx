@@ -419,10 +419,7 @@ export default function AboutClientPage({
 					) : (
 						<div className="text-center text-muted-foreground px-4">
 							<p className="text-base md:text-lg">
-								Hover over a skill to see details
-							</p>
-							<p className="text-sm mt-2 hidden md:block">
-								Click a skill to see all projects
+								Click a skill to see its details
 							</p>
 						</div>
 					)}
