@@ -9,8 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit",
-    "postinstall": "node -e \"const rp=require('react-pdf');const v=rp?.pdfjs?.version||'5.3.93';const fs=require('fs');const path=require('path');const src=path.join('node_modules','pdfjs-dist','build','pdf.worker.min.mjs');const dst=path.join('public','pdf.worker.min.mjs');fs.mkdirSync('public',{recursive:true});try{fs.copyFileSync(src,dst);console.log('Copied pdf.worker for pdfjs version',v);}catch(e){console.warn('Could not copy pdf.worker:',e?.message);} \""
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@genkit-ai/googleai": "^1.14.1",
@@ -50,8 +49,7 @@
     "next": "^15.5.3",
     "next-themes": "^0.4.6",
     "overlayscrollbars": "^2.12.0",
-    "patch-package": "^8.0.0",
-    "pdfjs-dist": "5.4.149",
+  "patch-package": "^8.0.0",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",
@@ -73,5 +71,8 @@
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "overrides": {
+    "pdfjs-dist": "5.3.93"
   }
 }

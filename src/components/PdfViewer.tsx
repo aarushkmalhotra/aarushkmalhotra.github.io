@@ -42,10 +42,14 @@ export function PdfThumbnail({ file, onClick }: { file: string; onClick: () => v
       try {
         const mod = await import("react-pdf");
         if (!mounted) return;
-        // Configure worker (CDN path works well on static hosting like GitHub Pages)
+        // Prefer CDN worker that matches the installed pdfjs version,
+        // with an optional self-hosted fallback at /pdf.worker.min.mjs
         if (typeof window !== "undefined") {
-          const v = (mod.pdfjs && mod.pdfjs.version) || "5.3.93";
-          mod.pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${v}/build/pdf.worker.min.mjs`;
+          const v = (mod.pdfjs && mod.pdfjs.version) || "5.4.120";
+          const cdn = `https://unpkg.com/pdfjs-dist@${v}/build/pdf.worker.min.mjs`;
+          mod.pdfjs.GlobalWorkerOptions.workerSrc = cdn;
+          // Optional fallback if CDN is blocked:
+          // mod.pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
         }
         setPdf({ Document: mod.Document, Page: mod.Page, pdfjs: mod.pdfjs });
       } catch {
@@ -101,8 +105,11 @@ export function PdfLightbox({ open, onOpenChange, file }: { open: boolean; onOpe
         const mod = await import("react-pdf");
         if (!mounted) return;
         if (typeof window !== "undefined") {
-          const v = (mod.pdfjs && mod.pdfjs.version) || "5.3.93";
-          mod.pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${v}/build/pdf.worker.min.mjs`;
+          const v = (mod.pdfjs && mod.pdfjs.version) || "5.4.120";
+          const cdn = `https://unpkg.com/pdfjs-dist@${v}/build/pdf.worker.min.mjs`;
+          mod.pdfjs.GlobalWorkerOptions.workerSrc = cdn;
+          // Optional fallback if CDN is blocked:
+          // mod.pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
         }
         setPdf({ Document: mod.Document, Page: mod.Page, pdfjs: mod.pdfjs });
       } catch (e) {
