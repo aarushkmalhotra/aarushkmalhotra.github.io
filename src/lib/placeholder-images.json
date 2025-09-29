@@ -18,6 +18,12 @@
       "imageUrl": "/emtybanner.png",
       "imageHint": "data visualization"
     },
+        {
+      "id": "emty-2",
+      "description": "Team EMTY at the Capitol",
+      "imageUrl": "/emty-at-capitol.png",
+      "imageHint": "group picture"
+    },
     {
       "id": "simply-1",
       "description": "Banner for Simply Discord Bot",

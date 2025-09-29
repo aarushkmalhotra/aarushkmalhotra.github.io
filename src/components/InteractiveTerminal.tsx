@@ -21,6 +21,25 @@ interface TerminalProps {
   heightClass?: string; // override the scrollable height, e.g., "h-[56dvh]"
 }
 
+// Helper function to detect initial theme synchronously
+const getInitialTheme = (): 'light' | 'dark' => {
+  if (typeof window === 'undefined') return 'dark';
+  
+  // Check DOM class first (most reliable for hydrated state)
+  const htmlClass = document.documentElement.classList.contains('dark');
+  if (htmlClass) return 'dark';
+  
+  // Check localStorage
+  const storedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+  if (storedTheme && (storedTheme === 'light' || storedTheme === 'dark')) {
+    return storedTheme;
+  }
+  
+  // Check system preference
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  return prefersDark ? 'dark' : 'light';
+};
+
 export function InteractiveTerminal({ className = '', heightClass }: TerminalProps) {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<Command[]>([]);
@@ -33,7 +52,7 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
   const [questActive, setQuestActive] = useState(false);
   const [questStage, setQuestStage] = useState<QuestStage>('alpha');
   const [questInventory, setQuestInventory] = useState<string[]>([]); // collected fragments
-  const [questCodes, setQuestCodes] = useState<{ alpha?: string; beta?: string; gamma?: string }>({});
+  const [questCodes, setQuestCodes] = useState<{ alpha?: string; beta?: string; gamma: string }>({});
   const [questExpected, setQuestExpected] = useState<{ alpha: string; beta: string; gamma: string } | null>(null);
   const [questLoaded, setQuestLoaded] = useState(false); // avoid overwriting storage before restore
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -54,6 +73,7 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
   const channelRef = useRef<BroadcastChannel | null>(null);
   const applyingRemoteRef = useRef(false);
   const router = useRouter();
+  // Tailwind dark: variant classes handle theming instantly based on html.dark
 
   // Lightweight XOR + base64 obfuscation for localStorage persistence of expected quest codes
   const secretKey = (typeof window !== 'undefined' && typeof location !== 'undefined'
@@ -221,6 +241,7 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
 
   // Initialize with a one-time boot sequence then welcome message
   useEffect(() => {
+    
     // Restore quest state from localStorage
     try {
       const saved = localStorage.getItem('terminalQuestState');
@@ -246,28 +267,21 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
       const steps = [
         'Initializing shell environment…',
         'Loading projects and skills…',
-        'Wiring up animations…',
         'Polishing pixels…',
-        'Almost there…',
+        'Warming up animations…',
+        'All systems go!'
       ];
-      const start = Date.now();
-      const duration = 5000; // 5 seconds total
-      // Push a boot sequence node into history and update it over time
-      setHistory([{
-        command: '',
-        output: (
-          <BootSequence steps={steps} duration={duration} />
-        ),
-        timestamp: new Date()
-      }]);
-      const t = setTimeout(() => {
-        sessionStorage.setItem('terminalBooted', 'true');
+      const duration = 2200;
+      setHistory([{ command: '', output: <BootSequence steps={steps} duration={duration} />, timestamp: new Date() }]);
+      const t = window.setTimeout(() => {
         setIsBooting(false);
+        sessionStorage.setItem('terminalBooted', '1');
         const welcomeMessage = (
           <div className="space-y-2">
-            <div className="text-green-400">Welcome to Aarush's Portfolio Terminal v1.0</div>
-            <div className="text-gray-400">Type 'help' to see available commands</div>
-            <div className="text-gray-400">Type 'fun' for something special...</div>
+            <div className="text-green-600 dark:text-green-400">Welcome to Aarush's Portfolio Terminal v1.0</div>
+            <div className="text-yellow-700 font-medium block dark:hidden">⚠️ Bro at least don't flashbang yourself while coding 🥀</div>
+            <div className="text-gray-600 dark:text-gray-400">Type 'help' to see available commands</div>
+            <div className="text-gray-600 dark:text-gray-400">Type 'fun' for something special...</div>
           </div>
         );
         setHistory([{ command: '', output: welcomeMessage, timestamp: new Date() }]);
@@ -279,15 +293,18 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
     } else {
       const welcomeMessage = (
         <div className="space-y-2">
-          <div className="text-green-400">Welcome to Aarush's Portfolio Terminal v1.0</div>
-          <div className="text-gray-400">Type 'help' to see available commands</div>
-          <div className="text-gray-400">Type 'fun' for something special...</div>
+          <div className="text-green-600 dark:text-green-400">Welcome to Aarush's Portfolio Terminal v1.0</div>
+          <div className="text-yellow-700 font-medium block dark:hidden">⚠️ Bro at least don't flashbang yourself while coding 🥀</div>
+          <div className="text-gray-600 dark:text-gray-400">Type 'help' to see available commands</div>
+          <div className="text-gray-600 dark:text-gray-400">Type 'fun' for something special...</div>
         </div>
       );
       setHistory([{ command: '', output: welcomeMessage, timestamp: new Date() }]);
     }
     setQuestLoaded(true);
   }, []);
+
+  // No theme sync effect needed; Tailwind dark: classes handle it instantly.
 
   // Persist quest state to localStorage whenever it changes
   useEffect(() => {
@@ -447,32 +464,32 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
   const commands = {
     help: () => (
       <div className="space-y-1 text-sm">
-        <div className="text-green-400 font-semibold">Available Commands:</div>
+        <div className={`text-green-600 dark:text-green-400 font-semibold`}>Available Commands:</div>
         <div className="ml-4 space-y-1">
-          <div><span className="text-blue-400">about</span> - Learn about Aarush</div>
-          <div><span className="text-blue-400">projects</span> - List all projects</div>
-          <div><span className="text-blue-400">skills</span> - Show technical skills</div>
-          <div><span className="text-blue-400">contact</span> - Get contact information</div>
-          <div><span className="text-blue-400">resume</span> - View resume</div>
-          <div><span className="text-blue-400">fun</span> - Try it and see!</div>
-          <div><span className="text-blue-400">clear</span>/<span className="text-blue-400">cls</span> - Clear terminal</div>
-          <div><span className="text-blue-400">matrix</span> - Enter the matrix...</div>
-          <div><span className="text-blue-400">joke</span> - Random programming joke</div>
-          <div><span className="text-blue-400">fortune</span> - A random dev quote</div>
-          <div><span className="text-blue-400">ascii</span> - Show a banner</div>
-          <div><span className="text-blue-400">cowsay &lt;text&gt;</span> - Cow has something to say</div>
-          <div><span className="text-blue-400">cd projects</span> - Go to projects</div>
-          <div><span className="text-blue-400">cd blog</span> - Go to blog</div>
-          <div><span className="text-blue-400">cd contact</span> - Go to contact</div>
-          <div><span className="text-blue-400">cd about</span> - Go to about</div>
-          <div><span className="text-blue-400">cd ..</span> - Go home</div>
+          <div><span className="text-blue-600 dark:text-blue-300">about</span> - Learn about Aarush</div>
+          <div><span className="text-blue-600 dark:text-blue-300">projects</span> - List all projects</div>
+          <div><span className="text-blue-600 dark:text-blue-300">skills</span> - Show technical skills</div>
+          <div><span className="text-blue-600 dark:text-blue-300">contact</span> - Get contact information</div>
+          <div><span className="text-blue-600 dark:text-blue-300">resume</span> - View resume</div>
+          <div><span className="text-blue-600 dark:text-blue-300">fun</span> - Try it and see!</div>
+          <div><span className="text-blue-600 dark:text-blue-300">clear</span>/<span className="text-blue-600 dark:text-blue-300">cls</span> - Clear terminal</div>
+          <div><span className="text-blue-600 dark:text-blue-300">matrix</span> - Enter the matrix...</div>
+          <div><span className="text-blue-600 dark:text-blue-300">joke</span> - Random programming joke</div>
+          <div><span className="text-blue-600 dark:text-blue-300">fortune</span> - A random dev quote</div>
+          <div><span className="text-blue-600 dark:text-blue-300">ascii</span> - Show a banner</div>
+          <div><span className="text-blue-600 dark:text-blue-300">cowsay &lt;text&gt;</span> - Cow has something to say</div>
+          <div><span className="text-blue-600 dark:text-blue-300">cd projects</span> - Go to projects</div>
+          <div><span className="text-blue-600 dark:text-blue-300">cd blog</span> - Go to blog</div>
+          <div><span className="text-blue-600 dark:text-blue-300">cd contact</span> - Go to contact</div>
+          <div><span className="text-blue-600 dark:text-blue-300">cd about</span> - Go to about</div>
+          <div><span className="text-blue-600 dark:text-blue-300">cd ..</span> - Go home</div>
         </div>
       </div>
     ),
 
     about: () => (
       <div className="space-y-2">
-        <div className="flex items-center gap-2 text-green-400">
+        <div className={`flex items-center gap-2 text-green-600 dark:text-green-400`}>
           <User className="w-4 h-4" />
           <span className="font-semibold">Aarush Kumar</span>
         </div>
@@ -489,7 +506,7 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
             <Code className="w-3 h-3" />
             <span>Full-Stack Developer & AI Enthusiast</span>
           </div>
-          <div className="mt-2 text-gray-300">
+          <div className={`mt-2 text-gray-600 dark:text-gray-300`}>
             I see problems, then I build solutions. Currently studying Computer Science 
             at Macaulay Honors College while building innovative tech projects.
           </div>
@@ -499,7 +516,7 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
 
     projects: () => (
       <div className="space-y-3">
-        <div className="text-green-400 font-semibold">Recent Projects:</div>
+        <div className={`text-green-600 dark:text-green-400 font-semibold`}>Recent Projects:</div>
         {projects.slice(0, 5).map((project, index) => (
           <motion.div
             key={project.id}
@@ -509,14 +526,14 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
             className="ml-4 p-2 border-l-2 border-blue-400 pl-3"
           >
             <div className="flex items-center gap-2">
-              <span className="text-blue-400 font-medium">{project.name}</span>
+              <span className={`text-blue-600 dark:text-blue-300 font-medium`}>{project.name}</span>
               {project.demoUrl && (
                 <Link href={project.demoUrl} target="_blank" className="text-xs">
                   <ExternalLink className="w-3 h-3" />
                 </Link>
               )}
             </div>
-            <div className="text-xs text-gray-400">{project.tagline}</div>
+            <div className={`text-xs text-gray-600 dark:text-gray-400`}>{project.tagline}</div>
             <div className="flex flex-wrap gap-1 mt-1">
               {project.techStack.split(',').slice(0, 3).map(tech => (
                 <Badge key={tech} variant="outline" className="text-xs h-4">
@@ -526,7 +543,7 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
             </div>
           </motion.div>
         ))}
-        <div className="text-xs text-gray-400 ml-4">
+        <div className={`text-xs text-gray-600 dark:text-gray-400 ml-4`}>
           Type 'cd projects' to explore more...
         </div>
       </div>
@@ -544,7 +561,7 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
       
       return (
         <div className="space-y-2">
-          <div className="text-green-400 font-semibold">Technical Skills:</div>
+          <div className={`text-green-600 dark:text-green-400 font-semibold`}>Technical Skills:</div>
           <div className="ml-4 grid grid-cols-2 md:grid-cols-3 gap-2">
             {skillArray.map((skill, index) => (
               <motion.div
@@ -565,13 +582,13 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
 
     contact: () => (
       <div className="space-y-2">
-        <div className="text-green-400 font-semibold">Contact Information:</div>
+        <div className={`text-green-600 dark:text-green-400 font-semibold`}>Contact Information:</div>
         <div className="ml-4 space-y-1 text-sm">
           <div>📧 Email: Available on resume</div>
           <div>🌐 Portfolio: aarushkmalhotra.github.io</div>
           <div>💼 LinkedIn: /in/kumaraarush</div>
           <div>🐙 GitHub: /aarushkmalhotra</div>
-          <div className="text-xs text-gray-400 mt-2">
+          <div className={`text-xs text-gray-600 dark:text-gray-400 mt-2`}>
             Use 'resume' command to view full contact details
           </div>
         </div>
@@ -580,12 +597,12 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
 
     resume: () => (
       <div className="space-y-2">
-        <div className="text-green-400 font-semibold">Resume Access:</div>
+        <div className={`text-green-600 dark:text-green-400 font-semibold`}>Resume Access:</div>
         <div className="ml-4">
           <Link 
             href="/resume-09-25.pdf" 
             target="_blank"
-            className="text-blue-400 hover:underline flex items-center gap-1"
+            className={`text-blue-600 dark:text-blue-300 hover:underline flex items-center gap-1`}
           >
             📄 View Resume (PDF) <ExternalLink className="w-3 h-3" />
           </Link>
@@ -1288,15 +1305,22 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
 
   const scrollToCommandIndex = (idx: number) => {
     const el = entryRefs.current[idx];
-    if (el && el.scrollIntoView) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (el && terminalRef.current) {
+      const container = terminalRef.current;
+      const header = container.previousElementSibling as HTMLElement;
+      const headerHeight = header?.offsetHeight || 0;
+      const gap = 1;
+      const offsetTop = el.offsetTop;
+      container.scrollTo({
+        top: offsetTop - headerHeight - gap,
+        behavior: 'smooth'
+      });
     }
   };
 
   const handleScrollPrev = () => {
     if (history.length === 0) return;
-    let idx = scrollCmdIndexRef.current ?? history.length - 1;
-    idx = Math.max(0, idx - 1);
+    const idx = history.length - 1;
     scrollCmdIndexRef.current = idx;
     scrollToCommandIndex(idx);
   };
@@ -1315,8 +1339,8 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
   };
 
   return (
-    <Card ref={containerRef} className={`bg-gray-900 text-green-400 font-mono text-sm ${className}`}>
-      <div className="flex items-center justify-between p-3 border-b border-gray-700">
+    <Card ref={containerRef} className={`bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-green-400 font-mono text-sm ${className}`}>
+      <div className={`flex items-center justify-between p-3 border-b border-gray-300 dark:border-gray-700`}>
         <div className="flex items-center gap-2">
           <Terminal className="w-4 h-4" />
           <span>aarush@portfolio:~$</span>
@@ -1329,23 +1353,23 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button aria-label="Terminal menu" className="p-1 rounded hover:bg-gray-800">
+              <button aria-label="Terminal menu" className={`p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800`}>
                 <MoreVertical className="w-4 h-4" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 z-[1000] pointer-events-auto">
-              <DropdownMenuItem onClick={() => { setHistory([]); broadcast('state:clear', {}); }}>
+            <DropdownMenuContent align="end" className="w-56 z-[1001]" sideOffset={5}>
+              <DropdownMenuItem onClick={() => { setHistory([]); broadcast('state:clear', {}); }} className="cursor-pointer hover:bg-accent focus:bg-accent data-[highlighted]:bg-accent">
                 <Trash2 className="w-4 h-4 mr-2" /> Clear Terminal
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleScrollPrev}>
+              <DropdownMenuItem onClick={handleScrollPrev} className="cursor-pointer hover:bg-accent focus:bg-accent data-[highlighted]:bg-accent">
                 <ChevronUpIcon className="w-4 h-4 mr-2" /> Scroll to Last Command
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleScrollNext}>
+              <DropdownMenuItem onClick={handleScrollNext} className="cursor-pointer hover:bg-accent focus:bg-accent data-[highlighted]:bg-accent">
                 <ChevronDownIcon className="w-4 h-4 mr-2" /> Scroll to Next Command
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleRunRecent}>
+              <DropdownMenuItem onClick={handleRunRecent} className="cursor-pointer hover:bg-accent focus:bg-accent data-[highlighted]:bg-accent">
                 <PlayCircle className="w-4 h-4 mr-2" /> Run Recent Command
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -1369,10 +1393,10 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
               {entry.command && (
                 <div className="flex items-center gap-2">
                   <ChevronRight className="w-3 h-3" />
-                  <span className="text-blue-300">{entry.command}</span>
+                  <span className="text-blue-600 dark:text-blue-300">{entry.command}</span>
                 </div>
               )}
-              <div className="ml-5 text-gray-100">{entry.output}</div>
+              <div className={`ml-5 text-gray-700 dark:text-gray-100`}>{entry.output}</div>
             </motion.div>
           ))}
         </AnimatePresence>
@@ -1405,7 +1429,7 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
                 onSelect={handleSelect}
                 onKeyDown={handleKeyDown}
                 rows={1}
-                className="w-full bg-transparent outline-none text-blue-300 resize-none overflow-hidden caret-transparent"
+                className={`w-full bg-transparent outline-none text-blue-600 dark:text-blue-300 resize-none overflow-hidden caret-transparent`}
                 placeholder={isTyping ? "" : "Type a command... (Shift+Enter for newline)"}
                 disabled={isTyping}
                 spellCheck={false}
@@ -1419,7 +1443,7 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
               {!isTyping && (
                 <div
                   ref={cursorRef}
-                  className="absolute w-2 h-5 bg-green-400"
+                  className={`absolute w-2 h-5 bg-gray-800 dark:bg-green-400`}
                   style={{ top: 0, left: 0, opacity: cursorVisible ? 1 : 0 }}
                 />
               )}
@@ -1445,8 +1469,8 @@ function BootSequence({ steps, duration }: { steps: string[]; duration: number }
 
   return (
     <div className="space-y-2">
-      <div className="text-green-400">Setting up terminal for you…</div>
-      <div className="space-y-1 text-xs text-gray-300">
+      <div className="text-green-400 dark:text-green-400 text-green-600">Setting up terminal for you…</div>
+      <div className="space-y-1 text-xs text-gray-600 dark:text-gray-300">
         {steps.map((s, i) => (
           <motion.div
             key={s}

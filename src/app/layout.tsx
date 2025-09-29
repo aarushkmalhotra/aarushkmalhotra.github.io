@@ -35,6 +35,21 @@ const ThemeInitializer = () => {
   return <script dangerouslySetInnerHTML={{ __html: script }} />;
 };
 
+const ProjectsScrollbarInitializer = () => {
+  const script = `
+    (function() {
+      try {
+        var isProjects = location && location.pathname && location.pathname.startsWith('/projects');
+        var isDesktop = typeof window !== 'undefined' && window.matchMedia('(min-width: 640px)').matches;
+        if (isProjects && isDesktop) {
+          document.documentElement.classList.add('projects-hide-scrollbar');
+        }
+      } catch (e) {}
+    })();
+  `;
+  return <script dangerouslySetInnerHTML={{ __html: script }} />;
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -44,6 +59,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <ThemeInitializer />
+        <ProjectsScrollbarInitializer />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

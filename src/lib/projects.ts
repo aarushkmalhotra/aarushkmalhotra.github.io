@@ -17,6 +17,12 @@ export interface DownloadableAudioFile {
   file: string;
 }
 
+export interface DocumentFile {
+  id: string;
+  title: string;
+  file: string; // path under /public
+}
+
 export interface Project {
   id: string;
   name: string;
@@ -46,6 +52,7 @@ export interface Project {
   type?: 'project' | 'contribution';
   audioFiles?: AudioFile[];
   downloadableAudioFiles?: DownloadableAudioFile[];
+  documents?: DocumentFile[];
 }
 
 // In a real app, you might fetch this from a CMS or API

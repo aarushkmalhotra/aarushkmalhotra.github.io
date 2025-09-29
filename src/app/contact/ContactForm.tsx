@@ -54,7 +54,7 @@ export function ContactForm({ action }: ContactFormProps) {
             required
             maxLength={100}
             className="block w-full rounded-md border border-input bg-background px-3 py-2 text-foreground shadow-sm focus:border-primary focus:ring-primary text-sm"
-            placeholder="Project Inquiry"
+            placeholder="Inquiry"
             autoComplete="off"
           />
         </div>

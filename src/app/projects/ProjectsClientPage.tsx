@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import type { Project } from "@/lib/projects";
 import { getProjects } from "@/lib/projects";
 import { ProjectCard } from "@/components/ProjectCard";
@@ -60,6 +60,20 @@ export function ProjectsClientPage() {
   const [showFavorites, setShowFavorites] = useState<boolean>(() => (searchParams.get('favorites') || '').toLowerCase() === 'true');
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
 
+  // Track when the toolbar becomes stuck to add background/border only then
+  const toolbarRef = useRef<HTMLDivElement | null>(null);
+  const [toolbarStuck, setToolbarStuck] = useState(false);
+
+  // Hide global scrollbar only on this page for desktop (sm and up)
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.documentElement.classList.add("projects-hide-scrollbar");
+      return () => {
+        document.documentElement.classList.remove("projects-hide-scrollbar");
+      };
+    }
+  }, []);
+
 
   // Hydrate favorites from localStorage on mount
   useEffect(() => {
@@ -89,6 +103,43 @@ export function ProjectsClientPage() {
     };
     window.addEventListener('portfolio:favorites-updated', handler as EventListener);
     return () => window.removeEventListener('portfolio:favorites-updated', handler as EventListener);
+  }, []);
+
+  // Detect when the sticky toolbar hits its top offset (i.e., becomes "stuck")
+  useEffect(() => {
+    const el = toolbarRef.current;
+    if (!el) return;
+
+    let ticking = false;
+
+    const update = () => {
+      if (!toolbarRef.current) return;
+      const styleTop = getComputedStyle(toolbarRef.current).top;
+      const topPx = parseFloat(styleTop || "0") || 0; // sticky offset in px (e.g., top-16)
+      const rectTop = toolbarRef.current.getBoundingClientRect().top;
+      // Consider it stuck when its top is at or above the sticky offset
+      const isStuck = rectTop <= topPx + 0.5; // small epsilon
+      setToolbarStuck(isStuck);
+    };
+
+    const onScrollOrResize = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
+    };
+
+    // Initialize and listen
+    update();
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
+
+    return () => {
+      window.removeEventListener("scroll", onScrollOrResize as EventListener);
+      window.removeEventListener("resize", onScrollOrResize as EventListener);
+    };
   }, []);
 
   // Update URL when filters change
@@ -159,8 +210,22 @@ export function ProjectsClientPage() {
 
   return (
     <div>
-      <div className="sticky top-16 z-10 flex flex-col md:flex-row gap-4 mb-8 py-4 bg-card border-b">
-        <div className="relative flex-grow">
+      <div
+        ref={toolbarRef}
+        className={`sticky top-16 z-10 mb-8 py-4 relative
+          transition-all duration-500 ease-in-out will-change-transform
+        `}
+      >
+        {/* Full-bleed background and border that appear only when stuck */}
+        <div
+          aria-hidden="true"
+          className={`absolute  inset-y-0 left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] pointer-events-none z-0
+            transition-all duration-500 ease-in-out
+            ${toolbarStuck ? "opacity-100 bg-card border-b border-border shadow-sm" : "opacity-0 bg-transparent border-b border-transparent shadow-none"}
+          `}
+        />
+        <div className="relative z-10 w-full flex flex-col md:flex-row gap-4">
+          <div className="relative flex-grow">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             type="search"
@@ -169,9 +234,9 @@ export function ProjectsClientPage() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-        </div>
+          </div>
 
-        <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-4">
           <div className="w-1/2 md:w-auto">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -225,6 +290,7 @@ export function ProjectsClientPage() {
                 <SelectItem value="alphabetical">Alphabetical</SelectItem>
               </SelectContent>
             </Select>
+          </div>
           </div>
         </div>
       </div>

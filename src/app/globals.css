@@ -209,6 +209,19 @@
 
 /* Clean CSS-only custom scrollbar implementation */
 
+/* Hide scrollbar on the projects page only for desktop (sm and up) */
+@media (min-width: 440px) {
+  html.projects-hide-scrollbar,
+  body.projects-hide-scrollbar {
+    /* Firefox */
+    scrollbar-width: none;
+  }
+  html.projects-hide-scrollbar::-webkit-scrollbar,
+  body.projects-hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+  }
+}
+
 /* Ensure proper scrolling behavior */
 html {
   scroll-behavior: smooth;

@@ -48,7 +48,7 @@
     "outcomes": "We built a working design system and a clickable prototype that tells a clear story. The demo showed how small cues can change rider flow in busy stations.\nThe work earned a Gold Award in class and opened doors to share the idea with local leaders. It also set a base for future tests with live feeds.",
     "repoUrl": null,
     "demoUrl": "https://linktr.ee/emty7",
-    "images": ["emty-1"],
+    "images": ["emty-1", "emty-2"],
     "startDate": "2024-08-01",
     "endDate": "2025-04-01",
     "type": "project",
@@ -217,6 +217,13 @@
     "demoUrl": "https://docs.google.com/presentation/d/1SxtFXwkSP7j3ouTHC2i0pD7lLCfUJtWJVXgNG7_GLuo/",
     "images": [
       "cifar-1"
+    ],
+    "documents": [
+      {
+        "id": "veritas-ai-cert-11-2024",
+        "title": "Veritas AI Scholar Certificate (Nov 2024)",
+        "file": "/veritasai-certificate-11-2024.pdf"
+      }
     ],
     "startDate": "2024-09-01",
     "endDate": "2024-11-01",

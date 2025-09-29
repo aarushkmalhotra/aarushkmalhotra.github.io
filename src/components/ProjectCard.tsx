@@ -117,7 +117,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   
   const getCallToActionIcon = () => {
     if (project.id === 'youtube-thumbnails') {
-        return <YoutubeIcon className="w-4 h-4" />;
+        return <YoutubeIcon className="w-4 h-4 transition-transform duration-300 group-hover/button:translate-x-1" />;
     }
     return <ArrowUpRightIcon className="w-4 h-4 transition-transform duration-300 group-hover/button:translate-x-1 group-hover/button:-translate-y-1" />;
   }

@@ -5,17 +5,18 @@ import type { Project } from '@/lib/projects';
 import { PlaceHolderImages, type ImagePlaceholder } from '@/lib/placeholder-images';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, FileText } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
 import { CustomVideoPlayer } from '@/components/CustomVideoPlayer';
+import PdfPreview from '@/components/PdfViewer';
 
 interface ProjectGalleryProps {
   project: Project;
 }
 
-type GalleryItem = (ImagePlaceholder & { type: 'image' }) | { type: 'video'; url: string } | { type: 'iframe'; url: string };
+type GalleryItem = (ImagePlaceholder & { type: 'image' }) | { type: 'video'; url: string } | { type: 'iframe'; url: string } | { type: 'pdf'; url: string; title?: string };
 
 function isImage(item: GalleryItem): item is (ImagePlaceholder & { type: 'image' }) {
     return item.type === 'image';
@@ -102,12 +103,16 @@ export function ProjectGallery({ project }: ProjectGalleryProps) {
         : { type: 'video' as const, url: project.videoPreview }) 
         : null;
 
+    const docItems: GalleryItem[] = (project.documents || []).map(doc => ({ type: 'pdf', url: doc.file, title: doc.title }));
+
     const galleryItems: GalleryItem[] = [
         ...(videoItem ? [videoItem] : []),
+        ...docItems,
         ...imageItems
     ];
     
     const imageOnlyItems = galleryItems.filter(isImage);
+    const pdfItems = galleryItems.filter(i => (i as any).type === 'pdf') as { type: 'pdf'; url: string; title?: string }[];
 
     if (galleryItems.length === 0) {
         return null;
@@ -138,6 +143,29 @@ export function ProjectGallery({ project }: ProjectGalleryProps) {
                     </div>
                 )}
                 
+                {pdfItems.length > 0 && (
+                    <div className="grid md:grid-cols-2 gap-6">
+                        {pdfItems.map((pdf, idx) => {
+                            const isCifarCert = project.id === 'cifar-10-cnn' && (pdf.url?.includes('veritasai-certificate-11-2024.pdf') || pdf.title?.toLowerCase().includes('veritas'));
+                            const aspectClass = isCifarCert ? 'aspect-[1200/849]' : 'aspect-video';
+                            return (
+                            <div key={`pdf-${idx}`} className="space-y-3 p-4 rounded-lg border bg-card">
+                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                    <FileText className="w-4 h-4" />
+                                    <span>{pdf.title || 'Document'}</span>
+                                </div>
+                                <div
+                                  className={`${aspectClass} relative overflow-hidden rounded bg-muted select-none`}
+                                  onContextMenu={(e) => e.preventDefault()}
+                                >
+                                  <PdfPreview file={pdf.url} title="" />
+                                </div>
+                                <a href={pdf.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-sm text-accent underline">Open PDF in new tab</a>
+                            </div>
+                        );})}
+                    </div>
+                )}
+
                 {imageOnlyItems.length > 0 && (
                     <Carousel
                         opts={{
