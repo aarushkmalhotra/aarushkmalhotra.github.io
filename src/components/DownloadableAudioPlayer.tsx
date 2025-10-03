@@ -6,6 +6,7 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "./ui/button";
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "./ui/alert-dialog";
 import Link from "next/link";
+import { config } from "@/lib/config";
 
 interface AudioPlayerProps {
     audioFile: DownloadableAudioFile;
@@ -190,7 +191,7 @@ export function DownloadableAudioPlayer({ audioFile, themeColor }: AudioPlayerPr
                     <AlertDialogDescription>
                         This audio track is available under a Creative Commons license. You are free to use it, but you <strong className="text-foreground">must provide credit</strong>.
                         <br/><br/>
-                        Please credit "Aarush Kumar" and link to <Link href="https://aarushkmalhotra.github.io" target="_blank" className="underline">aarushkmalhotra.github.io</Link>.
+                        Please credit "{config.fullName}" and link to <Link href={config.portfolioUrl} target="_blank" className="underline">{config.portfolioDomain}</Link>.
                     </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>

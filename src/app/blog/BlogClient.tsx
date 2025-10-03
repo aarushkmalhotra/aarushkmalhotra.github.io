@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { config } from "@/lib/config";
 
 type Post = {
   id: string;
@@ -28,8 +29,6 @@ type Post = {
   coverImage?: { url: string } | null;
   author: { name: string; profilePicture?: string | null; username?: string | null };
 };
-
-const HASHNODE_HOST = "aarushkumar.hashnode.dev";
 
 export function BlogClient() {
   const [posts, setPosts] = useState<Post[] | null>(null);
@@ -112,7 +111,7 @@ export function BlogClient() {
           headers: { "Content-Type": "application/json" },
           // avoid staleness from intermediate caches
           cache: "no-store",
-          body: JSON.stringify({ query, variables: { host: HASHNODE_HOST } })
+          body: JSON.stringify({ query, variables: { host: config.hashnodeHost } })
         });
 
         // Try with subtitle+username, then fallback to with-username, then no-username

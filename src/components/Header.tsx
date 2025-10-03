@@ -8,6 +8,7 @@ import { MobileNav } from "./MobileNav";
 import { cn } from "@/lib/utils";
 import { FileText } from "lucide-react";
 import { useEffect, useState } from "react";
+import { config } from "@/lib/config";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -33,12 +34,12 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2 font-headline text-lg font-bold mr-auto">
           <Image
             src="/portrait.jpg"
-            alt="Aarush's Portfolio Logo"
+            alt={`${config.siteName} Logo`}
             width={32}
             height={32}
             className="rounded-full"
           />
-          <span>Aarush's Portfolio</span>
+          <span>{config.siteName}</span>
         </Link>
         
         <div className="flex items-center gap-4">

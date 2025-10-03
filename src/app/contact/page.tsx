@@ -1,14 +1,15 @@
 import { Metadata } from "next";
 import { InteractiveTerminal } from "@/components/InteractiveTerminal";
 import { ContactForm } from "./ContactForm";
+import { config } from "@/lib/config";
 
 // Important: To make this form work, you need a Formspree account.
 // 1. Create a new form on formspree.io.
-// 2. Replace the placeholder URL below with your own Formspree form endpoint URL.
-const FORMSPREE_URL = "https://formspree.io/f/mzzjpwwl";
+// 2. Add your Formspree URL to your .env.local file as NEXT_PUBLIC_FORMSPREE_URL
+const FORMSPREE_URL = config.formspreeUrl;
 
 export const metadata: Metadata = {
-  title: "Contact – Aarush's Portfolio",
+  title: `Contact – ${config.siteName}`,
   description: "Have a project in mind, a question, or just want to say hi? Get in touch with me.",
 };
 

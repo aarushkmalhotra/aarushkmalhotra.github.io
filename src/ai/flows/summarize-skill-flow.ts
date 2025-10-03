@@ -39,7 +39,7 @@ Analyze the provided projects to answer the following:
 - What was the role of {{{skill}}} in those projects?
 - What do these projects demonstrate about the developer's proficiency with {{{skill}}}?
 
-Synthesize this information into a human-readable summary. Speak in the third person (e.g., "Aarush has demonstrated...").
+Synthesize this information into a human-readable summary. Speak in the third person (e.g., "The developer has demonstrated...").
 Do not just list the projects. Instead, weave them into a narrative that highlights the developer's experience.
 Focus only on the provided skill: {{{skill}}}.
 

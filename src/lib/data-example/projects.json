@@ -1,0 +1,76 @@
+[
+  {
+    "id": "example-project",
+    "name": "My Awesome Project",
+    "tagline": "A brief, catchy description of what this project does",
+    "description": "This is where you tell the story of your project. What problem did it solve? What was interesting about building it? What did you learn? Make it conversational and engaging - people want to understand not just what you built, but why and how.\n\nYou can use multiple paragraphs to tell a complete story. Talk about your motivations, the challenges you faced, and the impact it had.",
+    "role": "Describe your specific role in this project. Were you the solo developer? Did you lead a team? What parts did you focus on? Be specific about your contributions.",
+    "problem": "What problem were you trying to solve? Make this relatable - help readers understand why this project mattered and why someone would care about the solution.",
+    "approach": "How did you approach solving this problem? What was your methodology? What tools or frameworks did you choose and why?",
+    "challenges": "What obstacles did you face while building this? Technical challenges, design decisions, performance issues? How did you overcome them?",
+    "keyFeatures": [
+      "List the main features or capabilities",
+      "Focus on what makes this project special",
+      "Keep each point concise but descriptive",
+      "Usually 3-5 features work well"
+    ],
+    "techStack": "React, Next.js, TypeScript, Tailwind CSS, Node.js",
+    "keywords": ["Web Development", "UI/UX & Design", "AI & Machine Learning"],
+    "outcomes": "What was the result? Did users love it? Did you learn something valuable? Any metrics or feedback you can share? What impact did this project have?",
+    "repoUrl": "https://github.com/yourusername/your-repo",
+    "demoUrl": "https://your-project-demo.com",
+    "images": ["example-project-1", "example-project-2"],
+    "startDate": "2024-01-01",
+    "endDate": "2024-06-01",
+    "type": "project",
+    "theme": {
+      "primary": "hsl(220, 70%, 50%)",
+      "secondary": "hsl(280, 70%, 60%)"
+    }
+  },
+  {
+    "id": "another-project",
+    "name": "Another Cool Project",
+    "tagline": "Different type of project with different features",
+    "description": "Here's an example of a different kind of project. Maybe this one has audio files, or documents, or videos. The structure is flexible to accommodate different types of work.",
+    "role": "Your role in this project...",
+    "problem": "The problem this project solved...",
+    "approach": "How you approached it...",
+    "challenges": "Challenges you faced...",
+    "keyFeatures": [
+      "Feature one",
+      "Feature two", 
+      "Feature three"
+    ],
+    "techStack": "Python, Flask, PostgreSQL, Docker",
+    "keywords": ["Backend Development", "Database Design"],
+    "outcomes": "The results and impact...",
+    "repoUrl": null,
+    "demoUrl": "https://another-demo.com",
+    "images": ["another-project-1"],
+    "videoPreview": "/project-demo-video.mp4",
+    "documents": [
+      {
+        "id": "project-report",
+        "title": "Project Research Report",
+        "file": "/project-report.pdf"
+      }
+    ],
+    "audioFiles": [
+      {
+        "id": "project-audio",
+        "title": "Project Demo Audio",
+        "file": "/project-demo.mp3",
+        "originalArtist": "Original Creator",
+        "originalComposer": "Composer Name"
+      }
+    ],
+    "startDate": "2023-09-01",
+    "endDate": "2024-02-01",
+    "type": "project",
+    "theme": {
+      "primary": "hsl(160, 70%, 45%)",
+      "secondary": "hsl(45, 90%, 60%)"
+    }
+  }
+]

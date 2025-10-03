@@ -17,6 +17,7 @@ import { LinkedinIcon } from "./icons/LinkedinIcon";
 import { InstagramIcon } from "./icons/InstagramIcon";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { config } from "@/lib/config";
 
 interface NavLink {
   href: string;
@@ -45,12 +46,12 @@ export function MobileNav({ navLinks }: MobileNavProps) {
               <div className="flex items-center gap-2 font-headline text-lg font-bold">
                   <Image
                       src="/portrait.jpg"
-                      alt="Aarush's Portfolio Logo"
+                      alt={`${config.siteName} Logo`}
                       width={32}
                       height={32}
                       className="rounded-full"
                   />
-                  <span>Aarush's Portfolio</span>
+                  <span>{config.siteName}</span>
               </div>
               <SheetClose asChild>
                 <Button variant="ghost" size="icon">
@@ -79,16 +80,16 @@ export function MobileNav({ navLinks }: MobileNavProps) {
           </nav>
           <div className="border-t p-4">
           <div className="flex gap-4 mt-4 md:mt-0">
-            <a href="mailto:aarush@vernato.org" aria-label="Email" target="_blank" rel="noopener noreferrer">
+            <a href={`mailto:${config.email}`} aria-label="Email" target="_blank" rel="noopener noreferrer">
                 <Mail className="h-6 w-6 text-secondary-foreground/60 transition-colors hover:text-primary" />
             </a>
-            <a href="https://github.com/aarushkmalhotra" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <a href={config.social.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                 <GithubIcon className="h-6 w-6 text-secondary-foreground/60 transition-colors hover:text-[#181717] dark:hover:text-white" />
             </a>
-            <a href="https://linkedin.com/in/kumaraarush" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <a href={config.social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                 <LinkedinIcon className="h-6 w-6 text-secondary-foreground/60 transition-colors hover:text-[#0A66C2]" />
             </a>
-            <a href="https://instagram.com/aarush.nyc" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <a href={config.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <InstagramIcon className="h-6 w-6 text-secondary-foreground/60 transition-colors hover:text-[#E1306C]" />
             </a>
           </div>

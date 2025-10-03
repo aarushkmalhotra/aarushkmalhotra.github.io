@@ -13,6 +13,7 @@ import { ProjectGallery } from "./ProjectGallery";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { ProjectDetailClientPage } from "./ProjectDetailClientPage";
 import ProjectQuickDock from "./ProjectQuickDock";
+import { config } from "@/lib/config";
 import SectionHeading from "./SectionHeading";
 
 interface PageProps {
@@ -32,10 +33,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const firstImage = PlaceHolderImages.find(img => img.id === project.images[0]);
 
   return {
-    title: `${project.name} – Aarush's Portfolio`,
+    title: `${project.name} – ${config.siteName}`,
     description: project.tagline,
     openGraph: {
-        title: `${project.name} – Aarush's Portfolio`,
+        title: `${project.name} – ${config.siteName}`,
         description: project.tagline,
         images: firstImage ? [
             {

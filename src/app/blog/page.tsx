@@ -15,12 +15,13 @@ import { Metadata } from 'next';
 import { Button } from "@/components/ui/button";
 // Client-side fetching is handled in BlogClient to avoid rebuilds for updates
 import { BlogClient } from "./BlogClient";
+import { config } from "@/lib/config";
 
 export const metadata: Metadata = {
-  title: "Blog – Aarush's Portfolio",
+  title: `Blog – ${config.siteName}`,
   description: "My thoughts on technology, development, and everything in between.",
   openGraph: {
-    title: "Blog – Aarush's Portfolio",
+    title: `Blog – ${config.siteName}`,
     description: "My thoughts on technology, development, and everything in between.",
     images: [
       {

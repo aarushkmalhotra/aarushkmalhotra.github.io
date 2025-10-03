@@ -8,10 +8,11 @@ import { Toaster } from '@/components/ui/toaster';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { ParticleBackground } from '@/components/ParticleBackground';
 import { HotkeyHint } from '@/components/HotkeyHint';
+import { config } from '@/lib/config';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://aarushkmalhotra.github.io/'),
-  title: "Aarush's Portfolio – Developer Portfolio",
+  metadataBase: new URL(config.portfolioUrl),
+  title: config.siteTitle,
   description: 'A developer portfolio built with Next.js and Tailwind CSS.',
   icons: {
     icon: '/portrait.jpg',

@@ -1,7 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { Briefcase, GraduationCap, FileText } from "lucide-react";
+import { Briefcase, GraduationCap, FileText, ExternalLink } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
@@ -10,6 +10,7 @@ import type { Project } from "@/lib/projects";
 import { Button } from "@/components/ui/button";
 import { SkillVisualization } from "@/components/SkillVisualization";
 import { useRouter } from "next/navigation";
+import { config } from "@/lib/config";
 
 const experience = [
 	{
@@ -114,7 +115,7 @@ const ExperienceItem = ({
 	const y = useTransform(scrollYProgress, [0, 1], [20, 0]);
 
 	return (
-		<div ref={ref} className="relative pl-12 md:pl-0 mb-12">
+		<div ref={ref} className="relative mx-4 pl-12 md:pl-0 mb-12">
 			<div className="absolute top-0 left-4 md:left-1/2 -translate-x-1/2 -translate-y-1 bg-background border-2 border-primary w-10 h-10 rounded-full flex items-center justify-center z-10">
 				{item.icon}
 			</div>
@@ -222,45 +223,14 @@ export default function AboutClientPage({
 			<section className="flex flex-col justify-center min-h-[calc(100dvh-65px)] container mx-auto px-4 py-8 md:py-16">
 				<div className="max-w-6xl mx-auto text-center">
 					<h1 className="font-headline text-4xl md:text-5xl font-bold tracking-tight mb-4">
-						I build tools to fix what's broken.
+						{config.about.title}
 					</h1>
 					<div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground space-y-4 text-left md:text-center">
-						<p>
-							I'm a student founder based in Manhattan, currently studying
-							Computer Science at Macaulay Honors College at CCNY (expected
-							graduation May 2029). I've lived in way too many countries and been
-							through way too many school systems. CBSE, IGCSE, APs, and now
-							college. You name it, I've probably been confused by it at some
-							point.
-						</p>
-						<p>
-							All that moving around taught me that most things are way more
-							complicated than they need to be. Like, why do privacy policies
-							sound like they were written by robots for other robots? I got so
-							annoyed reading those endless terms and conditions that I built{" "}
-							<Link href="/projects/simplify-me">Simplify Me.</Link> It turns
-							all that legal nonsense into actual English so people are informed
-							about what companies are doing with their data.
-						</p>
-						<p>
-							Then there's <Link href="/projects/vernato">Vernato</Link>.
-							Moving around so much, I noticed that people speak the same
-							language completely differently depending on where they're from. A
-							British accent isn't more "correct" than an American one, and
-							Spanish from Mexico isn't wrong just because it's different from
-							Spanish from Spain. I got tired of apps that could mark you wrong
-							for sounding different, so I built Vernato to actually recognize
-							and teach these regional differences. It focuses on those tiny
-							pronunciation details that other apps are too lazy to care about.
-						</p>
-						<p>
-							The truth is, I just get really bothered when things don't work
-							well. I end up building tools to fix whatever's driving me crazy.
-							I'm always down to chat with people who also think technology
-							should actually help people instead of just being impressive.
-						</p>
+						{config.about.description.map((paragraph, index) => (
+							<p key={index}>{paragraph}</p>
+						))}
 					</div>
-					<div className="mt-8">
+					<div className="flex flex-col justify-center w-full sm:flex-row gap-4 mt-8">
 						<Button asChild size="lg">
 							<Link
 								href="/resume-09-25.pdf"
@@ -271,6 +241,11 @@ export default function AboutClientPage({
 								View My Resume
 							</Link>
 						</Button>
+						<Button asChild size="lg">
+                <Link href="/projects" target="_blank">
+										<ExternalLink className="mr-2 h-5 w-5" />
+										View My Work</Link>
+              </Button>
 					</div>
 				</div>
 			</section>
@@ -431,9 +406,9 @@ export default function AboutClientPage({
 					My Journey
 				</h2>
 				<div ref={journeyRef} className="relative max-w-3xl mx-auto">
-					<div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 h-full w-0.5 bg-border"></div>
+					<div className="absolute left-8 md:left-1/2 md:-translate-x-1/2 h-full w-0.5 bg-border"></div>
 					<motion.div
-						className="absolute left-4 md:left-1/2 md:-translate-x-1/2 h-full w-0.5 bg-primary origin-top"
+						className="absolute left-8 md:left-1/2 md:-translate-x-1/2 h-full w-0.5 bg-primary origin-top"
 						style={{ scaleY: scrollYProgress }}
 					/>
 					{experience.map((item, index) => (

@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { Suspense } from "react";
 import { LatestPostClient } from "@/components/LatestPostClient";
+import { config } from "@/lib/config";
 
 const skills = [
   "TypeScript", "Next.js", "Tailwind CSS", "Firebase", "Azure", "AWS"
@@ -63,7 +64,7 @@ export default async function Home() {
   const featuredProjects = allProjects.slice(0, 3);
   // Latest post is fetched client-side to keep static export fresh on GitHub Pages
   const latestPost = true; // sentinel to render the section; content will load client-side
-  const name = "Aarush Kumar";
+  const name = config.fullName;
 
   return (
     <div className="animate-fade-in">
@@ -89,10 +90,16 @@ export default async function Home() {
 
             <div className="animate-fade-in-up" style={{ animationDelay: '450ms' }}>
                 <h2 className="font-headline text-3xl md:text-5xl font-bold tracking-tight text-muted-foreground/80 mb-8">
-                    I see problems, then I <span className="animated-gradient-text">build solutions.</span>
+                    {config.hero.tagline.split(' ').map((word, index, array) => 
+                        index === array.length - 1 && word.includes('.') ? (
+                            <span key={index} className="animated-gradient-text">{word}</span>
+                        ) : (
+                            word + ' '
+                        )
+                    )}
                 </h2>
                 <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-                    Welcome to my corner of the internet. I'm a full-stack developer who thrives on turning frustration into functional, high-performance web applications.
+                    {config.hero.description}
                 </p>
             </div>
 
@@ -113,12 +120,9 @@ export default async function Home() {
             <div>
                 <h2 className="font-headline text-3xl md:text-4xl font-bold tracking-tight mb-4">About Me</h2>
                 <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground space-y-4">
-                    <p>
-                        I'm a student founder with a knack for building tools that fix real-world frustrations. My journey in tech is driven by a simple idea: technology should be helpful and intuitive, not just impressive.
-                    </p>
-                    <p>
-                        From making sense of endless legal jargon with <Link href="/projects/simplify-me">Simplify Me.</Link> to teaching nuanced language dialects with <Link href="/projects/vernato">Vernato</Link>, I love diving deep into problems and building solutions that make a difference.
-                    </p>
+                    {config.about.description.map((paragraph, index) => (
+                        <p key={index}>{paragraph}</p>
+                    ))}
                 </div>
                  <Button asChild variant="link" className="text-accent p-0 mt-4 text-base">
                     <Link href="/about">Learn more about my journey →</Link>

@@ -7,6 +7,7 @@ import { Terminal } from "lucide-react";
 // import { SkillClientPage } from "./SkillClientPage";
 import { RelatedSkills } from "./RelatedSkills";
 import { Suspense } from "react";
+import { config } from "@/lib/config";
 
 
 type Props = {
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const capitalizedSkill = decodedSkill.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
   return {
-    title: `Projects with ${capitalizedSkill} – Aarush's Portfolio`,
+    title: `Projects with ${capitalizedSkill} – ${config.siteName}`,
     description: `A collection of projects built using ${capitalizedSkill}.`,
   };
 }

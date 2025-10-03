@@ -213,14 +213,14 @@ export function ProjectsClientPage() {
       <div
         ref={toolbarRef}
         className={`sticky top-16 z-10 mb-8 py-4 relative
-          transition-all duration-500 ease-in-out will-change-transform
+          transition-all duration-300 ease-in-out will-change-transform
         `}
       >
         {/* Full-bleed background and border that appear only when stuck */}
         <div
           aria-hidden="true"
           className={`absolute  inset-y-0 left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] pointer-events-none z-0
-            transition-all duration-500 ease-in-out
+            transition-all duration-300 ease-in-out
             ${toolbarStuck ? "opacity-100 bg-card border-b border-border shadow-sm" : "opacity-0 bg-transparent border-b border-transparent shadow-none"}
           `}
         />

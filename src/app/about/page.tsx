@@ -2,12 +2,13 @@
 import AboutClientPage from "./AboutClientPage";
 import { Metadata } from "next";
 import { getSkills } from "@/lib/projects";
+import { config } from "@/lib/config";
 
 export const metadata: Metadata = {
-  title: "About – Aarush's Portfolio",
+  title: `About – ${config.siteName}`,
   description: "Learn more about my journey, skills, and the story behind my work.",
   openGraph: {
-    title: "About – Aarush's Portfolio",
+    title: `About – ${config.siteName}`,
     description: "Learn more about my journey, skills, and the story behind my work.",
     images: [
       {

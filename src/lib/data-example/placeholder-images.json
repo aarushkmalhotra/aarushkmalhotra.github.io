@@ -1,0 +1,20 @@
+{
+  "example-project-1": {
+    "src": "/example-project-screenshot.jpg",
+    "alt": "Screenshot of My Awesome Project showing the main interface",
+    "width": 1200,
+    "height": 800
+  },
+  "example-project-2": {
+    "src": "/example-project-mobile.jpg", 
+    "alt": "Mobile view of My Awesome Project",
+    "width": 400,
+    "height": 800
+  },
+  "another-project-1": {
+    "src": "/another-project-banner.jpg",
+    "alt": "Banner image for Another Cool Project",
+    "width": 1200,
+    "height": 600
+  }
+}

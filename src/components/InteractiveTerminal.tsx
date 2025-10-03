@@ -9,6 +9,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { getProjects, getAllSkills } from '@/lib/projects';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { config } from '@/lib/config';
 
 interface Command {
   command: string;
@@ -52,7 +53,7 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
   const [questActive, setQuestActive] = useState(false);
   const [questStage, setQuestStage] = useState<QuestStage>('alpha');
   const [questInventory, setQuestInventory] = useState<string[]>([]); // collected fragments
-  const [questCodes, setQuestCodes] = useState<{ alpha?: string; beta?: string; gamma: string }>({});
+  const [questCodes, setQuestCodes] = useState<{ alpha?: string; beta?: string; gamma?: string }>({});
   const [questExpected, setQuestExpected] = useState<{ alpha: string; beta: string; gamma: string } | null>(null);
   const [questLoaded, setQuestLoaded] = useState(false); // avoid overwriting storage before restore
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -278,7 +279,7 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
         sessionStorage.setItem('terminalBooted', '1');
         const welcomeMessage = (
           <div className="space-y-2">
-            <div className="text-green-600 dark:text-green-400">Welcome to Aarush's Portfolio Terminal v1.0</div>
+            <div className="text-green-600 dark:text-green-400">{config.terminal.welcome}</div>
             <div className="text-yellow-700 font-medium block dark:hidden">⚠️ Bro at least don't flashbang yourself while coding 🥀</div>
             <div className="text-gray-600 dark:text-gray-400">Type 'help' to see available commands</div>
             <div className="text-gray-600 dark:text-gray-400">Type 'fun' for something special...</div>
@@ -293,7 +294,7 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
     } else {
       const welcomeMessage = (
         <div className="space-y-2">
-          <div className="text-green-600 dark:text-green-400">Welcome to Aarush's Portfolio Terminal v1.0</div>
+          <div className="text-green-600 dark:text-green-400">{config.terminal.welcome}</div>
           <div className="text-yellow-700 font-medium block dark:hidden">⚠️ Bro at least don't flashbang yourself while coding 🥀</div>
           <div className="text-gray-600 dark:text-gray-400">Type 'help' to see available commands</div>
           <div className="text-gray-600 dark:text-gray-400">Type 'fun' for something special...</div>
@@ -466,7 +467,7 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
       <div className="space-y-1 text-sm">
         <div className={`text-green-600 dark:text-green-400 font-semibold`}>Available Commands:</div>
         <div className="ml-4 space-y-1">
-          <div><span className="text-blue-600 dark:text-blue-300">about</span> - Learn about Aarush</div>
+          <div><span className="text-blue-600 dark:text-blue-300">about</span> - Learn about {config.firstName}</div>
           <div><span className="text-blue-600 dark:text-blue-300">projects</span> - List all projects</div>
           <div><span className="text-blue-600 dark:text-blue-300">skills</span> - Show technical skills</div>
           <div><span className="text-blue-600 dark:text-blue-300">contact</span> - Get contact information</div>
@@ -491,7 +492,7 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
       <div className="space-y-2">
         <div className={`flex items-center gap-2 text-green-600 dark:text-green-400`}>
           <User className="w-4 h-4" />
-          <span className="font-semibold">Aarush Kumar</span>
+          <span className="font-semibold">{config.fullName}</span>
         </div>
         <div className="ml-6 space-y-1 text-sm">
           <div className="flex items-center gap-2">
@@ -585,9 +586,9 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
         <div className={`text-green-600 dark:text-green-400 font-semibold`}>Contact Information:</div>
         <div className="ml-4 space-y-1 text-sm">
           <div>📧 Email: Available on resume</div>
-          <div>🌐 Portfolio: aarushkmalhotra.github.io</div>
-          <div>💼 LinkedIn: /in/kumaraarush</div>
-          <div>🐙 GitHub: /aarushkmalhotra</div>
+          <div>🌐 Portfolio: {config.portfolioDomain}</div>
+          <div>💼 LinkedIn: /in/{config.linkedinUsername}</div>
+          <div>🐙 GitHub: /{config.githubUsername}</div>
           <div className={`text-xs text-gray-600 dark:text-gray-400 mt-2`}>
             Use 'resume' command to view full contact details
           </div>
@@ -1343,7 +1344,7 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
       <div className={`flex items-center justify-between p-3 border-b border-gray-300 dark:border-gray-700`}>
         <div className="flex items-center gap-2">
           <Terminal className="w-4 h-4" />
-          <span>aarush@portfolio:~$</span>
+          <span>{config.terminalPrompt}</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="flex gap-1">

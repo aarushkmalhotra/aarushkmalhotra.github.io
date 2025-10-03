@@ -7,6 +7,7 @@ import { Loader2 } from "lucide-react";
 import { ArrowUpRightIcon } from "@/components/icons/ArrowUpRightIcon";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { config } from "@/lib/config";
 
 type Post = {
   id: string;
@@ -21,7 +22,7 @@ type Post = {
   author: { name: string; profilePicture?: string | null; username?: string | null };
 };
 
-const HASHNODE_HOST = "aarushkumar.hashnode.dev";
+const HASHNODE_HOST = process.env.NEXT_PUBLIC_HASHNODE_HOST || "yourusername.hashnode.dev";
 
 export function LatestPostClient() {
   const [post, setPost] = useState<Post | null>(null);
@@ -77,7 +78,7 @@ export function LatestPostClient() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           cache: "no-store",
-          body: JSON.stringify({ query, variables: { host: HASHNODE_HOST } }),
+          body: JSON.stringify({ query, variables: { host: config.hashnodeHost } }),
         });
 
         // try with subtitle+username, then fallback to with-username, then no-username
