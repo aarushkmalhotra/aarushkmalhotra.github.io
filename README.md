@@ -1,9 +1,19 @@
 # Hey there! I'm Aarush Kumar 👋
 
+<table>
+<tr>
+<td width="40%" align="center">
+
+<img src="https://aarushkmalhotra.github.io/portrait.jpg" alt="Aarush Kumar" width="200" height="200" style="border-radius: 50%;" />
+
+</td>
+<td width="60%">
+
 Welcome to my corner of the internet! I'm a passionate developer who loves building things that actually matter. Whether it's creating AI-powered tools that help people learn pronunciation or designing apps that make subway commutes less stressful, I'm always chasing projects that blend cool technology with real human needs.
 
-![Aarush Kumar](https://aarushkmalhotra.github.io/portrait.jpg)
-_That's me! Building, learning, and probably overthinking some code somewhere._
+</td>
+</tr>
+</table>
 
 ## What I'm About
 
@@ -19,6 +29,7 @@ This portfolio showcases the projects I'm most excited about. Each one taught me
 - Built with Next.js because it just works
 - TypeScript keeps me honest with my code
 - Tailwind CSS for styling that doesn't fight me
+- Blog powered by Hashnode for seamless content management
 - Deployed on GitHub Pages (because why complicate things?)
 - Dark mode toggle because your eyes matter
 
@@ -39,17 +50,55 @@ If you're curious about how this portfolio works or want to use it as a starting
     cd aarushkmalhotra.github.io
     ```
 
-2.  **Get the dependencies:**
+2.  **Set up your environment:**
+    ```bash
+    cp .env.example .env.local
+    ```
+    Then edit `.env.local` with your actual values (see [Configuration](#configuration) section below).
+
+3.  **Get the dependencies:**
     ```bash
     npm install
     # or if you prefer yarn or pnpm, those work too
     ```
 
-3.  **Fire it up:**
+4.  **Fire it up:**
     ```bash
     npm run dev
     ```
     Then head to [http://localhost:9002](http://localhost:9002) and you should see everything running!
+
+## Configuration
+
+This portfolio uses environment variables for easy customization. Copy `.env.example` to `.env.local` and update the values:
+
+### Personal Information
+- `NEXT_PUBLIC_SITE_NAME` - Your portfolio site name
+- `NEXT_PUBLIC_FULL_NAME` - Your full name
+- `NEXT_PUBLIC_FIRST_NAME` - Your first name
+- `NEXT_PUBLIC_EMAIL` - Your email address
+- `NEXT_PUBLIC_PORTFOLIO_URL` - Your portfolio URL
+- `NEXT_PUBLIC_TERMINAL_USERNAME` - Username displayed in the interactive terminal
+
+### Site Content
+- `NEXT_PUBLIC_HERO_TAGLINE` - Main tagline on your homepage
+- `NEXT_PUBLIC_HERO_DESCRIPTION` - Description below your tagline
+- `NEXT_PUBLIC_ABOUT_TITLE` - Title for your about section
+- `NEXT_PUBLIC_ABOUT_DESCRIPTION` - About section content (use `|` to separate paragraphs)
+
+### External Services
+- `NEXT_PUBLIC_FORMSPREE_URL` - Contact form endpoint from [Formspree](https://formspree.io)
+- `NEXT_PUBLIC_HASHNODE_HOST` - Your Hashnode blog domain (e.g., `yourusername.hashnode.dev`)
+
+### Social Media Links
+- `NEXT_PUBLIC_GITHUB_URL` - Your GitHub profile
+- `NEXT_PUBLIC_LINKEDIN_URL` - Your LinkedIn profile
+- `NEXT_PUBLIC_TWITTER_URL` - Your Twitter/X profile
+- `NEXT_PUBLIC_INSTAGRAM_URL` - Your Instagram profile
+- `NEXT_PUBLIC_YOUTUBE_URL` - Your YouTube channel
+
+### Terminal Configuration
+- `NEXT_PUBLIC_TERMINAL_WELCOME` - Welcome message for the interactive terminal
 
 ## Making It Your Own
 
@@ -61,11 +110,11 @@ Head over to `src/lib/data/projects.json` and you'll see how I've structured min
 
 ### Writing Blog Posts
 
-I keep things simple with Markdown files. Create a new `.md` file in the blog directory, add some frontmatter at the top (title, date, description), and write away. The site handles the rest automatically.
+The blog is powered by Hashnode, which makes content management incredibly easy. Just set up your Hashnode blog and add your domain to the `NEXT_PUBLIC_HASHNODE_HOST` environment variable. The portfolio will automatically fetch and display your latest posts with rich formatting, SEO optimization, and all the features Hashnode provides.
 
 ### Contact Form Setup
 
-The contact form uses Formspree, which is honestly the easiest way to handle form submissions without setting up your own backend. Just create an account there, get your form endpoint, and update the contact page with your URL.
+The contact form uses Formspree, which is honestly the easiest way to handle form submissions without setting up your own backend. Just create an account at [Formspree](https://formspree.io), create a new form, and add your form endpoint to the `NEXT_PUBLIC_FORMSPREE_URL` environment variable in your `.env.local` file.
 
 ## Getting It Live
 
