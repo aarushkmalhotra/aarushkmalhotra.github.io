@@ -23,13 +23,15 @@ interface NavLink {
   href: string;
   label: string;
   isExternal?: boolean;
+  isResume?: boolean;
 }
 
 interface MobileNavProps {
   navLinks: NavLink[];
+  onResumeClick?: () => void;
 }
 
-export function MobileNav({ navLinks }: MobileNavProps) {
+export function MobileNav({ navLinks, onResumeClick }: MobileNavProps) {
   const pathname = usePathname();
   
   return (
@@ -61,22 +63,37 @@ export function MobileNav({ navLinks }: MobileNavProps) {
               </SheetClose>
           </div>
           <nav className="flex-grow flex flex-col gap-6 p-4 text-lg font-medium">
-            {navLinks.map((link) => (
-              <SheetClose asChild key={link.href}>
-                <Link
-                  href={link.href}
-                  target={link.isExternal ? "_blank" : undefined}
-                  rel={link.isExternal ? "noopener noreferrer" : undefined}
-                  className={cn(
-                    "transition-colors hover:text-foreground flex items-center gap-2",
-                    pathname === link.href ? "text-primary" : "text-muted-foreground"
-                  )}
-                >
-                  {link.label}
-                  {link.isExternal && <FileText className="w-4 h-4" />}
-                </Link>
-              </SheetClose>
-            ))}
+            {navLinks.map((link) => {
+              if (link.isResume) {
+                return (
+                  <SheetClose asChild key={link.href}>
+                    <button
+                      onClick={onResumeClick}
+                      className={cn(
+                        "transition-colors hover:text-foreground flex items-center gap-2 text-left",
+                        "text-muted-foreground"
+                      )}
+                    >
+                      {link.label}
+                      <FileText className="w-4 h-4" />
+                    </button>
+                  </SheetClose>
+                );
+              }
+              return (
+                <SheetClose asChild key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={cn(
+                      "transition-colors hover:text-foreground flex items-center gap-2",
+                      pathname === link.href ? "text-primary" : "text-muted-foreground"
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                </SheetClose>
+              );
+            })}
           </nav>
           <div className="border-t p-4">
           <div className="flex gap-4 mt-4 md:mt-0">

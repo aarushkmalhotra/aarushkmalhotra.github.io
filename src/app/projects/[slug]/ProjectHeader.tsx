@@ -4,7 +4,8 @@ import { ProjectShare } from "@/components/ProjectShare";
 import { Button } from "@/components/ui/button";
 import { Project } from "@/lib/projects";
 import { YoutubeIcon } from "@/components/icons/YoutubeIcon";
-import { ArrowUpRight, Github, Music, CalendarDays } from "lucide-react";
+import { ArrowUpRight, Music, CalendarDays } from "lucide-react";
+import { GithubIcon } from "@/components/icons/GithubIcon";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
@@ -177,7 +178,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                         {project.repoUrl && (
                             <Button asChild size="sm">
                                 <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
-                                    <Github />
+                                    <GithubIcon />
                                     GitHub
                                 </Link>
                             </Button>
@@ -220,7 +221,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
                             {project.repoUrl && (
                                 <Button asChild size="sm" className="flex-1">
                                     <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
-                                        <Github />
+                                        <GithubIcon />
                                         GitHub
                                     </Link>
                                 </Button>

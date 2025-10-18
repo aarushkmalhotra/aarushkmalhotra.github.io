@@ -10,6 +10,7 @@ import { getProjects, getAllSkills } from '@/lib/projects';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { config } from '@/lib/config';
+import { ResumeDialogTrigger } from '@/components/ResumeDialog';
 
 interface Command {
   command: string;
@@ -600,13 +601,11 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
       <div className="space-y-2">
         <div className={`text-green-600 dark:text-green-400 font-semibold`}>Resume Access:</div>
         <div className="ml-4">
-          <Link 
-            href="/resume-09-25.pdf" 
-            target="_blank"
-            className={`text-blue-600 dark:text-blue-300 hover:underline flex items-center gap-1`}
-          >
-            📄 View Resume (PDF) <ExternalLink className="w-3 h-3" />
-          </Link>
+          <ResumeDialogTrigger>
+            <span className={`text-blue-600 dark:text-blue-300 hover:underline flex items-center gap-1`}>
+              📄 View Resume
+            </span>
+          </ResumeDialogTrigger>
         </div>
       </div>
     ),
@@ -1340,7 +1339,7 @@ export function InteractiveTerminal({ className = '', heightClass }: TerminalPro
   };
 
   return (
-    <Card ref={containerRef} className={`bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-green-400 font-mono text-sm ${className}`}>
+    <Card ref={containerRef} className={`bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-green-400 font-mono text-sm md:hover:translate-y-0 ${className}`}>
       <div className={`flex items-center justify-between p-3 border-b border-gray-300 dark:border-gray-700`}>
         <div className="flex items-center gap-2">
           <Terminal className="w-4 h-4" />

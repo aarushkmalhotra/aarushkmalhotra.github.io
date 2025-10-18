@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { SkillVisualization } from "@/components/SkillVisualization";
 import { useRouter } from "next/navigation";
 import { config } from "@/lib/config";
+import { ResumeDialogTrigger } from "@/components/ResumeDialog";
 
 const experience = [
 	{
@@ -231,16 +232,12 @@ export default function AboutClientPage({
 						))}
 					</div>
 					<div className="flex flex-col justify-center w-full sm:flex-row gap-4 mt-8">
-						<Button asChild size="lg">
-							<Link
-								href="/resume-09-25.pdf"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
+						<ResumeDialogTrigger>
+							<Button size="lg">
 								<FileText className="mr-2 h-5 w-5" />
 								View My Resume
-							</Link>
-						</Button>
+							</Button>
+						</ResumeDialogTrigger>
 						<Button asChild size="lg">
                 <Link href="/projects" target="_blank">
 										<ExternalLink className="mr-2 h-5 w-5" />

@@ -34,7 +34,13 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 217 91% 60%;
 
-    --radius: 0.5rem;
+    /* Custom radius variables for distinctive design */
+    --radius: 0.75rem;
+    --radius-sm: 0.5rem;
+    --radius-md: 0.875rem;
+    --radius-lg: 1.25rem;
+    --radius-xl: 1.5rem;
+    --radius-full: 9999px;
   }
 
   .dark {
