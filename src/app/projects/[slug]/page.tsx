@@ -15,6 +15,7 @@ import { ProjectDetailClientPage } from "./ProjectDetailClientPage";
 import ProjectQuickDock from "./ProjectQuickDock";
 import { config } from "@/lib/config";
 import SectionHeading from "./SectionHeading";
+import { AnchorScrollHandler } from "@/components/AnchorScrollHandler";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -127,6 +128,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
   return (
     <div className="animate-fade-in" style={{ '--project-primary': project.theme.primary, '--project-secondary': project.theme.secondary, '--project-accent': project.theme.secondary } as React.CSSProperties}>
+      {/* Handle anchor scrolling on page load and hash changes */}
+      <AnchorScrollHandler />
+      
       <ProjectHeader project={project} />
       {/* Floating quick dock (desktop right rail + mobile bottom bar) */}
       <ProjectQuickDock project={project} backHref="/projects" />

@@ -35,7 +35,6 @@ export function ProjectShare({ project }: ProjectShareProps) {
             await navigator.clipboard.writeText(`${shareText}\n\n${shareUrl}`);
             toast({ title: "Link copied", description: "Share link copied to clipboard" });
         } catch {
-            toast({ title: "Copy failed", description: "Couldn't access clipboard. Please copy manually.", variant: "destructive" });
         }
     };
 

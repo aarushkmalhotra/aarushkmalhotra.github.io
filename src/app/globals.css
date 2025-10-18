@@ -228,9 +228,9 @@
   }
 }
 
-/* Ensure proper scrolling behavior */
+/* Disable native smooth scrolling - we handle it via JS for better control */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 /* Account for sticky site header when jumping to in-page anchors */

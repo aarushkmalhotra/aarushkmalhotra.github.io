@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Check, Link as LinkIcon } from "lucide-react";
+import { scrollToAnchor } from "@/lib/scroll-to-anchor";
 
 type SectionHeadingProps = {
   sectionId: string;
@@ -35,11 +36,15 @@ export function SectionHeading({ sectionId, title, className }: SectionHeadingPr
     return () => window.removeEventListener('section-link-copied', handler as EventListener);
   }, [sectionId, timerId]);
 
-  const copyLink = () => {
+  const copyLink = async () => {
     try {
       const base = new URL(window.location.origin + window.location.pathname);
       base.hash = sectionId;
-      navigator.clipboard.writeText(base.toString());
+      await navigator.clipboard.writeText(base.toString());
+      
+      // Scroll to the section smoothly to show the user what they copied
+      scrollToAnchor(sectionId, { duration: 800 });
+      
       // Inform others to hide their copied state
       try { window.dispatchEvent(new CustomEvent('section-link-copied', { detail: sectionId })); } catch {}
       setCopied(true);

@@ -23,6 +23,8 @@ export function ParticleBackground({ className = '', intensity = 'medium' }: Par
   const animationRef = useRef<number>();
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef({ x: 0, y: 0, isMoving: false });
+  const resizeTimeoutRef = useRef<NodeJS.Timeout>();
+  const lastResizeRef = useRef({ width: 0, height: 0 });
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -40,8 +42,17 @@ export function ParticleBackground({ className = '', intensity = 'medium' }: Par
     if (!ctx) return;
 
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+      
+      // Store old dimensions for particle scaling
+      const oldWidth = canvas.width || newWidth;
+      const oldHeight = canvas.height || newHeight;
+      
+      canvas.width = newWidth;
+      canvas.height = newHeight;
+      
+      return { oldWidth, oldHeight, newWidth, newHeight };
     };
 
     const getIntensitySettings = () => {
@@ -71,6 +82,18 @@ export function ParticleBackground({ className = '', intensity = 'medium' }: Par
           connections: 0
         });
       }
+    };
+    
+    // Scale existing particles instead of recreating them
+    const scaleParticles = (oldWidth: number, oldHeight: number, newWidth: number, newHeight: number) => {
+      const scaleX = newWidth / oldWidth;
+      const scaleY = newHeight / oldHeight;
+      
+      particlesRef.current.forEach(particle => {
+        particle.x *= scaleX;
+        particle.y *= scaleY;
+        // Keep velocities unchanged to maintain motion feel
+      });
     };
 
     const getThemeColors = () => {
@@ -222,13 +245,38 @@ export function ParticleBackground({ className = '', intensity = 'medium' }: Par
     };
 
     const handleResize = () => {
-      resizeCanvas();
-      initParticles();
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+      
+      // Ignore very small height changes (common on mobile when browser UI shows/hides)
+      const heightDiff = Math.abs(newHeight - lastResizeRef.current.height);
+      const widthDiff = Math.abs(newWidth - lastResizeRef.current.width);
+      
+      // If only height changed and it's a small change (< 150px), it's likely mobile browser UI
+      // Scale particles instead of reinitializing
+      if (widthDiff < 10 && heightDiff > 0 && heightDiff < 150) {
+        const { oldWidth, oldHeight, newWidth: canvasNewWidth, newHeight: canvasNewHeight } = resizeCanvas();
+        scaleParticles(oldWidth, oldHeight, canvasNewWidth, canvasNewHeight);
+        lastResizeRef.current = { width: newWidth, height: newHeight };
+        return;
+      }
+      
+      // Debounce significant resizes
+      if (resizeTimeoutRef.current) {
+        clearTimeout(resizeTimeoutRef.current);
+      }
+      
+      resizeTimeoutRef.current = setTimeout(() => {
+        resizeCanvas();
+        initParticles();
+        lastResizeRef.current = { width: newWidth, height: newHeight };
+      }, 150);
     };
 
     // Setup
     resizeCanvas();
     initParticles();
+    lastResizeRef.current = { width: canvas.width, height: canvas.height };
     animate();
 
     // Event listeners
@@ -238,6 +286,9 @@ export function ParticleBackground({ className = '', intensity = 'medium' }: Par
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
+      }
+      if (resizeTimeoutRef.current) {
+        clearTimeout(resizeTimeoutRef.current);
       }
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);

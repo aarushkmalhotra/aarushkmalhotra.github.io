@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { Link as LinkIcon, Music, Share2, Menu, ArrowUp, Check, Star } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
+import { scrollToAnchor } from "@/lib/scroll-to-anchor";
 
 interface ProjectQuickDockProps {
   project: Project;
@@ -267,16 +268,34 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
       await navigator.clipboard.writeText(`${shareText}\n\n${shareUrl}`);
       toast({ title: "Link copied", description: "Share link copied to clipboard" });
     } catch {
-      toast({ title: "Copy failed", description: "Couldn't access clipboard. Please copy manually.", variant: "destructive" });
     }
   };
 
   // Scroll to top functionality
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    // Use custom smooth scroll for consistent behavior
+    const startPosition = window.pageYOffset;
+    const duration = 800;
+    let startTime: number | null = null;
+
+    const easeInOutCubic = (t: number): number => {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
+
+    function animation(currentTime: number) {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const ease = easeInOutCubic(progress);
+
+      window.scrollTo(0, startPosition - startPosition * ease);
+
+      if (progress < 1) {
+        requestAnimationFrame(animation);
+      }
+    }
+
+    requestAnimationFrame(animation);
   };
 
   // No DOM scanning for sections; only listen for scroll to update visibility and active section
@@ -327,13 +346,8 @@ export function ProjectQuickDock({ project, backHref }: ProjectQuickDockProps) {
 
 
   const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    // Try to derive header height dynamically; fallback to 64 (h-16)
-    const header = document.querySelector('header') as HTMLElement | null;
-    const siteHeaderHeight = header?.offsetHeight ?? 64;
-    const y = el.getBoundingClientRect().top + window.pageYOffset - siteHeaderHeight - 20;
-    window.scrollTo({ top: y, behavior: "smooth" });
+    // Use our custom smooth scroll utility for consistent, slow scrolling
+    scrollToAnchor(id, { duration: 800 });
   };
 
   // Removed global copyLink trigger (now handled inline in headings)
