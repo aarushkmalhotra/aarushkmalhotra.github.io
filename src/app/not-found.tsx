@@ -5,7 +5,7 @@ import Link from "next/link"
 
 export default function NotFound() {
   return (
-    <div className="container mx-auto flex h-[calc(100dvh-129px)] items-center justify-center px-4 py-16">
+    <div className="container mx-auto flex min-h-[100dvh] md:min-h-[80dvh] items-center justify-center px-4 py-16 md:py-0">
       <div className="flex flex-col items-center text-center">
         <h1 className="font-headline text-8xl font-bold tracking-tighter text-primary">
           404

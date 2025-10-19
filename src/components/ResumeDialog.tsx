@@ -18,7 +18,7 @@ interface ResumeDialogProps {
 
 export function ResumeDialog({ open, onOpenChange }: ResumeDialogProps) {
   const handleOpenPDF = () => {
-    window.open("/resume-10-25.pdf", "_blank");
+    window.open("/resume-10-2025.pdf", "_blank");
     onOpenChange(false);
   };
 
@@ -29,7 +29,7 @@ export function ResumeDialog({ open, onOpenChange }: ResumeDialogProps) {
 
   const handleDownloadPDF = () => {
     const link = document.createElement('a');
-    link.href = "/resume-10-25.pdf";
+    link.href = "/resume-10-2025.pdf";
     link.download = "Aarush_Kumar_Resume-10-2025.pdf";
     document.body.appendChild(link);
     link.click();

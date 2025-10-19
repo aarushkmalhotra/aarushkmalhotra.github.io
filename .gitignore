@@ -45,7 +45,3 @@ next-env.d.ts
 # firebase
 firebase-debug.log
 firestore-debug.log
-
-# Personal assets (use public-example as template)
-/public/*
-!public-example/
