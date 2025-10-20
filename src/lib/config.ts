@@ -24,7 +24,23 @@ export const config = {
 
   // External Services
   formspreeUrl: process.env.NEXT_PUBLIC_FORMSPREE_URL || "https://formspree.io/f/YOUR_FORM_ID",
+  // Back-compat single host (still used by some components)
   hashnodeHost: process.env.NEXT_PUBLIC_HASHNODE_HOST || "yourusername.hashnode.dev",
+  // Preferred: multiple Hashnode hosts, comma-separated in NEXT_PUBLIC_HASHNODE_HOSTS
+  // Fallback order: env list -> single host -> sensible defaults for this portfolio
+  hashnodeHosts: (() => {
+    const list = process.env.NEXT_PUBLIC_HASHNODE_HOSTS
+      ?.split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+    if (list && list.length) return list;
+    const single = process.env.NEXT_PUBLIC_HASHNODE_HOST;
+    const defaults = ["aarushkumar.hashnode.dev", "vernato.hashnode.dev"];
+    return Array.from(new Set([...
+      defaults,
+      ...(single ? [single] : []),
+    ]));
+  })(),
 
   // Social Media Links
   social: {

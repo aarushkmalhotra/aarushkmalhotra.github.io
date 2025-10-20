@@ -56,7 +56,7 @@ export default async function BlogPage() {
       <div className="text-center mb-12">
         <h1 className="font-headline text-4xl md:text-5xl font-bold tracking-tight">Blog</h1>
         <p className="text-lg text-muted-foreground mt-3 max-w-2xl mx-auto">
-          My thoughts on technology, development, and everything in between, pulled directly from my Hashnode blog.
+          My thoughts on technology, development, and everything in between, pulled directly from my Hashnode blogs.
         </p>
       </div>
 
