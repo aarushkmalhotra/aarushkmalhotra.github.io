@@ -26,12 +26,10 @@ I've got this thing for taking complex ideas and making them accessible. Whether
 This portfolio showcases the projects I'm most excited about. Each one taught me something new, whether it was wrestling with audio processing algorithms, figuring out how to make real-time data actually feel real-time, or just learning that sometimes the simplest solution is the best one.
 
 **The Tech Behind This Site:**
-- Built with Next.js because it just works
-- TypeScript keeps me honest with my code
-- Tailwind CSS for styling that doesn't fight me
+- Built with Next.js
 - Blog powered by Hashnode for seamless content management
-- Deployed on GitHub Pages (because why complicate things?)
-- Dark mode toggle because your eyes matter
+- Deployed on GitHub Pages
+- Dark mode toggle
 
 ## Want to Run This Locally?
 
