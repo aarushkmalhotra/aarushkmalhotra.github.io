@@ -50,6 +50,13 @@
     "repoUrl": null,
     "demoUrl": "https://linktr.ee/emty7",
     "images": ["emty-1", "emty-2"],
+    "galleryLinks": [
+      {
+        "url": "https://www.congressionalappchallenge.us/24-NY13/",
+        "title": "Congressional App Challenge 2024 Winner (NY-13)",
+        "ogImage": null
+      }
+    ],
     "startDate": "2024-08-01",
     "endDate": "2025-04-01",
     "type": "project",

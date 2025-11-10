@@ -1,7 +1,19 @@
 "use client";
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import type { Project } from '@/lib/projects';
+import { ExternalLink } from 'lucide-react';
+// Helper to fetch OG image for a link (fallback to main image if not available)
+async function fetchOgImage(url: string): Promise<string | null> {
+    try {
+        const res = await fetch(`/api/og-image?url=${encodeURIComponent(url)}`);
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data.ogImage || null;
+    } catch {
+        return null;
+    }
+}
 import { PlaceHolderImages, type ImagePlaceholder } from '@/lib/placeholder-images';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -86,8 +98,28 @@ function Lightbox({ open, onOpenChange, items, startIndex }: { open: boolean, on
 }
 
 export function ProjectGallery({ project }: ProjectGalleryProps) {
-    const [isLightboxOpen, setLightboxOpen] = useState(false);
-    const [startIndex, setStartIndex] = useState(0);
+        const [isLightboxOpen, setLightboxOpen] = useState(false);
+        const [startIndex, setStartIndex] = useState(0);
+        const [galleryLinks, setGalleryLinks] = useState<Array<{ url: string; title: string; ogImage: string }>>([]);
+
+        useEffect(() => {
+            async function loadLinks() {
+                if (!project.galleryLinks) return;
+                const results = await Promise.all(
+                    project.galleryLinks.map(async (link) => {
+                        let ogImage = link.ogImage;
+                        if (!ogImage) {
+                            // fallback to main image
+                            const mainImg = PlaceHolderImages.find(img => img.id === project.images[0]);
+                            ogImage = mainImg?.imageUrl || '';
+                        }
+                        return { ...link, ogImage };
+                    })
+                );
+                setGalleryLinks(results);
+            }
+            loadLinks();
+        }, [project.galleryLinks, project.images]);
 
     const imageIds = (project.id === 'album-tracks' || project.id === 'imdb-top-1000')
         ? project.images.filter(id => id !== 'album-tracks-1' && id !== 'imdb-top-1000-1') 
@@ -123,10 +155,40 @@ export function ProjectGallery({ project }: ProjectGalleryProps) {
         setLightboxOpen(true);
     };
 
-    return (
-        <div id="gallery">
-            <h2 className="font-headline text-3xl mb-6 prose prose-lg dark:prose-invert max-w-none">Gallery</h2>
-            <div className="space-y-8">
+        return (
+                <div id="gallery">
+                        <h2 className="font-headline text-3xl mb-6 prose prose-lg dark:prose-invert max-w-none">Gallery</h2>
+                        <div className="space-y-8">
+                            {galleryLinks.length > 0 && (
+                                <div className="grid md:grid-cols-2 gap-6">
+                                    {galleryLinks.map((link, idx) => (
+                                        <a
+                                            key={link.url}
+                                            href={link.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="block group border rounded-lg overflow-hidden hover:shadow-lg transition-shadow bg-card"
+                                        >
+                                            <div className="aspect-video relative w-full bg-muted">
+                                                {link.ogImage && (
+                                                    <Image
+                                                        src={link.ogImage}
+                                                        alt={link.title || link.url}
+                                                        fill
+                                                        className="object-cover"
+                                                    />
+                                                )}
+                                                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                    <ExternalLink className="text-white w-10 h-10" />
+                                                </div>
+                                            </div>
+                                            <div className="p-4 flex items-center">
+                                                <span className="font-semibold text-base text-primary group-hover:underline">{link.title || link.url}</span>
+                                            </div>
+                                        </a>
+                                    ))}
+                                </div>
+                            )}
                 {videoItem && (
                     <div className="aspect-video relative overflow-hidden rounded-lg shadow-md bg-black">
                         {videoItem.type === 'iframe' ? (

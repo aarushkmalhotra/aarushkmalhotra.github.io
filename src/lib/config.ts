@@ -44,11 +44,11 @@ export const config = {
 
   // Social Media Links
   social: {
-    github: process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/yourusername",
-    linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL || "https://linkedin.com/in/yourusername",
-    twitter: process.env.NEXT_PUBLIC_TWITTER_URL || "https://twitter.com/yourusername",
-    instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://instagram.com/yourusername",
-    youtube: process.env.NEXT_PUBLIC_YOUTUBE_URL || "https://youtube.com/@yourusername",
+    github: process.env.NEXT_PUBLIC_GITHUB_URL,
+    linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL,
+    twitter: process.env.NEXT_PUBLIC_TWITTER_URL,
+    instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL,
+    youtube: process.env.NEXT_PUBLIC_YOUTUBE_URL,
   },
 
   // Terminal Configuration
