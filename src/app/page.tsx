@@ -1,6 +1,6 @@
 import { ProjectCard } from "@/components/ProjectCard";
 import { Button } from "@/components/ui/button";
-import { getProjects } from "@/lib/projects";
+import { getProjects, getAllSkills } from "@/lib/projects";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -12,10 +12,9 @@ import { cn } from "@/lib/utils";
 import { Suspense } from "react";
 import { LatestPostClient } from "@/components/LatestPostClient";
 import { config } from "@/lib/config";
+import SkillList from '@/components/SkillList';
 
-const skills = [
-  "TypeScript", "Next.js", "Tailwind CSS", "Firebase", "Azure", "AWS"
-];
+// Skills will be sourced from project data to keep canonical list in one place
 
 function LatestPostCard({ post }: { post: Post }) {
     return (
@@ -62,6 +61,21 @@ function LatestPostCard({ post }: { post: Post }) {
 export default async function Home() {
   const allProjects = getProjects();
   const featuredProjects = allProjects.slice(0, 3);
+  // Get canonical list of skills from projects data (server-side)
+  const skills = getAllSkills();
+  // Filter out unwanted skills per request
+  const filteredSkills = skills.filter((s) => {
+    const lower = s.toLowerCase();
+    // hide anything containing 'adobe'
+    if (lower.includes('adobe')) return false;
+    // hide anything containing 'code.org'
+    if (lower.includes('code.org')) return false;
+    // hide exact matches
+    if (s === 'MTA API' || s === 'GarageBand') return false;
+    // hide any skills that have a space
+    if (s.includes(' ')) return false;
+    return true;
+  });
   // Latest post is fetched client-side to keep static export fresh on GitHub Pages
   const latestPost = true; // sentinel to render the section; content will load client-side
   const name = config.fullName;
@@ -103,7 +117,7 @@ export default async function Home() {
                 </p>
             </div>
 
-            <div className="flex justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '600ms' }}>
+            <div className="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '600ms' }}>
               <Button asChild size="lg">
                 <Link href="/projects">View My Work</Link>
               </Button>
@@ -115,36 +129,27 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24 bg-secondary">
-        <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-            <div>
-                <h2 className="font-headline text-3xl md:text-4xl font-bold tracking-tight mb-4">About Me</h2>
-                <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground space-y-4">
-                    {config.about.description.map((paragraph, index) => (
-                        <p key={index}>{paragraph}</p>
-                    ))}
-                </div>
-                 <Button asChild variant="link" className="text-accent p-0 mt-4 text-base">
-                    <Link href="/about">Learn more about my journey →</Link>
-                </Button>
-            </div>
-             <div>
-                <h3 className="font-headline text-2xl font-bold mb-6">Core Skillset</h3>
-                <div className="flex flex-wrap gap-3">
-                    {skills.map((skill) => {
-                      const skillSlug = encodeURIComponent(skill.toLowerCase().replace(/\s/g, '-').replace(/\./g, ''));
-                      return (
-                        <Link key={skill} href={`/skill/${skillSlug}`}>
-                            <Badge className="text-base px-4 py-2 transition-colors hover:bg-primary hover:text-primary-foreground" variant="default">
-                            {skill}
-                            </Badge>
-                        </Link>
-                      )
-                    })}
-                </div>
-            </div>
+    <section className="py-16 md:py-24 bg-secondary">
+  <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-start">
+      <div>
+        <h2 className="font-headline text-3xl md:text-4xl font-bold tracking-tight mb-4">About Me</h2>
+        <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground space-y-4">
+          {config.about.description.map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))}
         </div>
-      </section>
+         <Button asChild variant="link" className="text-accent p-0 mt-4 text-base">
+          <Link href="/about">Learn more about my journey →</Link>
+        </Button>
+      </div>
+      <div className="flex flex-col items-end w-full">
+        <h2 className="font-headline text-3xl md:text-4xl font-bold tracking-tight mb-6 text-right w-full">Core Skillset</h2>
+        <div className="w-full">
+          <SkillList skills={skills} />
+        </div>
+      </div>
+    </div>
+    </section>
 
       <section className="py-16 md:py-24 border-t">
         <div className="container mx-auto px-4">

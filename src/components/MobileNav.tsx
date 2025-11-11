@@ -96,7 +96,7 @@ export function MobileNav({ navLinks, onResumeClick }: MobileNavProps) {
             })}
           </nav>
           <div className="border-t p-4">
-            <div className="flex gap-4 mt-4 md:mt-0">
+            <div className="flex gap-4">
               {config.email && config.email !== "" && (
                 <a href={`mailto:${config.email}`} aria-label="Email" target="_blank" rel="noopener noreferrer">
                   <Mail className="h-6 w-6 text-secondary-foreground/60 transition-colors hover:text-primary" />

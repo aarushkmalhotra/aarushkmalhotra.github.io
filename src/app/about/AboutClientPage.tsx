@@ -233,7 +233,7 @@ export default function AboutClientPage({
 					</div>
 					<div className="flex flex-col justify-center w-full sm:flex-row gap-4 mt-8">
 						<ResumeDialogTrigger>
-							<Button size="lg">
+							<Button size="lg" className="w-full md:w-auto">
 								<FileText className="mr-2 h-5 w-5" />
 								View My Resume
 							</Button>
