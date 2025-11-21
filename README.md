@@ -1,19 +1,20 @@
 # Hey there! I'm Aarush Kumar 👋
 
-<table>
-<tr>
-<td width="40%" align="center">
+<div align="center" style="width: 100%;">
+  <div style="width: 100%; margin-bottom: 20px;">
+    <img 
+      src="https://aarushkmalhotra.github.io/portrait.jpg" 
+      alt="Aarush Kumar" 
+      width="200" 
+      height="200" 
+      style="border-radius: 50%; max-width: 100%; height: auto;" 
+    />
+  </div>
 
-<img src="https://aarushkmalhotra.github.io/portrait.jpg" alt="Aarush Kumar" width="200" height="200" style="border-radius: 50%;" />
-
-</td>
-<td width="60%">
-
-Welcome to my corner of the internet! I'm a passionate developer who loves building things that actually matter. Whether it's creating AI-powered tools that help people learn pronunciation or designing apps that make subway commutes less stressful, I'm always chasing projects that blend cool technology with real human needs.
-
-</td>
-</tr>
-</table>
+  <div style="width: 100%; text-align: center;">
+    Welcome to my corner of the internet! I'm a passionate developer who loves building things that actually matter. Whether it's creating AI-powered tools that help people learn pronunciation or designing apps that make subway commutes less stressful, I'm always chasing projects that blend cool technology with real human needs.
+  </div>
+</div>
 
 ## What I'm About
 
