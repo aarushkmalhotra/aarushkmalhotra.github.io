@@ -132,7 +132,7 @@ export default async function Home() {
     <section className="py-16 md:py-24 bg-secondary">
   <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-start">
       <div>
-        <h2 className="font-headline text-3xl md:text-4xl font-bold tracking-tight mb-4">About Me</h2>
+        <h2 className="font-headline text-center md:text-left text-3xl md:text-4xl font-bold tracking-tight mb-4">About Me</h2>
         <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground space-y-4">
           {config.about.description.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
@@ -143,7 +143,7 @@ export default async function Home() {
         </Button>
       </div>
       <div className="flex flex-col items-end w-full">
-        <h2 className="font-headline text-3xl md:text-4xl font-bold tracking-tight mb-6 text-right w-full">Core Skillset</h2>
+        <h2 className="font-headline text-center md:text-right text-3xl md:text-4xl font-bold tracking-tight mb-6 w-full">Skillset</h2>
         <div className="w-full">
           <SkillList skills={skills} />
         </div>

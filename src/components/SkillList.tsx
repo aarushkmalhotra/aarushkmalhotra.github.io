@@ -1,16 +1,30 @@
 "use client";
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 
 type Props = { skills: string[] };
 
 export default function SkillList({ skills }: Props) {
   const [expanded, setExpanded] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
-  // Desktop: first 18; Mobile: first 15 with collapsible remainder
-  const firstChunk = isDesktop ? skills.slice(0, 18) : skills.slice(0, 15);
-  const rest = isDesktop ? [] : skills.slice(15);
+  // Filter for mobile: hide skills that are two+ words AND do not include allowed terms
+  const visibleSkills = useMemo(() => {
+    if (isDesktop) return skills;
+    const allowedRe = /(google|api|css|learning)/i;
+    return skills.filter((s) => {
+      const wordCount = s.trim().split(/\s+/).filter(Boolean).length;
+      const hasTwoOrMoreWords = wordCount >= 2;
+      const includesAllowed = allowedRe.test(s);
+      // hide only when both conditions are met
+      return !(hasTwoOrMoreWords && !includesAllowed);
+    });
+  }, [skills, isDesktop]);
+
+  // Desktop: first 18; Mobile: first 15 with collapsible remainder (after filtering)
+  const firstChunk = isDesktop ? visibleSkills.slice(0, 18) : visibleSkills.slice(0, 15);
+  const rest = isDesktop ? [] : visibleSkills.slice(15);
   const restRef = useRef<HTMLDivElement | null>(null);
   const [restHeight, setRestHeight] = useState(0);
 
@@ -28,7 +42,7 @@ export default function SkillList({ skills }: Props) {
     if (restRef.current) {
       setRestHeight(restRef.current.scrollHeight);
     }
-  }, [skills, expanded, isDesktop]);
+  }, [visibleSkills, expanded, isDesktop]);
 
   // Reset collapse when switching to desktop
   useEffect(() => {
@@ -92,6 +106,14 @@ export default function SkillList({ skills }: Props) {
           >
             {expanded ? 'Show less' : `Show more (${rest.length})`}
           </button>
+        </div>
+      )}
+
+      {isDesktop && (
+        <div className="mt-4 text-right hidden md:block">
+          <Button asChild variant="link" className="text-accent p-0 text-base">
+            <Link href="/about#skills">See all skills →</Link>
+          </Button>
         </div>
       )}
     </div>

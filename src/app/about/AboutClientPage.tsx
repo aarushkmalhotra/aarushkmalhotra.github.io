@@ -12,6 +12,7 @@ import { SkillVisualization } from "@/components/SkillVisualization";
 import { useRouter } from "next/navigation";
 import { config } from "@/lib/config";
 import { ResumeDialogTrigger } from "@/components/ResumeDialog";
+import { AnchorScrollHandler } from "@/components/AnchorScrollHandler";
 
 const experience = [
 	{
@@ -221,6 +222,8 @@ export default function AboutClientPage({
 
 	return (
 		<div className="animate-fade-in">
+			{/* Enable smooth scroll to #skills via hash navigation with extra offset */}
+			<AnchorScrollHandler offset={64} />
 			<section className="flex flex-col justify-center min-h-[calc(100dvh-65px)] container mx-auto px-4 py-8 md:py-16">
 				<div className="max-w-6xl mx-auto text-center">
 					<h1 className="font-headline text-4xl md:text-5xl font-bold tracking-tight mb-4">
@@ -247,7 +250,7 @@ export default function AboutClientPage({
 				</div>
 			</section>
 
-			<section className="py-16 md:py-24 border-t">
+			<section id="skills" className="py-16 md:py-24 border-t">
 				<h2 className="font-headline text-3xl md:text-4xl font-bold text-center mb-12">
 					My Skillset
 				</h2>
